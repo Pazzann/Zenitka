@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://oy8li7qf5km6"]
+
+[ext_resource type="Script" path="res://Scripts/2D/Bullet.cs" id="1_1okgf"]
+[ext_resource type="Texture2D" uid="uid://dadhn6dm1c1tu" path="res://Assets/sdfsd.svg" id="1_4ouvd"]
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_1okgf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.179688, 0.570313)
+texture = ExtResource("1_4ouvd")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

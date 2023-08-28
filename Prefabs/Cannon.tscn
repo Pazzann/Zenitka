@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://85lv0slp0cd2"]
+[gd_scene load_steps=3 format=3 uid="uid://85lv0slp0cd2"]
 
-[node name="empty" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/2D/Cannon.cs" id="1_5upuh"]
+[ext_resource type="Texture2D" uid="uid://dadhn6dm1c1tu" path="res://Assets/sdfsd.svg" id="2_xwbyp"]
+
+[node name="Cannon" type="Node2D"]
+position = Vector2(318, 269)
+script = ExtResource("1_5upuh")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = ExtResource("2_xwbyp")
+
+[node name="Gun" type="Sprite2D" parent="Body"]
+rotation = -1.52367
+scale = Vector2(0.181702, 1)
+texture = ExtResource("2_xwbyp")
+offset = Vector2(1, -129)
