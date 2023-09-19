@@ -7,45 +7,40 @@ namespace Zenitka.Scripts._2D
 	public partial class Cannon : Node
 	{
 
-		const float GunRotationSpeed = 1.0f;
+		public float GunRotationSpeed = 1f;
 		
-		private Sprite2D _body;
 		private Sprite2D _gun;
-
-
-		private float _targetAngle = -0.5f;
+		
+		private float _targetAngle = 0;
+		private bool _shouldSignal = false;
 
 		public override void _Ready()
 		{
-			_body = GetChild(0) as Sprite2D;
-			_gun = _body.GetChild(0) as Sprite2D;
+			_gun = GetNode<Sprite2D>("Body/Gun");
 		}
 
-
-		void RotateTo(float targetAngle)
-		{
+		public void RotateToAndSignal(float targetAngle) {
+			_shouldSignal = true;
 			_targetAngle = targetAngle;
 		}
 		
-		public override void _Process(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
-			if(Math.Abs(_gun.Rotation - _targetAngle) == 0)
-				return;
-			if (Math.Abs(_gun.Rotation - _targetAngle) < Math.Abs(GunRotationSpeed * (float)delta))
-			{
-				_gun.Rotation = _targetAngle;
-				return;
-			}
+			float deltaF = (float) delta;
 
-			if (_gun.Rotation > _targetAngle)
-			{
-				_gun.Rotation -= GunRotationSpeed * (float)delta ;
-			}
-			else
-			{
-				_gun.Rotation += GunRotationSpeed * (float)delta ;
-			}
+			if (Mathf.IsEqualApprox(_gun.Rotation, _targetAngle, deltaF * GunRotationSpeed)) {
+				if (_shouldSignal) {
+					_shouldSignal = false;
+					EmitSignal(SignalName.GunReady, _targetAngle);
+				}
+
+				return;
+			} else
+				_gun.Rotation += Mathf.Sign(_targetAngle - _gun.Rotation) * GunRotationSpeed * deltaF;
 		}
+
+		[Signal]
+		public delegate void GunReadyEventHandler(float angleRad);
 	}
 
 }

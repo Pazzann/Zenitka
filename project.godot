@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="Zenitka"
+run/main_scene="res://Scenes/Main2D.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
 
 [dotnet]
 

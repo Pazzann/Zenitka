@@ -1,31 +1,29 @@
 using Godot;
 using System;
 
-
 namespace Zenitka.Scripts._2D
 {
-	public partial class Bullet : Node
+	public partial class Bullet : RigidBody2D
 	{
-		const float Velocity = 1.0f;
-
 		private Timer _timer;
-		
 		
 		public override void _Ready()
 		{
-			_timer = GetChild(1) as Timer;
-
-
+			_timer = GetNode<Timer>("SuicideTimer");
 		}
-		public override void _Process(double delta)
+
+		public void Fire(float lifespanSec) {
+			_timer.Start(lifespanSec);
+			Freeze = false;
+		}
+
+		[Signal]
+		public delegate void SelfDestroyedEventHandler();
+
+		private void OnSuicideTimerTimeout()
 		{
+			_timer.Stop();
+			EmitSignal(SignalName.SelfDestroyed);
 		}
-		private void _on_timer_timeout()
-		{
-			// Replace with function body.
-		}
-
 	}
 }
-
-

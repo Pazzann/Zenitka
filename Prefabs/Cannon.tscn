@@ -4,14 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://dadhn6dm1c1tu" path="res://Assets/sdfsd.svg" id="2_xwbyp"]
 
 [node name="Cannon" type="Node2D"]
-position = Vector2(318, 269)
 script = ExtResource("1_5upuh")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("2_xwbyp")
 
 [node name="Gun" type="Sprite2D" parent="Body"]
-rotation = -1.52367
 scale = Vector2(0.181702, 1)
 texture = ExtResource("2_xwbyp")
 offset = Vector2(1, -129)

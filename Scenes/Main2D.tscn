@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://b654r1mknj116"]
+
+[ext_resource type="PackedScene" uid="uid://85lv0slp0cd2" path="res://Prefabs/Cannon.tscn" id="1_un41y"]
+[ext_resource type="Script" path="res://Scripts/2D/Main2D.cs" id="1_vkw7f"]
+
+[sub_resource type="Curve2D" id="Curve2D_tb520"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -626, 79, 0, 0, 0, 0, -638, -646, 0, 0, 0, 0, 598, -631, 0, 0, 0, 0, 627, 84)
+}
+point_count = 4
+
+[node name="Main2D" type="Node2D"]
+script = ExtResource("1_vkw7f")
+
+[node name="Cannon" parent="." instance=ExtResource("1_un41y")]
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(0, -272)
+
+[node name="TargetSpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="TargetSpawnLocations" type="Path2D" parent="."]
+curve = SubResource("Curve2D_tb520")
+
+[node name="Sampler" type="PathFollow2D" parent="TargetSpawnLocations"]
+position = Vector2(-626, 79)
+rotation = -1.58735
+
+[connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

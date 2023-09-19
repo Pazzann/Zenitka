@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://djcontc8rjxrl"]
+
+[ext_resource type="Script" path="res://Scripts/2D/Target.cs" id="1_1gmsy"]
+[ext_resource type="Texture2D" uid="uid://bir22hbyhhpo1" path="res://icon.svg" id="1_3quyg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fqs6k"]
+size = Vector2(40, 40)
+
+[node name="Target" type="RigidBody2D"]
+script = ExtResource("1_1gmsy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fqs6k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_3quyg")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-20, -20, 40, 40)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="OnVisibleOnScreenNotifier2dScreenEntered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnVisibleOnScreenNotifier2dScreenExited"]
