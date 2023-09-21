@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://Scripts/2D/Bullet.cs" id="1_1okgf"]
 [ext_resource type="Texture2D" uid="uid://dadhn6dm1c1tu" path="res://Assets/sdfsd.svg" id="1_4ouvd"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_v7agr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cdij"]
+size = Vector2(20, 70)
 
 [node name="Bullet" type="RigidBody2D"]
 collision_mask = 3
@@ -16,7 +17,7 @@ scale = Vector2(0.179688, 0.570313)
 texture = ExtResource("1_4ouvd")
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_v7agr")
+shape = SubResource("RectangleShape2D_3cdij")
 
 [node name="SuicideTimer" type="Timer" parent="."]
 

@@ -51,7 +51,7 @@ namespace Zenitka.Scripts._2D
 			var startPos = GenerateTargetSpawnlocation(kind);
 			var endPos = GenerateTargetSpawnlocation(!kind);
 
-			target.GlobalPosition = startPos;
+			target.GlobalPosition = startPos - new Vector2(20f, 20f);
 			target.LinearVelocity = (endPos - startPos).Normalized() * TARGET_SPEED;
 
 			target.GravityScale = 0f;
