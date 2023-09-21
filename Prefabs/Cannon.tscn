@@ -14,5 +14,5 @@ scale = Vector2(0.181702, 1)
 texture = ExtResource("2_xwbyp")
 offset = Vector2(1, -129)
 
-[node name="Node2D" type="Node2D" parent="Body/Gun"]
+[node name="Head" type="Node2D" parent="Body/Gun"]
 position = Vector2(4.16077, -196.253)

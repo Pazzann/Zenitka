@@ -6,15 +6,16 @@ namespace Zenitka.Scripts._2D
 	public partial class Bullet : RigidBody2D
 	{
 		private Timer _timer;
+		private float _lifespanSec = 0f;
 		
 		public override void _Ready()
 		{
 			_timer = GetNode<Timer>("SuicideTimer");
+			_timer.Start(_lifespanSec);
 		}
 
-		public void Fire(float lifespanSec) {
-			_timer.Start(lifespanSec);
-			Freeze = false;
+		public void SetLifespan(float lifespanSec) {
+			_lifespanSec = lifespanSec;
 		}
 
 		[Signal]

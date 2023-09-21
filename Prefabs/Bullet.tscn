@@ -6,8 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_v7agr"]
 
 [node name="Bullet" type="RigidBody2D"]
+collision_mask = 3
 can_sleep = false
-freeze = true
 freeze_mode = 1
 script = ExtResource("1_1okgf")
 
