@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://v8c8igwmwavv"]
+
+[ext_resource type="Script" path="res://Scripts/3D/Main3D.cs" id="1_2igm4"]
+[ext_resource type="PackedScene" uid="uid://bt7u2b3j8v318" path="res://Prefabs/3D/Cannon.tscn" id="1_4hkxh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_usupc"]
+
+[node name="Main3D" type="Node3D"]
+script = ExtResource("1_2igm4")
+
+[node name="Cannon" parent="." instance=ExtResource("1_4hkxh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 20)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999332, 0.0365394, 0, -0.0365394, 0.999332, 10, 3.99641, 28.5848)
+
+[node name="TargetSpawnTimer" type="Timer" parent="."]
+wait_time = 4.521
+autostart = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 0.1, 0, 0, 0, 20, 10, -0.5, 10)
+mesh = SubResource("BoxMesh_usupc")
+
+[connection signal="GunReady3D" from="Cannon" to="." method="OnCannonGunReady"]
+[connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
