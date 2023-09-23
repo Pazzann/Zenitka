@@ -7,7 +7,7 @@ namespace Zenitka.Scripts._2D
 	public partial class Cannon : Node
 	{
 
-		public float GunRotationSpeed = 15f;
+		public float GunRotationSpeed = 5f;
 		
 		private Sprite2D _gun;
 		private Node2D _head;
@@ -37,7 +37,7 @@ namespace Zenitka.Scripts._2D
 			if (Mathf.IsEqualApprox(_gun.Rotation, _targetAngle, deltaF * GunRotationSpeed)) {
 				if (_shouldSignal) {
 					_shouldSignal = false;
-					EmitSignal(SignalName.GunReady, 0.5f * Mathf.Pi - _targetAngle);
+					EmitSignal(SignalName.GunReady, 0.5f * Mathf.Pi - _targetAngle, GetHeadPosition());
 				}
 
 				return;
@@ -46,7 +46,7 @@ namespace Zenitka.Scripts._2D
 		}
 
 		[Signal]
-		public delegate void GunReadyEventHandler(float angleRad);
+		public delegate void GunReadyEventHandler(float angleRad, Vector2 headPosition);
 	}
 
 }

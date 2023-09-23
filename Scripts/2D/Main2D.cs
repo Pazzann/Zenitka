@@ -26,7 +26,7 @@ namespace Zenitka.Scripts._2D
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 		}
 
-		private void OnCannonGunReady(double angleRad)
+		private void OnCannonGunReady(double angleRad, Vector2 headPosition)
 		{
 	
 			float angleRadF = (float) angleRad;
@@ -35,7 +35,7 @@ namespace Zenitka.Scripts._2D
 
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 
-			bullet.GlobalPosition = _cannon.GetHeadPosition(); 
+			bullet.GlobalPosition = headPosition; 
 			bullet.LinearVelocity = Vector2.FromAngle((float) - angleRadF) * MUZZLE_SPEED;
 			bullet.GravityScale = 0f;
 
