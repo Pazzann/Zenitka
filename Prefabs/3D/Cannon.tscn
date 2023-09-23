@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bt7u2b3j8v318"]
+
+[ext_resource type="Script" path="res://Scripts/3D/Cannon.cs" id="1_jjwqs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al2tu"]
+albedo_color = Color(1, 1, 0.309804, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fb1tt"]
+material = SubResource("StandardMaterial3D_al2tu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4e87t"]
+albedo_color = Color(1, 1, 0.172549, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o7jpl"]
+material = SubResource("StandardMaterial3D_4e87t")
+
+[node name="Cannon" type="Node3D"]
+script = ExtResource("1_jjwqs")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_fb1tt")
+
+[node name="Gun" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.459538, 0, 0, 0, 0.356723, 0, 0, 0, 1.44361, 0, 0.697098, -0.552164)
+mesh = SubResource("BoxMesh_o7jpl")
+
+[node name="Head" type="Node3D" parent="Body/Gun"]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, -0.523882)

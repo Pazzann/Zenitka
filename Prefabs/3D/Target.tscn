@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0unsnrxrapqr"]
+
+[ext_resource type="Script" path="res://Scripts/3D/Target.cs" id="1_h5mlg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_856tk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gm2cn"]
+albedo_color = Color(1, 0.282353, 0.0823529, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tctre"]
+material = SubResource("StandardMaterial3D_gm2cn")
+
+[node name="Target" type="RigidBody3D"]
+script = ExtResource("1_h5mlg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_856tk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_tctre")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(0.852979, 0, 0, 0, 0.497149, 0, 0, 0, 0.502989, 0, 0, 0)
+aabb = AABB(-0.592955, -1, -1, 1.18591, 2, 2)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="OnVisibleOnScreenNotifier2dScreenEntered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="OnVisibleOnScreenNotifier2dScreenExited"]

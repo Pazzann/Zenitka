@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://rmlak2bw88h4"]
+
+[ext_resource type="Script" path="res://Scripts/3D/Bullet.cs" id="1_ioofg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g8gjo"]
+size = Vector3(0.256, 1, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ngd0w"]
+albedo_color = Color(0.305882, 0.407843, 0.835294, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jn8ue"]
+material = SubResource("StandardMaterial3D_ngd0w")
+
+[node name="Bullet" type="RigidBody3D"]
+script = ExtResource("1_ioofg")
+
+[node name="BoundingBox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.00170851)
+shape = SubResource("BoxShape3D_g8gjo")
+
+[node name="SuicideTimer" type="Timer" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.256069, 0, 0, 0, 1, 0, 0, 0, 0.299853, 0, 0, 0)
+mesh = SubResource("BoxMesh_jn8ue")
+
+[connection signal="timeout" from="SuicideTimer" to="." method="OnSuicideTimerTimeout"]
