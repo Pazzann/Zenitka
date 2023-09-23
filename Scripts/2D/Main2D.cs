@@ -28,6 +28,7 @@ namespace Zenitka.Scripts._2D
 
 		private void OnCannonGunReady(double angleRad)
 		{
+	
 			float angleRadF = (float) angleRad;
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
@@ -40,7 +41,6 @@ namespace Zenitka.Scripts._2D
 
 			bullet.SetLifespan(10f);
 			AddChild(bullet);
-
 			ToSignal(bullet, Bullet.SignalName.SelfDestroyed).OnCompleted(() => {
 				bullet.QueueFree();
 			});

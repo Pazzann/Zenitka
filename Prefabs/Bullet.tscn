@@ -21,4 +21,5 @@ shape = SubResource("RectangleShape2D_3cdij")
 
 [node name="SuicideTimer" type="Timer" parent="."]
 
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="timeout" from="SuicideTimer" to="." method="OnSuicideTimerTimeout"]

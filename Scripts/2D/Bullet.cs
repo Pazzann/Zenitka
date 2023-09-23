@@ -10,6 +10,8 @@ namespace Zenitka.Scripts._2D
 		
 		public override void _Ready()
 		{
+			ContactMonitor = true;
+			MaxContactsReported = 1;
 			_timer = GetNode<Timer>("SuicideTimer");
 			_timer.Start(_lifespanSec);
 		}
@@ -20,6 +22,13 @@ namespace Zenitka.Scripts._2D
 
 		[Signal]
 		public delegate void SelfDestroyedEventHandler();
+		
+		
+		private void OnBodyEntered(Node body)
+		{
+			body.QueueFree();
+			QueueFree();
+		}
 
 		private void OnSuicideTimerTimeout()
 		{
@@ -28,3 +37,5 @@ namespace Zenitka.Scripts._2D
 		}
 	}
 }
+
+
