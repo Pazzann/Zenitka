@@ -30,5 +30,4 @@ script = ExtResource("3_2pk56")
 transform = Transform3D(0.663691, -0.647793, 0.374003, 0, 0.5, 0.866025, -0.748007, -0.574773, 0.331846, 3, 5, 5)
 shadow_enabled = true
 
-[connection signal="Aimed" from="Cannon" to="." method="OnCannonAimed"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

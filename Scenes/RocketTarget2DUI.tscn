@@ -97,6 +97,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
 [node name="Button" type="Button" parent="."]
+layout_mode = 0
 offset_left = 1007.0
 offset_top = 559.0
 offset_right = 1122.0
