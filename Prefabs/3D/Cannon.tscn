@@ -1,28 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://bt7u2b3j8v318"]
+[gd_scene load_steps=5 format=3 uid="uid://bt7u2b3j8v318"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Cannon.cs" id="1_jjwqs"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al2tu"]
-albedo_color = Color(1, 1, 0.309804, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_c6tab"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_fb1tt"]
-material = SubResource("StandardMaterial3D_al2tu")
+[sub_resource type="SphereMesh" id="SphereMesh_mwon0"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4e87t"]
-albedo_color = Color(1, 1, 0.172549, 1)
+[sub_resource type="CylinderMesh" id="CylinderMesh_rbuv3"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_o7jpl"]
-material = SubResource("StandardMaterial3D_4e87t")
-
-[node name="Cannon" type="Node3D"]
+[node name="Cannon" type="CharacterBody3D"]
 script = ExtResource("1_jjwqs")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.383531, -0.0856782)
+shape = SubResource("BoxShape3D_c6tab")
+
 [node name="Body" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_fb1tt")
+mesh = SubResource("SphereMesh_mwon0")
 
-[node name="Gun" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(0.459538, 0, 0, 0, 0.356723, 0, 0, 0, 1.44361, 0, 0.697098, -0.552164)
-mesh = SubResource("BoxMesh_o7jpl")
+[node name="Barrel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
+mesh = SubResource("CylinderMesh_rbuv3")
 
-[node name="Head" type="Node3D" parent="Body/Gun"]
-transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, -0.523882)
+[node name="BulletSpawnLocation" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

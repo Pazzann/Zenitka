@@ -19,10 +19,3 @@ shape = SubResource("BoxShape3D_856tk")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_tctre")
 skeleton = NodePath("../CollisionShape3D")
-
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
-transform = Transform3D(0.852979, 0, 0, 0, 0.497149, 0, 0, 0, 0.502989, 0, 0, 0)
-aabb = AABB(-0.592955, -1, -1, 1.18591, 2, 2)
-
-[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="OnVisibleOnScreenNotifier2dScreenEntered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="OnVisibleOnScreenNotifier2dScreenExited"]

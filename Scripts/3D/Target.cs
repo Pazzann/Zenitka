@@ -3,53 +3,34 @@ using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public partial class Target : RigidBody3D
-	{
-		private bool _isOffscreen = false;
-		
-		private Rect2 _field = new Rect2(Vector2.Zero, new Vector2(20, 20));
-		
+	public partial class Target : RigidBody3D {
+		private bool _isDetectable = false;
 		private bool _isWithinRange = false;
 
-		// Called when the node enters the scene tree for the first time.
+		float _detectionRange = 0f;
+
 		public override void _Ready()
-		{
+		{}
+
+		public void SetDetectionRange(float range) {
+			_detectionRange = range;
 		}
 
-		public void ScheduleSelfDestroyWhenOffscreen()
-		{
-			_isOffscreen = _field.HasPoint(new Vector2(Position[0], Position[2]));
+		public void ScheduleSelfDestroyWhenOffscreen() {
+			_isDetectable = Position.LengthSquared() <= _detectionRange * _detectionRange;
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
 		public override void _Process(double delta)
 		{
-		}
-		
-		[Signal]
-		public delegate void WentWithinRange3DEventHandler();
-		
-		private void OnVisibleOnScreenNotifier2dScreenEntered()
-		{
-			_isOffscreen = false;
-
-			if (!_isWithinRange) {
-				_isWithinRange = true;
-
+			if (Position.LengthSquared() <= _detectionRange * _detectionRange) {
 				ToSignal(GetTree().CreateTimer(0.5f), SceneTreeTimer.SignalName.Timeout)
 					.OnCompleted(() => EmitSignal(SignalName.WentWithinRange3D));
-			}
-		}
-		
-		private void OnVisibleOnScreenNotifier2dScreenExited()
-		{
-			if (!_isOffscreen) {
-				GD.Print("target self-destroyed as it went offscreen");
+			} else if (_isDetectable) {
 				QueueFree();
 			}
 		}
+
+		[Signal]
+		public delegate void WentWithinRange3DEventHandler();
 	}
 }
-
-
-

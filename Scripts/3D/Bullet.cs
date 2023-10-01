@@ -19,14 +19,14 @@ namespace Zenitka.Scripts._3D
 		}
 
 		[Signal]
-		public delegate void SelfDestroyed3DEventHandler();
+		public delegate void ExplodedEventHandler(Node3D target);
 
 		private void OnSuicideTimerTimeout()
 		{
 			_timer.Stop();
-			EmitSignal(SignalName.SelfDestroyed3D);
+			QueueFree();
+
+			EmitSignal(SignalName.Exploded, null);
 		}
 	}
 }
-
-
