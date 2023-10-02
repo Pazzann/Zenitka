@@ -9,11 +9,18 @@ script = ExtResource("1_vkw7f")
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(0, -272)
+position = Vector2(0, -1600)
+zoom = Vector2(0.2, 0.2)
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
 wait_time = 4.521
 autostart = true
+
+[node name="Anchor2" type="Node2D" parent="."]
+position = Vector2(-2716, -2121)
+
+[node name="Anchor" type="Node2D" parent="."]
+position = Vector2(-2712, -2510)
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

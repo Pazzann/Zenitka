@@ -3,7 +3,4 @@
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\2D\Targets" />
-  </ItemGroup>
 </Project>
