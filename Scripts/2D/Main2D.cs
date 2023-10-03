@@ -67,11 +67,11 @@ namespace Zenitka.Scripts._2D
 			
 			// ToSignal(target, Target.SignalName.WentWithinRange).OnCompleted(() =>
 			// {
-				GD.Print(1232);
+				
 				var bullet = _bulletScene.Instantiate() as Target;
 				bullet._Ready();
 				float a = Math2D.GetAngle(_cannon.GlobalPosition, target.GlobalPosition, bullet, target, 9.8f,
-					_cannon.GunRotationSpeed, _cannon.Rotation, 1000.0f, new Vector2(100.0f, 1000.0f));
+					_cannon.GunRotationSpeed, _cannon.Rotation, 10.0f, new Vector2(5400.0f, 1000.0f));
 				bullet.QueueFree();
 				GD.Print("cannon angle: ", a);
 

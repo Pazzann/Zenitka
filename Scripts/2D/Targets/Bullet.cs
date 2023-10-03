@@ -7,7 +7,7 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			Weight = 1.0f;
 			DragCoefficient = 0.05f;
-			StartVelocity = 200.0f;
+			StartVelocity = 2000.0f;
 		}
 		private void OnBodyEntered(Node body)
 		{
