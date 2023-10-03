@@ -79,6 +79,9 @@ namespace Zenitka.Scripts._3D
 
 			var y = MathUtils.RandRange(0f, Mathf.Sqrt(1f - x * x));
 			var z = Mathf.Sqrt(1f - x * x - y * y);
+
+			if (_rng.Next(2) == 0)
+				z = -z;
 			
 			return TARGET_SPAWN_RADIUS * new Vector3(x, y, z).Normalized();
 		}

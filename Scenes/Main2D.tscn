@@ -12,7 +12,7 @@ script = ExtResource("1_vkw7f")
 position = Vector2(0, -272)
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
-wait_time = 4.521
+wait_time = 1.524
 autostart = true
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]

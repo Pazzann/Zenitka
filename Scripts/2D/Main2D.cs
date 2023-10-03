@@ -8,8 +8,8 @@ namespace Zenitka.Scripts._2D
 	public partial class Main2D : Node2D
 	{
 		private static float BARREL_LENGTH = 200f;
-		private static float MUZZLE_SPEED = 200f;
-		private static float TARGET_SPEED = 200f;
+		private static float BULLET_SPEED = 1000f;
+		private static float TARGET_SPEED = 500f;
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
@@ -36,8 +36,8 @@ namespace Zenitka.Scripts._2D
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 
 			bullet.GlobalPosition = headPosition; 
-			bullet.LinearVelocity = Vector2.FromAngle((float) - angleRadF) * MUZZLE_SPEED;
-			bullet.GravityScale = 0f;
+			bullet.LinearVelocity = Vector2.FromAngle((float) - angleRadF) * BULLET_SPEED;
+			bullet.GravityScale = 1f;
 
 			bullet.SetLifespan(10f);
 			AddChild(bullet);
@@ -63,12 +63,27 @@ namespace Zenitka.Scripts._2D
 			target.GravityScale = 0f;
 
 			ToSignal(target, Target.SignalName.WentWithinRange).OnCompleted(() => {
-				float a = MathUtils.CalculateFiringAngle(
+				float a = MathUtils.CalculateFiringAngle2(
+					_cannon.GetAngle(),
 					BARREL_LENGTH,
-					MUZZLE_SPEED,
-					target.GlobalPosition,
-					target.LinearVelocity
+					10f,
+					Vector2.Zero,
+					BULLET_SPEED,
+					Vector2.Zero,
+					new BodyState(
+						target.GlobalPosition,
+						target.LinearVelocity,
+						Vector2.Zero,
+						Vector2.Zero
+					)
 				);
+
+				// float a = MathUtils.CalculateFiringAngle(
+				// 	BARREL_LENGTH,
+				// 	BULLET_SPEED,
+				// 	target.GlobalPosition,
+				// 	target.LinearVelocity
+				// );
 
 				GD.Print("cannon angle: ", a);
 
@@ -93,6 +108,21 @@ namespace Zenitka.Scripts._2D
 			var y = MathUtils.RandRange(rect.Position.Y, rect.Position.Y + rect.Size.Y);
 
 			return new Vector2(baseX, y);
+
+			// var rect = GetWindowRect();
+			// var r = Mathf.Max(rect.Size.X, rect.Size.Y);
+
+			// var x = MathUtils.RandRange(0f, 1f);
+
+			// if (kind)
+			// 	x = -x;
+
+			// var y = Mathf.Sqrt(1f - x * x);
+
+			// if (_rng.Next(2) == 0)
+			// 	y = -y;
+
+			// return r * new Vector2(x, y).Normalized() + GetWindowRect().GetCenter();
 		}
 
 		private Rect2 GetWindowRect() {

@@ -5,6 +5,28 @@ using Godot;
 
 namespace Zenitka.Scripts
 {
+	public struct BodyState {
+		public Vector2 position;
+		public Vector2 velocity;
+		public Vector2 acceleration;
+		public Vector2 dragCoefs;
+
+		public BodyState(Vector2 position, Vector2 velocity, Vector2 acceleration, Vector2 dragCoefs) {
+			this.position = position;
+			this.velocity = velocity;
+			this.acceleration = acceleration;
+			this.dragCoefs = dragCoefs;
+		}
+
+		public void update(float dt) {
+			acceleration -= dt * velocity * dragCoefs.X;
+			acceleration -= dt * velocity * velocity.Length() * dragCoefs.Y;
+
+			velocity += dt * acceleration;
+			position += dt * velocity;
+		}
+	}
+
 	public static class MathUtils {
 		private static Random _rng = new Random();
 
@@ -17,6 +39,50 @@ namespace Zenitka.Scripts
 				RandRange(min.X, max.X),
 				RandRange(min.Y, max.Y)
 			);
+		}
+
+		public static float CalculateFiringAngle2(
+			float curCannonAngle,
+			float barrelLength,
+			float cannonRotationSpeed,
+			Vector2 g,
+			float projectileSpeed,
+			Vector2 projectileDrag,
+			BodyState target
+		) {
+			const int K = 100;
+			const float STEP = Mathf.Pi / K;
+
+			var oTarget = target;
+
+			for (int i = 0; i < K; ++i) {
+				float a = STEP * i;
+				target = oTarget;
+
+				var projectile = new BodyState(
+					new Vector2(barrelLength, 0f).Rotated(a),
+					new Vector2(projectileSpeed, 0f).Rotated(a),
+					g,
+					projectileDrag
+				);
+
+				const float D_T = 1f / 60f;
+
+				for (int j = 0; j < 300; ++j) {
+					if ((target.position - projectile.position).LengthSquared() < 1000f)
+						return a;
+
+					//GD.Print((target.position - projectile.position).LengthSquared());
+					//GD.Print(target.position, projectile.position);
+
+					target.update(D_T);
+
+					if (D_T * j >= Mathf.Abs(a - curCannonAngle) / cannonRotationSpeed)
+						projectile.update(D_T);
+				}
+			}
+
+			return float.PositiveInfinity;
 		}
 
 		public static float CalculateFiringAngle(
