@@ -5,6 +5,8 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using Zenitka.Scripts._2D.Targets;
 using Zenitka.Scripts.Math;
+using Zenitka.Scripts.UI;
+
 
 namespace Zenitka.Scripts._2D
 {
@@ -94,5 +96,37 @@ namespace Zenitka.Scripts._2D
 
 			return pos;
 		}
+		
+		private void MenuButton()
+		{
+			var button = GetNode<Button>("Button");
+			var pos = button.GlobalPosition;
+			
+			PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
+			var menu = menuScene.Instantiate() as Menu;
+			menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
+			AddChild(menu);
+			
+		}
+		
+		private void SettingsButton()
+		{
+			var button = GetNode<Button>("Button2");
+			var pos = button.GlobalPosition;
+			
+			PackedScene panelScene = GD.Load<PackedScene>("res://Prefabs/UI/SettingsPanel.tscn");
+			var panel = panelScene.Instantiate() as SettingsPanel;
+			panel.GlobalPosition = new Vector2(pos[0] + 250, pos[1] + 300);
+			AddChild(panel);
+		}
+
 	}
+	
+	
 }
+
+
+
+
+
+

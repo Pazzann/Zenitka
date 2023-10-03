@@ -1,0 +1,174 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkft2dlxunfv7"]
+
+[ext_resource type="Script" path="res://Scripts/UI/SettingsPanel.cs" id="1_dtult"]
+
+[node name="SettingsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -678.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(6, 6)
+script = ExtResource("1_dtult")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 452.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Зенітна гармата"
+popup/item_0/id = 0
+popup/item_1/text = "Зенітна ракетниця"
+popup/item_1/id = 1
+
+[node name="2DDefult" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefult"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefult/HBoxContainer"]
+layout_mode = 2
+text = "швидкість снаряда"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefult/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefult"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefult/HBoxContainer2"]
+layout_mode = 2
+text = "початковий кут підвищення каналу ствола"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefult/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefult"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefult/HBoxContainer3"]
+layout_mode = 2
+text = "кутова швидкість змінення напрямку ствола (1/с)"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefult/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="2DRocket" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer"]
+layout_mode = 2
+text = "координати виявлення відносно зенітної установки"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+layout_mode = 2
+text = "координати кінцевої точки польоту цілі"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+layout_mode = 2
+text = "вектор початкової швидкості (напрям, величина у м/с)"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+layout_mode = 2
+text = "розміри (довжина, товщина у м)"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+layout_mode = 2
+text = "власна маса ракети без палива, та маса палива"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer3"]
+layout_mode = 2
+text = "кутова швидкість (1/с) (швидкість повороту)"
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Закрити"
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="." method="CloseButton"]
