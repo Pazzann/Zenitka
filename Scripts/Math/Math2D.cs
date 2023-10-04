@@ -1,24 +1,24 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Godot;
 using Zenitka.Scripts._2D;
 
 namespace Zenitka.Scripts.Math
 {
-    public class Math2D
-    {
-        public static float GetAngle(
-            Vector2 gunPosition,
-            Vector2 startTargetPosition,
-            Target bullet,
-            Target target,
-            float gravitationalAcceleration,
-            float rotationalSpeed,
-            float initialGunAngle,
-            float precision,
-            Vector2 calculationSize
-        )
-        {
-            List<float[]> times = new List<float[]>();
+	public class Math2D
+	{
+		public static float GetAngle(
+			Vector2 gunPosition,
+			Vector2 startTargetPosition,
+			Target bullet,
+			Target target,
+			float gravitationalAcceleration,
+			float rotationalSpeed,
+			float initialGunAngle,
+			float precision,
+			Vector2 calculationSize
+		)
+		{
+			List<float[]> times = new List<float[]>();
 
             for (float alpha = 0; alpha < (float)(System.Math.PI); alpha += 0.02f)
             {
@@ -59,39 +59,40 @@ namespace Zenitka.Scripts.Math
                 }
             }
 
-            if (times.Count == 0)
-                return 0.0f;
 
-            float minTime = 9999999.0f;
-            float finalAlpha = 0.0f;
-            foreach (var time in times)
-            {
-                if (time[0] < minTime)
-                {
-                    minTime = time[0];
-                    finalAlpha = time[1];
-                }
-            }
+			if (times.Count == 0)
+				return 0.0f;
+
+			float minTime = 9999999.0f;
+			float finalAlpha = 0.0f;
+			foreach (var time in times)
+			{
+				if (time[0] < minTime)
+				{
+					minTime = time[0];
+					finalAlpha = time[1];
+				}
+			}
 
 
-            return finalAlpha;
-        }
+			return finalAlpha;
+		}
 
-        public static float XVelocityFromT(Target obj, float t)
-        {
-            float startTargetVelocityX = obj.StartVelocity * (float)System.Math.Cos(obj.StartAngle);
-            float stiffness = obj.DragCoefficient / obj.Weight;
-            return (float)System.Math.Exp((-1) * t * (double)stiffness) * startTargetVelocityX;
-        }
+		public static float XVelocityFromT(Target obj, float t)
+		{
+			float startTargetVelocityX = obj.StartVelocity * (float)System.Math.Cos(obj.StartAngle);
+			float stiffness = obj.DragCoefficient / obj.Weight;
+			return (float)System.Math.Exp((-1) * t * (double)stiffness) * startTargetVelocityX;
+		}
 
-        public static float YVelocityFromT(Target obj, float t, float gravitationalAcceleration)
-        {
-            float startTargetVelocityY = obj.StartVelocity * (float)System.Math.Sin(obj.StartAngle);
-            float stiffness = obj.DragCoefficient / obj.Weight;
-            return (-1) * ((-1) * gravitationalAcceleration * stiffness +
-                           (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
-                           (gravitationalAcceleration + startTargetVelocityY * stiffness)) / (stiffness * stiffness);
-        }
+		public static float YVelocityFromT(Target obj, float t, float gravitationalAcceleration)
+		{
+			float startTargetVelocityY = obj.StartVelocity * (float)System.Math.Sin(obj.StartAngle);
+			float stiffness = obj.DragCoefficient / obj.Weight;
+			return (-1) * ((-1) * gravitationalAcceleration * stiffness +
+						   (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
+						   (gravitationalAcceleration + startTargetVelocityY * stiffness)) / (stiffness * stiffness);
+		}
 
         public static float YPositionFromX(Target target, float gravitationalAcceleration, float x, Vector2 startPos,
             float angle)
@@ -122,3 +123,4 @@ namespace Zenitka.Scripts.Math
         }
     }
 }
+

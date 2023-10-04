@@ -6,7 +6,7 @@ namespace Zenitka.Scripts._3D
 	public partial class Bullet : RigidBody3D
 	{
 		private Timer _timer;
-		private float _lifespanSec = 0f;
+		private float _lifespanSec = 10f;
 		
 		public override void _Ready()
 		{
