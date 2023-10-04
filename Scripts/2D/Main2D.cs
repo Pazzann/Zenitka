@@ -45,7 +45,7 @@ namespace Zenitka.Scripts._2D
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 			bullet.Rotation = angleRad;
 
-			bullet.GlobalPosition = headPosition;
+			bullet.GlobalPosition = new Vector2(0.0f, 0.0f);
 
 			bullet.GravityScale = 0f;
 			bullet.StartAngle = angleRad;
@@ -61,6 +61,7 @@ namespace Zenitka.Scripts._2D
 
 
 			var startPos = GenerateTargetSpawnlocation();
+			GD.Print(startPos.X);
 
 			// TODO: use actual object size
 			target.GlobalPosition = startPos;
@@ -72,8 +73,8 @@ namespace Zenitka.Scripts._2D
 
 			var bullet = _bulletScene.Instantiate() as Target;
 			bullet._Ready();
-			float a = Math2D.GetAngle(_cannon.GlobalPosition, target.GlobalPosition, bullet, target, 9.8f,
-				_cannon.GunRotationSpeed, _cannon.Rotation, 100.0f, new Vector2(5400.0f, 1000.0f));
+			float a = Math2D.GetAngle(_cannon.GlobalPosition, startPos, bullet, target, 9.8f,
+				_cannon.GunRotationSpeed, _cannon.Rotation, 1.0f, new Vector2(5400.0f, 1000.0f));
 			bullet.QueueFree();
 			GD.Print("cannon angle: ", a);
 
@@ -93,6 +94,8 @@ namespace Zenitka.Scripts._2D
 
 			Random rand = new Random();
 			pos.X = (rand.Next(0, 2) == 0) ? _anchor1.GlobalPosition.X : _anchor2.GlobalPosition.X;
+
+			pos.Y = rand.Next( -2000, -500);
 
 			return pos;
 		}
