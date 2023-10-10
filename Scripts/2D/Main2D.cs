@@ -102,7 +102,6 @@ namespace Zenitka.Scripts._2D
 
 		private void MenuButton()
 		{
-<<<<<<< HEAD
 			// var button = GetNode<Button>("Button");
 			// var pos = button.GlobalPosition;
 			//
@@ -130,20 +129,10 @@ namespace Zenitka.Scripts._2D
 				
 			}
 			
-=======
-			var button = GetNode<Button>("Button");
-			var pos = button.GlobalPosition;
-
-			PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
-			var menu = menuScene.Instantiate() as Menu;
-			menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
-			AddChild(menu);
->>>>>>> 506c5892176b46e20b0ffd248fcfa8238d1bc397
 		}
 
 		private void SettingsButton()
 		{
-<<<<<<< HEAD
 			var settingsPanel = GetNode<Control>("SettingsPanel");
 			if (!settingsPanel.Visible)
 			{
@@ -159,25 +148,8 @@ namespace Zenitka.Scripts._2D
 				
 				
 			}
-=======
-			var button = GetNode<Button>("Button2");
-			var pos = button.GlobalPosition;
 
-			PackedScene panelScene = GD.Load<PackedScene>("res://Prefabs/UI/SettingsPanel.tscn");
-			var panel = panelScene.Instantiate() as SettingsPanel;
-			panel.GlobalPosition = new Vector2(pos[0] + 250, pos[1] + 300);
-			AddChild(panel);
->>>>>>> 506c5892176b46e20b0ffd248fcfa8238d1bc397
 		}
 	}
 }
-<<<<<<< HEAD
 
-
-
-
-
-
-
-=======
->>>>>>> 506c5892176b46e20b0ffd248fcfa8238d1bc397
