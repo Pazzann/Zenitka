@@ -99,31 +99,59 @@ namespace Zenitka.Scripts._2D
 		
 		private void MenuButton()
 		{
-			var button = GetNode<Button>("Button");
-			var pos = button.GlobalPosition;
-			
-			PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
-			var menu = menuScene.Instantiate() as Menu;
-			menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
-			AddChild(menu);
+			// var button = GetNode<Button>("Button");
+			// var pos = button.GlobalPosition;
+			//
+			// PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
+			// var menu = menuScene.Instantiate() as Menu;
+			// menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
+			// GD.Print(pos[0] - 450, pos[1] + 500);
+			// AddChild(menu);
+			//
+			// button.Hide();
+			var settingsPanel = GetNode<Control>("menu");
+			if (!settingsPanel.Visible)
+			{
+				GD.Print("in");
+				settingsPanel.Show();
+				var animation = GetNode<AnimationPlayer>("menu/Animation");
+				animation.Play("in");
+			}
+			else
+			{
+				GD.Print("out");
+				var animation = GetNode<AnimationPlayer>("menu/Animation");
+				animation.Play("out");
+				
+				
+			}
 			
 		}
 		
 		private void SettingsButton()
 		{
-			var button = GetNode<Button>("Button2");
-			var pos = button.GlobalPosition;
-			
-			PackedScene panelScene = GD.Load<PackedScene>("res://Prefabs/UI/SettingsPanel.tscn");
-			var panel = panelScene.Instantiate() as SettingsPanel;
-			panel.GlobalPosition = new Vector2(pos[0] + 250, pos[1] + 300);
-			AddChild(panel);
+			var settingsPanel = GetNode<Control>("SettingsPanel");
+			if (!settingsPanel.Visible)
+			{
+				settingsPanel.Show();
+				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				animation.Play("in");
+			}
+			else
+			{
+				// GD.Print("out");
+				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				animation.Play("out");
+				
+				
+			}
 		}
 
 	}
 	
 	
 }
+
 
 
 

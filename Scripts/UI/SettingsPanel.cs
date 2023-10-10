@@ -14,7 +14,7 @@ namespace Zenitka.Scripts.UI
 		public override void _Process(double delta)
 		{
 			OptionButton optionButton = GetNode<OptionButton>("ScrollContainer/VBoxContainer/OptionButton");
-			VBoxContainer default2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DDefult");
+			VBoxContainer default2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DDefault");
 			VBoxContainer rocket2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DRocket");
 			if (optionButton.Selected == 0)
 			{
@@ -27,12 +27,30 @@ namespace Zenitka.Scripts.UI
 				default2D.Hide();
 				rocket2D.Show();
 			}
+			OptionButton optionButton2 = GetNode<OptionButton>("ScrollContainer/VBoxContainer/OptionButton2");
+			VBoxContainer defaultTarget2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DDefaultTarget");
+			VBoxContainer rocketTarget2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DRocketTarget");
+			if (optionButton2.Selected == 0)
+			{
+				defaultTarget2D.Show();
+				rocketTarget2D.Hide();
+			}
+
+			if (optionButton2.Selected == 1)
+			{
+				defaultTarget2D.Hide();
+				rocketTarget2D.Show();
+			}
+			
 
 		}
 		private void CloseButton()
 		{
-			QueueFree();
+			var animation = GetNode<AnimationPlayer>("Animation");
+			animation.Play("out");
 		}
+		
+		
 	}
 }
 

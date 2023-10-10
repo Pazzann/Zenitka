@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b654r1mknj116"]
+[gd_scene load_steps=5 format=3 uid="uid://b654r1mknj116"]
 
 [ext_resource type="PackedScene" uid="uid://85lv0slp0cd2" path="res://Prefabs/Cannon.tscn" id="1_un41y"]
 [ext_resource type="Script" path="res://Scripts/2D/Main2D.cs" id="1_vkw7f"]
+[ext_resource type="PackedScene" uid="uid://dkft2dlxunfv7" path="res://Prefabs/UI/SettingsPanel.tscn" id="3_lfrii"]
+[ext_resource type="PackedScene" uid="uid://cm0kjp16exuaa" path="res://Prefabs/UI/Menu.tscn" id="4_qitgn"]
 
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
@@ -37,6 +39,20 @@ offset_right = -2650.0
 offset_bottom = -2997.0
 theme_override_font_sizes/font_size = 120
 text = "⚙"
+
+[node name="SettingsPanel" parent="." instance=ExtResource("3_lfrii")]
+visible = false
+offset_left = -2573.0
+offset_top = -2870.0
+offset_right = -2573.0
+offset_bottom = -2870.0
+
+[node name="menu" parent="." instance=ExtResource("4_qitgn")]
+visible = false
+offset_left = 1461.0
+offset_top = -2851.0
+offset_right = 1461.0
+offset_bottom = -2851.0
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

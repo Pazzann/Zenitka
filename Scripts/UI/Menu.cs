@@ -7,7 +7,8 @@ namespace Zenitka.Scripts.UI
 	{
 		private void ContinueButon()
 		{
-			QueueFree();
+			var animation = GetNode<AnimationPlayer>("Animation");
+			animation.Play("out");
 		}
 
 
