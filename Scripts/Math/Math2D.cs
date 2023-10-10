@@ -1,129 +1,126 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Godot;
 using Zenitka.Scripts._2D;
 
 namespace Zenitka.Scripts.Math
 {
-    public class Math2D
-    {
-        public static float GetAngle(
-            Vector2 gunPosition,
-            Vector2 startTargetPosition,
-            Target bullet,
-            Target target,
-            float gravitationalAcceleration,
-            float rotationalSpeed,
-            float initialGunAngle,
-            float precision,
-            Vector2 calculationSize
-        )
-        {
-            float bulletStiffness = bullet.DragCoefficient / bullet.Weight;
-            float targetStiffness = target.DragCoefficient / target.Weight;
-   
+	public class Math2D
+	{
+		public static float GetAngle(
+			Vector2 gunPosition,
+			Vector2 startTargetPosition,
+			Target bullet,
+			Target target,
+			float gravitationalAcceleration,
+			float rotationalSpeed,
+			float initialGunAngle,
+			float precision,
+			Vector2 calculationSize
+		)
+		{
+			List<float[]> times = new List<float[]>();
 
-            float startTargetVelocityX =
-                target.StartVelocity * (float)System.Math.Cos(0.5f * Mathf.Pi - target.StartAngle);
-            float startTargetVelocityY =
-                target.StartVelocity * (float)System.Math.Sin(0.5f * Mathf.Pi - target.StartAngle);
-
-
-            List<float[]> times = new List<float[]>();
-            GD.Print("Started");
-            for (float alpha = (float)(System.Math.PI / 2); alpha < (float)(System.Math.PI - System.Math.PI / 4); alpha += 0.05f)
+            for (float alpha = 0; alpha < (float)(System.Math.PI); alpha += 0.02f)
             {
-                float startBulletVelocityX = bullet.StartVelocity * (float)System.Math.Cos(alpha);
-                float startBulletVelocityY = bullet.StartVelocity * (float)System.Math.Sin(alpha);
-             
+                // float alpha = (3.0f / 4.0f) * (float)System.Math.PI;
 
                 List<Vector2> intercepts = new List<Vector2>();
-
+                
+                
                 for (float x = -calculationSize.X / 2; x < calculationSize.X / 2; x += precision)
                 {
-                    float targetTrajectory =
-                        ((targetStiffness * (gravitationalAcceleration * (x - startTargetPosition.X) +
-                                                    targetStiffness *
-                                                    (x * startTargetVelocityY -
-                                                     startTargetVelocityY * startTargetPosition.X +
-                                                     startTargetVelocityX * startTargetPosition.Y)) -
-                                 gravitationalAcceleration *
-                                 startTargetVelocityX
-                                 *
-                                 (float)System.Math.Log(startTargetVelocityX / (startTargetVelocityX -
-                                     x * targetStiffness +
-                                     startTargetPosition.X * targetStiffness))) /
-                                (startTargetVelocityX * targetStiffness * targetStiffness));
-                    GD.Print(targetTrajectory);
-                    float bulletTrajectory =
-                        ((bullet.StartVelocity * (gunPosition.Y * bulletStiffness * bulletStiffness -
-                                                         gravitationalAcceleration *
-                                                         (float)System.Math.Log(startBulletVelocityX /
-                                                             (-x * bulletStiffness +
-                                                              gunPosition.X * bulletStiffness +
-                                                              startBulletVelocityX))) +
-                                 (x - gunPosition.X) * bulletStiffness * (float)(1 / System.Math.Cos(alpha)) *
-                                 (gravitationalAcceleration + startBulletVelocityY * bulletStiffness)) /
-                                (bullet.StartVelocity * bulletStiffness * bulletStiffness));
-                    GD.Print(bulletTrajectory);
+                    // GD.Print("New iteration: x: ", x);
+                    float targetTrajectory = YPositionFromX(target, gravitationalAcceleration, x, startTargetPosition,
+                        target.StartAngle);
+                    // GD.Print("Target:", targetTrajectory);
+                    float bulletTrajectory = YPositionFromX(bullet, gravitationalAcceleration, x, gunPosition, -alpha);
+                    // GD.Print("Bullet:", bulletTrajectory);
                     if (System.Math.Abs(targetTrajectory - bulletTrajectory) < precision)
                         intercepts.Add(new Vector2(x, (float)System.Math.Round(targetTrajectory, 1)));
-                    GD.Print("ADOLLFFFFFFF");
                 }
 
+                GD.Print(intercepts.Count);
                 foreach (var intercept in intercepts)
                 {
-                    float targetTime = (float)System.Math.Log(startTargetVelocityX / (startTargetVelocityX -
-                        intercept.X * targetStiffness + startTargetPosition.X * targetStiffness)) / targetStiffness;
-                    float bulletTime = (float)System.Math.Log(startBulletVelocityX / (startBulletVelocityX -
-                        intercept.X * bulletStiffness + gunPosition.X * bulletStiffness)) / bulletStiffness;
+                    float targetTime = TFromX(target, intercept.X, startTargetPosition, target.StartAngle);
+                    float bulletTime = TFromX(bullet, intercept.X, gunPosition , alpha);
+                    // GD.PrintT(targetTime);
+                    // GD.PrintT(bulletTime);
 
                     if (System.Math.Abs(targetTime -
                                         (bulletTime + System.Math.Abs(((0.5f * Mathf.Pi - initialGunAngle) - alpha) /
-                                                                      rotationalSpeed))) <
-                        precision)
+                                                                      rotationalSpeed))) < 0.05f)
+                    // if (System.Math.Abs(targetTime - (bulletTime)) < 0.2f)
                         times.Add(new float[]
                         {
-                            targetTime +
-                            (bulletTime +
-                             (float)System.Math.Abs(((0.5f * Mathf.Pi - initialGunAngle) - alpha) / rotationalSpeed)) /
-                            2.0f,
+                            targetTime,
                             alpha
                         });
                 }
             }
 
-            if (times.Count == 0)
-                return 0.0f;
 
-            float minTime = 9999999.0f;
-            float finalAlpha = 0.0f;
-            foreach (var time in times)
-            {
-                if (time[0] < minTime)
-                {
-                    minTime = time[0];
-                    finalAlpha = time[1];
-                }
-            }
+			if (times.Count == 0)
+				return 0.0f;
+
+			float minTime = 9999999.0f;
+			float finalAlpha = 0.0f;
+			foreach (var time in times)
+			{
+				if (time[0] < minTime)
+				{
+					minTime = time[0];
+					finalAlpha = time[1];
+				}
+			}
 
 
-            return finalAlpha;
+			return finalAlpha;
+		}
+
+		public static float XVelocityFromT(Target obj, float t)
+		{
+			float startTargetVelocityX = obj.StartVelocity * (float)System.Math.Cos(obj.StartAngle);
+			float stiffness = obj.DragCoefficient / obj.Weight;
+			return (float)System.Math.Exp((-1) * t * (double)stiffness) * startTargetVelocityX;
+		}
+
+		public static float YVelocityFromT(Target obj, float t, float gravitationalAcceleration)
+		{
+			float startTargetVelocityY = obj.StartVelocity * (float)System.Math.Sin(obj.StartAngle);
+			float stiffness = obj.DragCoefficient / obj.Weight;
+			return (-1) * ((-1) * gravitationalAcceleration * stiffness +
+						   (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
+						   (gravitationalAcceleration + startTargetVelocityY * stiffness)) / (stiffness * stiffness);
+		}
+
+        public static float YPositionFromX(Target target, float gravitationalAcceleration, float x, Vector2 startPos,
+            float angle)
+        {
+            float startVelocityX =
+                target.StartVelocity * (float)System.Math.Cos(angle);
+            float startVelocityY =
+                target.StartVelocity * (float)System.Math.Sin(angle);
+
+            float stiffness = target.DragCoefficient / target.Weight;
+
+            // GD.Print(startVelocityX + " " + startVelocityY + " " + stiffness + " " + startPos.X + " " + startPos.Y);
+            return ((stiffness * (gravitationalAcceleration * (x - startPos.X) + stiffness *
+                         (x * startVelocityY - startVelocityY * startPos.X + startVelocityX * startPos.Y)) -
+                     gravitationalAcceleration * startVelocityX *
+                     (float)System.Math.Log(startVelocityX /
+                                            (startVelocityX - x * stiffness + startPos.X * stiffness))) /
+                    (startVelocityX * stiffness * stiffness));
         }
 
-        public static float XVelocityFromT(Target obj, float t)
+        public static float TFromX(Target target, float x, Vector2 startPos, float alpha)
         {
-            float startTargetVelocityX = obj.StartVelocity * (float)System.Math.Cos(obj.StartAngle);
-            float stiffness = obj.DragCoefficient / obj.Weight;
-            return (float)System.Math.Exp((-1) * t * (double)stiffness) * startTargetVelocityX;
-        }
-
-        public static float YVelocityFromT(Target obj, float t, float gravitationalAcceleration)
-        {
-            float startTargetVelocityY = obj.StartVelocity * (float)System.Math.Sin(obj.StartAngle);
-            float stiffness = obj.DragCoefficient / obj.Weight;
-            return (-1) * ((-1) * gravitationalAcceleration * stiffness +
-                           (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
-                           (gravitationalAcceleration + startTargetVelocityY * stiffness)) / (stiffness * stiffness);
+            float startVelocityX =
+                target.StartVelocity * (float)System.Math.Cos(alpha);
+            float stiffness = target.DragCoefficient / target.Weight;
+            return (float)System.Math.Log(startVelocityX / (startVelocityX -
+                x * stiffness + startPos.X * stiffness)) / stiffness;
         }
     }
 }
+

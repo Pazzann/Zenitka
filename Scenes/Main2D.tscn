@@ -15,11 +15,11 @@ position = Vector2(0, -1600)
 zoom = Vector2(0.2, 0.2)
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
-wait_time = 4.521
+wait_time = 2.612
 autostart = true
 
 [node name="Anchor2" type="Node2D" parent="."]
-position = Vector2(-2716, -2121)
+position = Vector2(-2738, -1494)
 
 [node name="Anchor" type="Node2D" parent="."]
 position = Vector2(-2712, -2510)

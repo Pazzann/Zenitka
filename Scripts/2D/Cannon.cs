@@ -7,7 +7,7 @@ namespace Zenitka.Scripts._2D
 	public partial class Cannon : Node2D
 	{
 
-		public float GunRotationSpeed = 0.5f;
+		public float GunRotationSpeed = 1.0f;
 		
 		private Sprite2D _gun;
 		private Node2D _head;
