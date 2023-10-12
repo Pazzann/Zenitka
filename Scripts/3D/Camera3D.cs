@@ -33,6 +33,17 @@ public partial class Camera3D : Godot.Camera3D
 
 		if (Input.IsActionPressed("cam_zoom_out_3d") && Position.LengthSquared() < 1000f)
 			Transform = Transform.Translated(Position.Normalized() * deltaF * ZOOM_SPEED);
+		if (Input.IsActionJustPressed("switch"))
+		{
+			if (Current == true)
+			{
+				Current = false;
+			}
+			else
+			{
+				Current = true;
+			}
+		}
 	}
 
 	private void RotateRelative(in Vector3 axis, float angle) {

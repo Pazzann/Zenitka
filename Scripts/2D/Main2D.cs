@@ -45,9 +45,10 @@ namespace Zenitka.Scripts._2D
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 			bullet.Rotation = angleRad;
 
-			bullet.GlobalPosition = headPosition;
+			bullet.GlobalPosition = new Vector2(0.0f, 0.0f);
 
 			bullet.GravityScale = 0f;
+			bullet.StartAngle = angleRad;
 
 			// bullet.SetLifespan(10f);
 			AddChild(bullet);
@@ -56,31 +57,31 @@ namespace Zenitka.Scripts._2D
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			
 			var target = _targetScene.Instantiate() as Target;
-			
+
 
 			var startPos = GenerateTargetSpawnlocation();
-			
+			GD.Print(startPos.X);
+
 			// TODO: use actual object size
 			target.GlobalPosition = startPos;
 			target._Ready();
 			// target.Rotation = (System.Math.Abs(target.GlobalPosition.X - _anchor2.GlobalPosition.X) < 0.1f) ? -(float)System.Math.PI : 0.0f;
-			
+
 			// ToSignal(target, Target.SignalName.WentWithinRange).OnCompleted(() =>
 			// {
-				
-				var bullet = _bulletScene.Instantiate() as Target;
-				bullet._Ready();
-				float a = Math2D.GetAngle(_cannon.GlobalPosition, target.GlobalPosition, bullet, target, 9.8f,
-					_cannon.GunRotationSpeed, _cannon.Rotation, 10.0f, new Vector2(5400.0f, 1000.0f));
-				bullet.QueueFree();
-				GD.Print("cannon angle: ", a);
 
-				if (a <= 1.01f * (Mathf.Pi / 2.0f) && a >= -1.01f * (Mathf.Pi / 2.0f))
-				{
-					_cannon.RotateToAndSignal(a);
-				}
+			var bullet = _bulletScene.Instantiate() as Target;
+			bullet._Ready();
+			float a = Math2D.GetAngle(_cannon.GlobalPosition, startPos, bullet, target, 9.8f,
+				_cannon.GunRotationSpeed, _cannon.Rotation, 1.0f, new Vector2(5400.0f, 1000.0f));
+			bullet.QueueFree();
+			GD.Print("cannon angle: ", a);
+
+			// if (a <= 1.01f * (Mathf.Pi / 2.0f) && a >= -1.01f * (Mathf.Pi / 2.0f))
+			// {
+				_cannon.RotateToAndSignal(a);
+			// }
 			// });
 
 			AddChild(target);
@@ -94,39 +95,61 @@ namespace Zenitka.Scripts._2D
 			Random rand = new Random();
 			pos.X = (rand.Next(0, 2) == 0) ? _anchor1.GlobalPosition.X : _anchor2.GlobalPosition.X;
 
+			pos.Y = rand.Next( -2000, -500);
+
 			return pos;
 		}
-		
+
 		private void MenuButton()
 		{
-			var button = GetNode<Button>("Button");
-			var pos = button.GlobalPosition;
-			
-			PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
-			var menu = menuScene.Instantiate() as Menu;
-			menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
-			AddChild(menu);
+			// var button = GetNode<Button>("Button");
+			// var pos = button.GlobalPosition;
+			//
+			// PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
+			// var menu = menuScene.Instantiate() as Menu;
+			// menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
+			// GD.Print(pos[0] - 450, pos[1] + 500);
+			// AddChild(menu);
+			//
+			// button.Hide();
+			var settingsPanel = GetNode<Control>("menu");
+			if (!settingsPanel.Visible)
+			{
+				GD.Print("in");
+				settingsPanel.Show();
+				var animation = GetNode<AnimationPlayer>("menu/Animation");
+				animation.Play("in");
+			}
+			else
+			{
+				GD.Print("out");
+				var animation = GetNode<AnimationPlayer>("menu/Animation");
+				animation.Play("out");
+				
+				
+			}
 			
 		}
-		
+
 		private void SettingsButton()
 		{
-			var button = GetNode<Button>("Button2");
-			var pos = button.GlobalPosition;
-			
-			PackedScene panelScene = GD.Load<PackedScene>("res://Prefabs/UI/SettingsPanel.tscn");
-			var panel = panelScene.Instantiate() as SettingsPanel;
-			panel.GlobalPosition = new Vector2(pos[0] + 250, pos[1] + 300);
-			AddChild(panel);
+			var settingsPanel = GetNode<Control>("SettingsPanel");
+			if (!settingsPanel.Visible)
+			{
+				settingsPanel.Show();
+				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				animation.Play("in");
+			}
+			else
+			{
+				// GD.Print("out");
+				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				animation.Play("out");
+				
+				
+			}
+
 		}
-
 	}
-	
-	
 }
-
-
-
-
-
 
