@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://djcontc8rjxrl"]
 
-[ext_resource type="Script" path="res://Scripts/2D/Target.cs" id="1_1gmsy"]
 [ext_resource type="Texture2D" uid="uid://bir22hbyhhpo1" path="res://icon.svg" id="1_3quyg"]
+[ext_resource type="Script" path="res://Scripts/2D/Targets/Shell.cs" id="1_22le1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fqs6k"]
 size = Vector2(40, 40)
 
 [node name="Target" type="RigidBody2D"]
 collision_layer = 2
-script = ExtResource("1_1gmsy")
+script = ExtResource("1_22le1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fqs6k")

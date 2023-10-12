@@ -9,11 +9,36 @@ script = ExtResource("1_vkw7f")
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(0, -272)
+position = Vector2(0, -1600)
+zoom = Vector2(0.2, 0.2)
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
 wait_time = 1.524
 autostart = true
 
+[node name="Anchor2" type="Node2D" parent="."]
+position = Vector2(-2716, -2121)
+
+[node name="Anchor" type="Node2D" parent="."]
+position = Vector2(-2712, -2510)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 2754.0
+offset_top = -3153.0
+offset_right = 2816.0
+offset_bottom = -3062.0
+theme_override_font_sizes/font_size = 120
+text = "☰"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = -2823.0
+offset_top = -3170.0
+offset_right = -2650.0
+offset_bottom = -2997.0
+theme_override_font_sizes/font_size = 120
+text = "⚙"
+
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
+[connection signal="pressed" from="Button" to="." method="MenuButton"]
+[connection signal="pressed" from="Button2" to="." method="SettingsButton"]

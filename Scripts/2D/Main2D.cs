@@ -2,134 +2,131 @@ using Godot;
 using Microsoft.VisualBasic;
 using System;
 using System.Net;
+using System.Runtime.CompilerServices;
+using Zenitka.Scripts._2D.Targets;
+using Zenitka.Scripts.Math;
+using Zenitka.Scripts.UI;
 
-namespace Zenitka.Scripts._2D 
+
+namespace Zenitka.Scripts._2D
 {
 	public partial class Main2D : Node2D
 	{
 		private static float BARREL_LENGTH = 200f;
-		private static float BULLET_SPEED = 1000f;
-		private static float TARGET_SPEED = 500f;
+		private static float MUZZLE_SPEED = 2000f;
+		private static float TARGET_SPEED = 2000f;
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
 
 		private Cannon _cannon;
 
+		private Node2D _anchor1;
+		private Node2D _anchor2;
+
 		private static Random _rng = new Random();
 
 		public override void _Ready()
 		{
 			_cannon = GetNode<Cannon>("Cannon");
+			_anchor1 = GetNode<Node2D>("Anchor");
+			_anchor2 = GetNode<Node2D>("Anchor2");
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 		}
 
-		private void OnCannonGunReady(double angleRad, Vector2 headPosition)
+		private void OnCannonGunReady(float angleRad, Vector2 headPosition)
 		{
-	
-			float angleRadF = (float) angleRad;
+			float angleRadF = angleRad;
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
 
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
+			bullet.Rotation = angleRad;
 
-			bullet.GlobalPosition = headPosition; 
-			bullet.LinearVelocity = Vector2.FromAngle((float) - angleRadF) * BULLET_SPEED;
-			bullet.GravityScale = 1f;
+			bullet.GlobalPosition = headPosition;
 
-			bullet.SetLifespan(10f);
+			bullet.GravityScale = 0f;
+
+			// bullet.SetLifespan(10f);
 			AddChild(bullet);
-			ToSignal(bullet, Bullet.SignalName.SelfDestroyed).OnCompleted(() => {
-				bullet.QueueFree();
-			});
+			// ToSignal(bullet, Bullet.SignalName.SelfDestroyed).OnCompleted(() => { bullet.QueueFree(); });
 		}
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var target = _targetScene.Instantiate() as Target;
-
-			bool kind = _rng.Next(2) == 0;
-
-			var startPos = GenerateTargetSpawnlocation(kind);
-			var endPos = GenerateTargetSpawnlocation(!kind);
-
-			// TODO: use actual object size
-			target.GlobalPosition = startPos - new Vector2(20f, 20f);
 			
-			target.LinearVelocity = (endPos - startPos).Normalized() * TARGET_SPEED;
+			var target = _targetScene.Instantiate() as Target;
+			
 
-			target.GravityScale = 0f;
-
-			ToSignal(target, Target.SignalName.WentWithinRange).OnCompleted(() => {
-				float a = MathUtils.CalculateFiringAngle2(
-					_cannon.GetAngle(),
-					BARREL_LENGTH,
-					10f,
-					Vector2.Zero,
-					BULLET_SPEED,
-					Vector2.Zero,
-					new BodyState(
-						target.GlobalPosition,
-						target.LinearVelocity,
-						Vector2.Zero,
-						Vector2.Zero
-					)
-				);
-
-				// float a = MathUtils.CalculateFiringAngle(
-				// 	BARREL_LENGTH,
-				// 	BULLET_SPEED,
-				// 	target.GlobalPosition,
-				// 	target.LinearVelocity
-				// );
-
+			var startPos = GenerateTargetSpawnlocation();
+			
+			// TODO: use actual object size
+			target.GlobalPosition = startPos;
+			target._Ready();
+			// target.Rotation = (System.Math.Abs(target.GlobalPosition.X - _anchor2.GlobalPosition.X) < 0.1f) ? -(float)System.Math.PI : 0.0f;
+			
+			// ToSignal(target, Target.SignalName.WentWithinRange).OnCompleted(() =>
+			// {
+				
+				var bullet = _bulletScene.Instantiate() as Target;
+				bullet._Ready();
+				float a = Math2D.GetAngle(_cannon.GlobalPosition, target.GlobalPosition, bullet, target, 9.8f,
+					_cannon.GunRotationSpeed, _cannon.Rotation, 10.0f, new Vector2(5400.0f, 1000.0f));
+				bullet.QueueFree();
 				GD.Print("cannon angle: ", a);
 
-				if (a <= 1.01f * Mathf.Pi && a >= -0.01f) {
+				if (a <= 1.01f * (Mathf.Pi / 2.0f) && a >= -1.01f * (Mathf.Pi / 2.0f))
+				{
 					_cannon.RotateToAndSignal(a);
 				}
-			});
+			// });
 
 			AddChild(target);
 		}
 
-		private Vector2 GenerateTargetSpawnlocation(bool kind) {
-			var rect = GetWindowRect();
+		private Vector2 GenerateTargetSpawnlocation()
+		{
+			var pos = new Vector2(0.0f, _anchor2.GlobalPosition.Y);
 
-			var baseX = rect.Position.X;
+
+			Random rand = new Random();
+			pos.X = (rand.Next(0, 2) == 0) ? _anchor1.GlobalPosition.X : _anchor2.GlobalPosition.X;
+
+			return pos;
+		}
+		
+		private void MenuButton()
+		{
+			var button = GetNode<Button>("Button");
+			var pos = button.GlobalPosition;
 			
-			if (kind)
-				baseX += rect.Size.X * 1.1f;
-			else
-				baseX -= rect.Size.X * 0.1f;
-
-			var y = MathUtils.RandRange(rect.Position.Y, rect.Position.Y + rect.Size.Y);
-
-			return new Vector2(baseX, y);
-
-			// var rect = GetWindowRect();
-			// var r = Mathf.Max(rect.Size.X, rect.Size.Y);
-
-			// var x = MathUtils.RandRange(0f, 1f);
-
-			// if (kind)
-			// 	x = -x;
-
-			// var y = Mathf.Sqrt(1f - x * x);
-
-			// if (_rng.Next(2) == 0)
-			// 	y = -y;
-
-			// return r * new Vector2(x, y).Normalized() + GetWindowRect().GetCenter();
+			PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
+			var menu = menuScene.Instantiate() as Menu;
+			menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
+			AddChild(menu);
+			
+		}
+		
+		private void SettingsButton()
+		{
+			var button = GetNode<Button>("Button2");
+			var pos = button.GlobalPosition;
+			
+			PackedScene panelScene = GD.Load<PackedScene>("res://Prefabs/UI/SettingsPanel.tscn");
+			var panel = panelScene.Instantiate() as SettingsPanel;
+			panel.GlobalPosition = new Vector2(pos[0] + 250, pos[1] + 300);
+			AddChild(panel);
 		}
 
-		private Rect2 GetWindowRect() {
-			var camera = GetViewport().GetCamera2D();
-			var viewportSize = GetViewportRect().Size;
-
-			return new Rect2(camera.GetScreenCenterPosition() - viewportSize * 0.5f, viewportSize);
-		}
 	}
+	
+	
 }
+
+
+
+
+
+

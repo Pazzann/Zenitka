@@ -4,13 +4,27 @@ using System;
 public partial class MainUI : Control
 {
 	// Called when the node enters the scene tree for the first time.
-	public void Button2D()
+	private void Button2D()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/CannonType.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/DefaultCannon2DUI.tscn");
 	}
+
+
+	private void ButtonRocket2D()
+	{
+		GetTree().ChangeSceneToFile("res://Scenes/RocketCannon2DUI.tscn");
+	}
+
+
 	private void Button3D()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/Main3D.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/DefaultCannon3DUI.tscn");
+	}
+
+
+	private void ButtonRocket3D()
+	{
+		GetTree().ChangeSceneToFile("res://Scenes/RocketCannon3DUI.tscn");
 	}
 	public override void _Ready()
 	{
@@ -21,6 +35,9 @@ public partial class MainUI : Control
 	{
 	}
 }
+
+
+
 
 
 
