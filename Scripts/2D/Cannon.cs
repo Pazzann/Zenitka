@@ -12,10 +12,6 @@ namespace Zenitka.Scripts._2D
 		private Sprite2D _gun;
 		private Node2D _head;
 
-		public void SetRotationSpeed(float speed) {
-			_rotationSpeed = speed;
-		}
-
 		public override void _Ready()
 		{
 			_gun = GetNode<Sprite2D>("Body/Gun");
@@ -40,7 +36,7 @@ namespace Zenitka.Scripts._2D
 			else {
 				var tween = CreateTween();
 
-				tween.TweenProperty(_gun, "rotation", targetAngle, diff / _rotationSpeed)
+				tween.TweenProperty(_gun, "rotation", targetAngle, diff / GunRotationSpeed)
 					.SetTrans(Tween.TransitionType.Linear);
 
 				tween.TweenCallback(Callable.From(Signal));
