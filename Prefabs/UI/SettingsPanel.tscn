@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkft2dlxunfv7"]
+[gd_scene load_steps=7 format=3 uid="uid://dkft2dlxunfv7"]
 
 [ext_resource type="Script" path="res://Scripts/UI/SettingsPanel.cs" id="1_dtult"]
+[ext_resource type="Theme" uid="uid://hxpqxviknukd" path="res://Assets/Styles/base.tres" id="1_r8vbj"]
 
 [sub_resource type="Animation" id="Animation_w5w8m"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ScrollContainer:position")
+tracks/0/path = NodePath("ColorRect:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,25 +20,13 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_0vw3p"]
 resource_name = "in"
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ScrollContainer:position")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-500, 0), Vector2(0, 0)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -45,34 +34,46 @@ tracks/1/keys = {
 "method": &"show"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_op7ws"]
-resource_name = "out"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ScrollContainer:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-500, 0)]
-}
-tracks/1/type = "method"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".")
+tracks/1/path = NodePath("ColorRect:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-800, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_op7ws"]
+resource_name = "out"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
 "times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"hide"
 }]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-800, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f07ao"]
@@ -87,25 +88,37 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -700.0
-offset_bottom = -10.0
+offset_right = -902.0
+offset_bottom = -494.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(6, 6)
+theme = ExtResource("1_r8vbj")
 script = ExtResource("1_dtult")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.054
-anchor_right = 0.054
-offset_right = 452.008
-offset_bottom = 648.0
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f07ao")
+}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 154.0
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 2
+offset_right = 250.0
+offset_bottom = 150.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
 layout_mode = 2
 
-[node name="OptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "Зенітна гармата"
@@ -113,145 +126,129 @@ popup/item_0/id = 0
 popup/item_1/text = "Зенітна ракетниця"
 popup/item_1/id = 1
 
-[node name="2DDefault" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="2DDefault" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefault"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefault/HBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer"]
 layout_mode = 2
 text = "швидкість снаряда"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefault/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefault"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefault/HBoxContainer2"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer2"]
 layout_mode = 2
 text = "початковий кут підвищення каналу ствола"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefault/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer2"]
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefault"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefault/HBoxContainer3"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer3"]
 layout_mode = 2
 text = "кутова швидкість змінення напрямку ствола (1/с)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefault/HBoxContainer3"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer3"]
 layout_mode = 2
 
-[node name="2DRocket" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="2DRocket" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
 layout_mode = 2
 text = "координати виявлення відносно зенітної установки"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2"]
 layout_mode = 2
 text = "координати кінцевої точки польоту цілі"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2"]
 layout_mode = 2
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2"]
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
 layout_mode = 2
 text = "вектор початкової швидкості (напрям, величина у м/с)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer5"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
 layout_mode = 2
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer5"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
 layout_mode = 2
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6"]
 layout_mode = 2
 text = "розміри (довжина, товщина у м)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer6"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6"]
 layout_mode = 2
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer6"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6"]
 layout_mode = 2
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+[node name="HBoxContainer7" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer7"]
 layout_mode = 2
 text = "власна маса ракети без палива, та маса палива"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer7"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer7"]
 layout_mode = 2
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer7"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer7"]
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocket"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer3"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer3"]
 layout_mode = 2
 text = "кутова швидкість (1/с) (швидкість повороту)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocket/HBoxContainer3"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer3"]
 layout_mode = 2
 
-[node name="OptionButton2" type="OptionButton" parent="ScrollContainer/VBoxContainer"]
+[node name="OptionButton2" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "Звичайна ціль"
@@ -259,141 +256,140 @@ popup/item_0/id = 0
 popup/item_1/text = "Аеродинамічна ціль"
 popup/item_1/id = 1
 
-[node name="2DDefaultTarget" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="2DDefaultTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefaultTarget"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
 layout_mode = 2
 text = "Вектор швидкості (напрям, величина у м/с)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefaultTarget"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
 layout_mode = 2
 text = "розміри (довжина, товщина у м)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefaultTarget"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer3"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer3"]
 layout_mode = 2
 text = "маса"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer3"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer3"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DDefaultTarget"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
 layout_mode = 2
 text = "викривлення земної поверхні"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="2DRocketTarget" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="2DRocketTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocketTarget"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer"]
 layout_mode = 2
 text = "прискорення, що надається ракетним двигуном (м/с2)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocketTarget"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer2"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer2"]
 layout_mode = 2
 text = "максимальну кутову швидкість (швидкість повороту, 1/c)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer2"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocketTarget"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer5"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer5"]
 layout_mode = 2
 text = "дистанція підриву (м)"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer5"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer5"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocketTarget"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer6"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer6"]
 layout_mode = 2
 text = "швидкість розльоту осколків"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer6"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer6"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/2DRocketTarget"]
+[node name="HBoxContainer7" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
 layout_mode = 2
 text = "власна маса ракети без палива, та маса палива"
 
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="TextEdit2" type="TextEdit" parent="ScrollContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
-custom_minimum_size = Vector2(100, 0)
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
 layout_mode = 2
+theme = ExtResource("1_r8vbj")
 
-[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer"]
+[node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Застосувати"
+
+[node name="Button" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Закрити"
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_f07ao")
-}
-
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="." method="CloseButton"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Button" to="." method="CloseButton"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Zenitka"
-run/main_scene="res://Scenes/Main2D.tscn"
+run/main_scene="res://Scenes/MainUI.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

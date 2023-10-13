@@ -1,6 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://cm0kjp16exuaa"]
+[gd_scene load_steps=7 format=3 uid="uid://cm0kjp16exuaa"]
 
+[ext_resource type="Theme" uid="uid://hxpqxviknukd" path="res://Assets/Styles/base.tres" id="1_boww8"]
 [ext_resource type="Script" path="res://Scripts/UI/Menu.cs" id="1_kdqbr"]
+
+[sub_resource type="Animation" id="Animation_jdn54"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_6xjnf"]
 resource_name = "in"
@@ -21,7 +37,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer:position")
+tracks/1/path = NodePath("ColorRect:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -29,21 +45,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(500, 0), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_jdn54"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_imyto"]
@@ -65,7 +66,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer:position")
+tracks/1/path = NodePath("ColorRect:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -87,32 +88,40 @@ layout_mode = 3
 anchor_right = 1.198
 anchor_bottom = 2.662
 offset_right = -1104.1
-offset_bottom = -1379.98
+offset_bottom = -1618.98
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(5, 5)
+theme = ExtResource("1_boww8")
 script = ExtResource("1_kdqbr")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 276.0
+offset_bottom = 106.0
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
 layout_mode = 2
 offset_right = 275.999
-offset_bottom = 82.0
+offset_bottom = 106.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "продовжити"
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
@@ -123,5 +132,5 @@ libraries = {
 "": SubResource("AnimationLibrary_qnqdd")
 }
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="ContinueButon"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Button2" to="." method="MenuButton"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Button" to="." method="ContinueButon"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Button2" to="." method="MenuButton"]

@@ -13,9 +13,15 @@ namespace Zenitka.Scripts.UI
 		// Called every frame. 'delta' is the elapsed time since the previous frame.
 		public override void _Process(double delta)
 		{
-			OptionButton optionButton = GetNode<OptionButton>("ScrollContainer/VBoxContainer/OptionButton");
-			VBoxContainer default2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DDefault");
-			VBoxContainer rocket2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DRocket");
+			VBoxContainer marginContainer = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer");
+			ColorRect textureRect = GetNode<ColorRect>("ColorRect");
+
+			textureRect.Size = new Vector2(marginContainer.Size[0] + 10, marginContainer.Size[1] + 10);
+			
+			
+			OptionButton optionButton = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton");
+			VBoxContainer default2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DDefault");
+			VBoxContainer rocket2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DRocket");
 			if (optionButton.Selected == 0)
 			{
 				default2D.Show();
@@ -27,9 +33,9 @@ namespace Zenitka.Scripts.UI
 				default2D.Hide();
 				rocket2D.Show();
 			}
-			OptionButton optionButton2 = GetNode<OptionButton>("ScrollContainer/VBoxContainer/OptionButton2");
-			VBoxContainer defaultTarget2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DDefaultTarget");
-			VBoxContainer rocketTarget2D = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer/2DRocketTarget");
+			OptionButton optionButton2 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton2");
+			VBoxContainer defaultTarget2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget");
+			VBoxContainer rocketTarget2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget");
 			if (optionButton2.Selected == 0)
 			{
 				defaultTarget2D.Show();

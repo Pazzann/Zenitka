@@ -6,25 +6,25 @@ public partial class MainUI : Control
 	// Called when the node enters the scene tree for the first time.
 	private void Button2D()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/DefaultCannon2DUI.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/Main2D.tscn");
 	}
 
 
 	private void ButtonRocket2D()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/RocketCannon2DUI.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/Main2D.tscn");
 	}
 
 
 	private void Button3D()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/DefaultCannon3DUI.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/Main3D.tscn");
 	}
 
 
 	private void ButtonRocket3D()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/RocketCannon3DUI.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/Main3D.tscn");
 	}
 	public override void _Ready()
 	{

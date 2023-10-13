@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3ros83onb74h"]
+[gd_scene load_steps=3 format=3 uid="uid://d3ros83onb74h"]
 
+[ext_resource type="Theme" uid="uid://hxpqxviknukd" path="res://Assets/Styles/base.tres" id="1_brasb"]
 [ext_resource type="Script" path="res://Scripts/UI/MainUI.cs" id="1_xwlam"]
 
 [node name="MainUI" type="Control"]
@@ -9,15 +10,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_brasb")
 script = ExtResource("1_xwlam")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.7844, 16.2713)
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

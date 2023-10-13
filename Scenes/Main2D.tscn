@@ -40,19 +40,21 @@ offset_bottom = -2997.0
 theme_override_font_sizes/font_size = 120
 text = "⚙"
 
-[node name="SettingsPanel" parent="." instance=ExtResource("3_lfrii")]
-visible = false
-offset_left = -2573.0
-offset_top = -2870.0
-offset_right = -2573.0
-offset_bottom = -2870.0
-
 [node name="menu" parent="." instance=ExtResource("4_qitgn")]
 visible = false
-offset_left = 1461.0
-offset_top = -2851.0
-offset_right = 1461.0
-offset_bottom = -2851.0
+offset_left = 1689.0
+offset_top = -2950.0
+offset_right = 1689.0
+offset_bottom = -2950.0
+scale = Vector2(3.65661, 5.35625)
+
+[node name="SettingsPanel" parent="." instance=ExtResource("3_lfrii")]
+visible = false
+offset_left = -2621.0
+offset_top = -2977.0
+offset_right = -2621.0
+offset_bottom = -2977.0
+scale = Vector2(4.39448, 5.45265)
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
