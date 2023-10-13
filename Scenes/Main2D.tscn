@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b654r1mknj116"]
+[gd_scene load_steps=7 format=3 uid="uid://b654r1mknj116"]
 
 [ext_resource type="PackedScene" uid="uid://85lv0slp0cd2" path="res://Prefabs/Cannon.tscn" id="1_un41y"]
 [ext_resource type="Script" path="res://Scripts/2D/Main2D.cs" id="1_vkw7f"]
+[ext_resource type="Script" path="res://Scripts/2D/Camera.cs" id="3_ha2sy"]
 [ext_resource type="PackedScene" uid="uid://dkft2dlxunfv7" path="res://Prefabs/UI/SettingsPanel.tscn" id="3_lfrii"]
 [ext_resource type="PackedScene" uid="uid://cm0kjp16exuaa" path="res://Prefabs/UI/Menu.tscn" id="4_qitgn"]
+[ext_resource type="Script" path="res://Scripts/2D/Camera2DTarget.cs" id="5_nimdy"]
 
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
@@ -13,6 +15,7 @@ script = ExtResource("1_vkw7f")
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(0, -1600)
 zoom = Vector2(0.2, 0.2)
+script = ExtResource("3_ha2sy")
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
 wait_time = 2.612
@@ -55,6 +58,10 @@ offset_top = -2977.0
 offset_right = -2621.0
 offset_bottom = -2977.0
 scale = Vector2(4.39448, 5.45265)
+
+[node name="Camera2DTarget" type="Camera2D" parent="."]
+position = Vector2(0, -700)
+script = ExtResource("5_nimdy")
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
