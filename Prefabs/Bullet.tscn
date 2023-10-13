@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/2D/Targets/Bullet.cs" id="1_7pnd0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cdij"]
-size = Vector2(20, 70)
+size = Vector2(9, 26)
 
 [node name="Bullet" type="RigidBody2D"]
 collision_mask = 3
@@ -13,10 +13,11 @@ freeze_mode = 1
 script = ExtResource("1_7pnd0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.179688, 0.570313)
+scale = Vector2(0.07, 0.2)
 texture = ExtResource("1_4ouvd")
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3cdij")
 
 [node name="SuicideTimer" type="Timer" parent="."]

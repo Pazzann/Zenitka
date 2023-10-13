@@ -11,9 +11,6 @@ namespace Zenitka.Scripts._2D
 		
 		private Sprite2D _gun;
 		private Node2D _head;
-		
-		private float _targetAngle = 0;
-		private bool _shouldSignal = false;
 
 		public override void _Ready()
 		{
@@ -25,24 +22,29 @@ namespace Zenitka.Scripts._2D
 			return _head.GlobalPosition;
 		}
 
-		public void RotateToAndSignal(float targetAngle) {
-			_shouldSignal = true;
-			_targetAngle = 0.5f * Mathf.Pi - Mathf.PosMod(targetAngle, 2f * Mathf.Pi);
+		public float GetAngle() {
+			return 0.5f * Mathf.Pi - _gun.Rotation;
 		}
-		
-		public override void _PhysicsProcess(double delta)
-		{
-			float deltaF = (float) delta;
 
-			if (Mathf.IsEqualApprox(_gun.Rotation, _targetAngle, deltaF * GunRotationSpeed)) {
-				if (_shouldSignal) {
-					_shouldSignal = false;
-					EmitSignal(SignalName.GunReady, 0.5f * Mathf.Pi - _targetAngle, GetHeadPosition());
-				}
+		public void RotateToAndSignal(float targetAngle) {
+			targetAngle = 0.5f * Mathf.Pi - Mathf.PosMod(targetAngle, 2f * Mathf.Pi);
+			var curRot = Mathf.PosMod(Rotation, 2f * Mathf.Pi);
+			var diff = Mathf.Abs(curRot - targetAngle);
 
-				return;
-			} else
-				_gun.Rotation += Mathf.Sign(_targetAngle - _gun.Rotation) * GunRotationSpeed * deltaF;
+			if (Mathf.IsEqualApprox(Rotation, targetAngle, 0.001f))
+				Signal();
+			else {
+				var tween = CreateTween();
+
+				tween.TweenProperty(_gun, "rotation", targetAngle, diff / GunRotationSpeed)
+					.SetTrans(Tween.TransitionType.Linear);
+
+				tween.TweenCallback(Callable.From(Signal));
+			}
+		}
+
+		private void Signal() {
+			EmitSignal(SignalName.GunReady, 0.5f * Mathf.Pi - _gun.Rotation, GetHeadPosition());
 		}
 
 		[Signal]

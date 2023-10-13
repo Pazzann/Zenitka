@@ -33,6 +33,8 @@ shadow_enabled = true
 
 [node name="CameraTarget" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 16, 11, 14.5)
+visible = false
 script = ExtResource("4_0nnjc")
 
+[connection signal="Aimed" from="Cannon" to="." method="OnCannonAimed"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
