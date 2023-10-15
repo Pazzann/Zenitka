@@ -4,20 +4,23 @@
 [ext_resource type="Script" path="res://Scripts/2D/Targets/Shell.cs" id="1_22le1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fqs6k"]
-size = Vector2(40, 40)
+size = Vector2(182, 40)
 
 [node name="Target" type="RigidBody2D"]
 collision_layer = 2
 script = ExtResource("1_22le1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
 shape = SubResource("RectangleShape2D_fqs6k")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
+scale = Vector2(1.40781, 0.3)
 texture = ExtResource("1_3quyg")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1, 0)
+scale = Vector2(4.45, 1)
 rect = Rect2(-20, -20, 40, 40)
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="OnVisibleOnScreenNotifier2dScreenEntered"]

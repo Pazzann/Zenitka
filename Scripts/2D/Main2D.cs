@@ -36,12 +36,13 @@ namespace Zenitka.Scripts._2D
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 		}
 
-		private void OnCannonGunReady(float angleRad, Vector2 headPosition)
+		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
 		{
 			float angleRadF = angleRad;
+			GD.Print(timeOfCollision);
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
-
+			bullet.SelfDestructionTime = timeOfCollision;
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 			bullet.Rotation = angleRad;
 
@@ -73,14 +74,14 @@ namespace Zenitka.Scripts._2D
 
 			var bullet = _bulletScene.Instantiate() as Target;
 			bullet._Ready();
-			float a = Math2D.GetAngle(_cannon.GlobalPosition, startPos, bullet, target, 9.8f,
+			float[] a = Math2D.GetAngle(_cannon.GlobalPosition, startPos, bullet, target, 9.8f,
 				_cannon.GunRotationSpeed, _cannon.Rotation, 1.0f, new Vector2(5400.0f, 1000.0f));
 			bullet.QueueFree();
-			GD.Print("cannon angle: ", a);
+			GD.Print( a[1]);
 
 			// if (a <= 1.01f * (Mathf.Pi / 2.0f) && a >= -1.01f * (Mathf.Pi / 2.0f))
 			// {
-				_cannon.RotateToAndSignal(a);
+				_cannon.RotateToAndSignal(a[0] , a[1]);
 			// }
 			// });
 

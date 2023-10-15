@@ -37,11 +37,13 @@ size_flags_vertical = 4
 theme_override_constants/separation = 40
 
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "2D Зенітна Гармата"
 
 [node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "2D Зенітна Ракетна
@@ -54,11 +56,13 @@ size_flags_vertical = 4
 theme_override_constants/separation = 40
 
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+texture_filter = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "3D Зенітна Гармата"
 
 [node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer2"]
+texture_filter = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "3D Зенітна Ракетна
