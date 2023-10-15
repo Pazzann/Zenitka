@@ -63,7 +63,7 @@ namespace Zenitka.Scripts.Math
             if (times.Count == 0)
                 return new float[2] { (0.5f * Mathf.Pi - initialGunAngle), 5.0f };
 
-            float minTime = 9999999.0f;
+            float minTime = 999999.0f;
             float finalAlpha = 0.0f;
             foreach (var time in times)
             {
@@ -75,7 +75,8 @@ namespace Zenitka.Scripts.Math
             }
 
 
-            return new float[2] { finalAlpha, minTime };
+            return new float[2] { finalAlpha, minTime - System.Math.Abs(((0.5f * Mathf.Pi - initialGunAngle) - finalAlpha) /
+                                                              rotationalSpeed) };
         }
 
         public static float XVelocityFromT(Target obj, float t)

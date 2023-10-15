@@ -55,7 +55,9 @@ size = Vector2(4, 19)
 radius = 32.0
 
 [node name="Bullet" type="RigidBody2D"]
-collision_mask = 3
+collision_mask = 2
+max_contacts_reported = 1
+contact_monitor = true
 can_sleep = false
 freeze_mode = 1
 script = ExtResource("1_7pnd0")

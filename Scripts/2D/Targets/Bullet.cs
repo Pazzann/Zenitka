@@ -25,7 +25,7 @@ namespace Zenitka.Scripts._2D.Targets
 			_timer = (GetChild(2) as Timer);
 			_bulletCollision = GetChild(1) as CollisionShape2D;
 			_explosionCollision = GetChild(3) as CollisionShape2D;
-			_timer.WaitTime = (double)SelfDestructionTime;
+			_timer.WaitTime = ((double)SelfDestructionTime);
 			_timer.Start();
 			_animation.Play("fly2");
 		}
@@ -34,24 +34,23 @@ namespace Zenitka.Scripts._2D.Targets
 		private void OnBodyEntered(Node body)
 		{
 			body.QueueFree();
-			QueueFree();
 		}
 
 		private void _on_suicide_timer_timeout()
 		{
-			GD.Print("EXPLODE");
 			_animation.Play("explode");
 			
 			_animation.Connect("animation_looped", Callable.From(_destroy));
 			_bulletCollision.Disabled = true;
 			_explosionCollision.Disabled = false;
-			
+
 		}
 
 		private void _destroy()
 		{
-			GD.Print("STOTOTPPT");
 			QueueFree();
 		}
 	}
 }
+
+

@@ -24,6 +24,9 @@ namespace Zenitka.Scripts._2D
 		private Node2D _anchor1;
 		private Node2D _anchor2;
 
+
+		private int _bulletCount = 0;
+
 		private static Random _rng = new Random();
 
 		public override void _Ready()
@@ -38,11 +41,12 @@ namespace Zenitka.Scripts._2D
 
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
 		{
+			GD.Print(1);
 			float angleRadF = angleRad;
 			GD.Print(timeOfCollision);
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
-			bullet.SelfDestructionTime = timeOfCollision;
+			bullet.SelfDestructionTime = timeOfCollision - 0.05f;
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 			bullet.Rotation = angleRad;
 
@@ -50,41 +54,35 @@ namespace Zenitka.Scripts._2D
 
 			bullet.GravityScale = 0f;
 			bullet.StartAngle = angleRad;
-
-			// bullet.SetLifespan(10f);
+			
 			AddChild(bullet);
-			// ToSignal(bullet, Bullet.SignalName.SelfDestroyed).OnCompleted(() => { bullet.QueueFree(); });
+			if(_bulletCount++ < 5)
+				ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(()=>{_cannon.RotateToAndSignal(angleRad + 0.02f , timeOfCollision);});
 		}
 
 		private void OnTargetSpawnTimerTimeout()
 		{
+			
 			var target = _targetScene.Instantiate() as Target;
-
-
+			_bulletCount = 0;
+			
 			var startPos = GenerateTargetSpawnlocation();
-			GD.Print(startPos.X);
 
 			// TODO: use actual object size
 			target.GlobalPosition = startPos;
 			target._Ready();
-			// target.Rotation = (System.Math.Abs(target.GlobalPosition.X - _anchor2.GlobalPosition.X) < 0.1f) ? -(float)System.Math.PI : 0.0f;
-
-			// ToSignal(target, Target.SignalName.WentWithinRange).OnCompleted(() =>
-			// {
+			
 
 			var bullet = _bulletScene.Instantiate() as Target;
 			bullet._Ready();
 			float[] a = Math2D.GetAngle(_cannon.GlobalPosition, startPos, bullet, target, 9.8f,
 				_cannon.GunRotationSpeed, _cannon.Rotation, 1.0f, new Vector2(5400.0f, 1000.0f));
 			bullet.QueueFree();
-			GD.Print( a[1]);
 
-			// if (a <= 1.01f * (Mathf.Pi / 2.0f) && a >= -1.01f * (Mathf.Pi / 2.0f))
-			// {
-				_cannon.RotateToAndSignal(a[0] , a[1]);
-			// }
-			// });
 
+			
+			_cannon.RotateToAndSignal(a[0] - 0.06f , a[1]);
+			
 			AddChild(target);
 		}
 

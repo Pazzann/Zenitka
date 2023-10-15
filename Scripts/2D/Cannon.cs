@@ -28,8 +28,11 @@ namespace Zenitka.Scripts._2D
 
 		public void RotateToAndSignal(float targetAngle, float time) {
 			targetAngle = 0.5f * Mathf.Pi - Mathf.PosMod(targetAngle, 2f * Mathf.Pi);
-			var curRot = Mathf.PosMod(Rotation, 2f * Mathf.Pi);
+			// var curRot = Mathf.PosMod(_gun.Rotation, 2f * Mathf.Pi);
+			var curRot = _gun.Rotation;
 			var diff = Mathf.Abs(curRot - targetAngle);
+			GD.Print(curRot);
+			GD.Print(targetAngle);
 
 			if (Mathf.IsEqualApprox(Rotation, targetAngle, 0.001f))
 				Signal(time);
@@ -38,8 +41,9 @@ namespace Zenitka.Scripts._2D
 
 				tween.TweenProperty(_gun, "rotation", targetAngle, diff / GunRotationSpeed)
 					.SetTrans(Tween.TransitionType.Linear);
-
-				tween.TweenCallback(Callable.From(()=>Signal(time - (float)tween.GetTotalElapsedTime())));
+				
+				tween.TweenCallback(Callable.From(()=>Signal(time)));
+				
 			}
 		}
 
