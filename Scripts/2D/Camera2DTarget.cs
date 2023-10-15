@@ -5,7 +5,8 @@ using Zenitka.Scripts._2D;
 public partial class Camera2DTarget : Camera2D
 {
 	private Target _target;
-	private float _koef = 1f;
+	private float _zoom = 1f;
+	private int _timeBeforeStart;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -13,8 +14,7 @@ public partial class Camera2DTarget : Camera2D
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
-	{ 
-		_target = GetNode<Target>("/root/Main2D/Target");
+	{
 		if (Input.IsActionJustPressed("switch2"))
 		{
 			if (IsCurrent() == false)
@@ -22,25 +22,48 @@ public partial class Camera2DTarget : Camera2D
 				MakeCurrent();
 			}
 		}
-
-		if (_target != null)
+		if (_timeBeforeStart >= 156)
 		{
-			var temp = _target.Position;
-			var temp2 = Zoom;
-			Position = temp;
-			if (Input.IsActionJustPressed("cam_zoom_out_3d") && _koef>=1.0f)
+
+			try
 			{
-				_koef -= 0.5f;
-				temp2.X = _koef;
-				temp2.Y = _koef;
+				_target = GetNode<Target>("/root/Main2D/Target");
 			}
-			if (Input.IsActionJustPressed("cam_zoom_in_3d") && _koef<6f)
+			catch
 			{
-				_koef += 0.5f;
-				temp2.X = _koef;
-				temp2.Y = _koef;
 			}
-			Zoom = temp2;
+
+
+
+			if (_target != null)
+			{
+				var targetPosition = _target.Position;
+				var currentZoom = Zoom;
+				Position = targetPosition;
+				if (Input.IsActionJustPressed("cam_zoom_out_3d") && _zoom >= 1.0f)
+				{
+					_zoom -= 0.5f;
+					currentZoom.X = _zoom;
+					currentZoom.Y = _zoom;
+				}
+
+				if (Input.IsActionJustPressed("cam_zoom_in_3d") && _zoom < 6f)
+				{
+					_zoom += 0.5f;
+					currentZoom.X = _zoom;
+					currentZoom.Y = _zoom;
+				}
+
+				Zoom = currentZoom;
+			}
+			else
+			{
+				_timeBeforeStart = 108;
+			}
+		}
+		else
+		{
+			_timeBeforeStart++;
 		}
 	}
 }
