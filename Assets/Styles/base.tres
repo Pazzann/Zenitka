@@ -1,9 +1,39 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://hxpqxviknukd"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://hxpqxviknukd"]
 
+[ext_resource type="Texture2D" uid="uid://df8l5v4f8gqy3" path="res://Assets/Styles/button_hoover.png" id="1_gwlbt"]
 [ext_resource type="Texture2D" uid="uid://njvpnv6phs6d" path="res://Assets/Styles/button cop.png" id="1_lsw6e"]
+[ext_resource type="Texture2D" uid="uid://dip6jbe03u66t" path="res://Assets/Styles/button_pressed.png" id="3_sw0ea"]
+[ext_resource type="Texture2D" uid="uid://c4xpec5wa1s4l" path="res://Assets/Styles/arrow.png" id="4_55xf0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt3mk"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.607843, 0.619608, 0.552941, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bb0au"]
+texture = ExtResource("1_gwlbt")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_552v0"]
 texture = ExtResource("1_lsw6e")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7v3yo"]
+texture = ExtResource("3_sw0ea")
 texture_margin_left = 5.0
 texture_margin_top = 5.0
 texture_margin_right = 5.0
@@ -22,13 +52,64 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 shadow_size = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40ne0"]
+bg_color = Color(0.0509804, 0.0470588, 0.0235294, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.486275, 0.486275, 0.462745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jddk3"]
+bg_color = Color(0.0509804, 0.0470588, 0.0235294, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.388235, 0.388235, 0.364706, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u75tr"]
 bg_color = Color(0.0941176, 0.0901961, 0.0705882, 1)
 
+[sub_resource type="ImageTexture" id="ImageTexture_jgvco"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_8s8od"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyqdf"]
+bg_color = Color(0.172549, 0.176471, 0.129412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocsuj"]
+bg_color = Color(0.0627451, 0.0627451, 0.0470588, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.388235, 0.388235, 0.364706, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_g25nn"]
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 0
+
 [resource]
 Button/colors/font_color = Color(0.854902, 0.847059, 0.823529, 1)
+Button/styles/focus = SubResource("StyleBoxFlat_yt3mk")
+Button/styles/hover = SubResource("StyleBoxTexture_bb0au")
 Button/styles/normal = SubResource("StyleBoxTexture_552v0")
+Button/styles/pressed = SubResource("StyleBoxTexture_7v3yo")
 Label/colors/font_color = Color(0.713726, 0.705882, 0.662745, 1)
 LineEdit/colors/font_color = Color(0.54902, 0.541176, 0.494118, 1)
 LineEdit/styles/normal = SubResource("StyleBoxFlat_m0pmq")
+OptionButton/icons/arrow = ExtResource("4_55xf0")
+OptionButton/styles/focus = SubResource("StyleBoxFlat_40ne0")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_40ne0")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_jddk3")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_40ne0")
 Panel/styles/panel = SubResource("StyleBoxFlat_u75tr")
+PopupMenu/colors/font_color = Color(0.929412, 0.929412, 0.929412, 1)
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_jgvco")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_8s8od")
+PopupMenu/icons/unchecked = null
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_jyqdf")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_ocsuj")
+PopupMenu/styles/separator = SubResource("StyleBoxLine_g25nn")
