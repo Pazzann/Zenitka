@@ -1,14 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://3n6wbgd7i0ox"]
+[gd_scene load_steps=8 format=3 uid="uid://3n6wbgd7i0ox"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Main3D.cs" id="1_2igm4"]
 [ext_resource type="PackedScene" uid="uid://bt7u2b3j8v318" path="res://Prefabs/3D/Cannon.tscn" id="1_4hkxh"]
 [ext_resource type="Script" path="res://Scripts/3D/Camera3D.cs" id="3_2pk56"]
 [ext_resource type="Script" path="res://Scripts/3D/CameraTarget.cs" id="4_0nnjc"]
+[ext_resource type="Script" path="res://Scripts/3D/CameraTarget2.cs" id="5_3s1li"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_161b6"]
 top_radius = 10.0
 bottom_radius = 10.0
 height = 0.1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4lwcm"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Main3D" type="Node3D"]
 script = ExtResource("1_2igm4")
@@ -27,14 +31,23 @@ mesh = SubResource("CylinderMesh_161b6")
 transform = Transform3D(0.707107, -0.183013, 0.683013, 0, 0.965926, 0.258819, -0.707107, -0.183013, 0.683013, 15.9726, 8.52938, 14.5587)
 script = ExtResource("3_2pk56")
 
+[node name="ScreenTarget" type="Sprite3D" parent="Camera3D"]
+transform = Transform3D(0.295743, 0, -0.0503611, -0.0130344, 0.289778, -0.076544, 0.0486451, 0.0776458, 0.285666, 2.00145, -0.483346, -3.1294)
+texture = SubResource("ViewportTexture_4lwcm")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.663691, -0.647793, 0.374003, 0, 0.5, 0.866025, -0.748007, -0.574773, 0.331846, 3, 5, 5)
 shadow_enabled = true
 
 [node name="CameraTarget" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 16, 11, 14.5)
-visible = false
 script = ExtResource("4_0nnjc")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="CameraTarget2" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 16, 11, 14.5)
+script = ExtResource("5_3s1li")
 
 [connection signal="Aimed" from="Cannon" to="." method="OnCannonAimed"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

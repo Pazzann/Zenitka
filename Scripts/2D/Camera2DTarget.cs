@@ -6,7 +6,7 @@ public partial class Camera2DTarget : Camera2D
 {
 	private Target _target;
 	private float _zoom = 1f;
-	private int _timeBeforeStart;
+	private int _timeBeforeStart=-2;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -58,7 +58,7 @@ public partial class Camera2DTarget : Camera2D
 			}
 			else
 			{
-				_timeBeforeStart = 108;
+				_timeBeforeStart = 135;
 			}
 		}
 		else
