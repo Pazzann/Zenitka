@@ -67,6 +67,22 @@ _data = {
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
 
+[node name="SettingsPanel" parent="." instance=ExtResource("3_lfrii")]
+visible = false
+offset_left = -2621.0
+offset_top = -2841.0
+offset_right = -2621.0
+offset_bottom = -2841.0
+scale = Vector2(4.39448, 5.45265)
+
+[node name="menu" parent="." instance=ExtResource("4_qitgn")]
+visible = false
+offset_left = 1689.0
+offset_top = -2950.0
+offset_right = 1689.0
+offset_bottom = -2950.0
+scale = Vector2(3.65661, 5.35625)
+
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -109,22 +125,6 @@ expand_icon = true
 libraries = {
 "": SubResource("AnimationLibrary_8fcmw")
 }
-
-[node name="SettingsPanel" parent="." instance=ExtResource("3_lfrii")]
-visible = false
-offset_left = -2621.0
-offset_top = -2841.0
-offset_right = -2621.0
-offset_bottom = -2841.0
-scale = Vector2(4.39448, 5.45265)
-
-[node name="menu" parent="." instance=ExtResource("4_qitgn")]
-visible = false
-offset_left = 1689.0
-offset_top = -2950.0
-offset_right = 1689.0
-offset_bottom = -2950.0
-scale = Vector2(3.65661, 5.35625)
 
 [node name="Camera2DTarget" type="Camera2D" parent="."]
 position = Vector2(0, -700)
