@@ -15,28 +15,35 @@ namespace Zenitka.Scripts._2D
 		public float CurrentTime = 0.0f;
 		public float StartAngle = 0.0f;
 
-
 		public override void _Ready()
 		{
 			Weight = 0.0f;
 			DragCoefficient = 0.0f;
 			StartVelocity = 0.0f;
-
 		}
-		
 		
 		public void ScheduleSelfDestroyWhenOffscreen() {
 			_isOffscreen = GetViewportRect().HasPoint(Position);
 		}
 
-		public override void _PhysicsProcess(double delta)
+		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 		{
-			CurrentTime += (float)delta;
+			base._IntegrateForces(state);
+
 			float velX = Math2D.XVelocityFromT(this, CurrentTime);
 			float velY = Math2D.YVelocityFromT(this, CurrentTime, 9.8f);
 
-			LinearVelocity = new Vector2(velX, velY);
+			state.LinearVelocity = new Vector2(velX, velY);
 		}
+
+		// public override void _PhysicsProcess(double delta)
+		// {
+		// 	CurrentTime += (float)delta;
+		// 	float velX = Math2D.XVelocityFromT(this, CurrentTime);
+		// 	float velY = Math2D.YVelocityFromT(this, CurrentTime, 9.8f);
+
+		// 	LinearVelocity = new Vector2(velX, velY);
+		// }
 
 		[Signal]
 		public delegate void WentWithinRangeEventHandler();

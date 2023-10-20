@@ -1,3 +1,4 @@
+using System.Data;
 using Godot;
 
 namespace Zenitka.Scripts._2D.Targets
