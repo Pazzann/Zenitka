@@ -33,6 +33,8 @@ namespace Zenitka.Scripts._2D
 			float velX = Math2D.XVelocityFromT(this, CurrentTime);
 			float velY = Math2D.YVelocityFromT(this, CurrentTime, 9.8f);
 
+			Rotation = (float)(System.Math.Atan(velY / velX) - System.Math.PI/2.0f);
+
 			state.LinearVelocity = new Vector2(velX, velY);
 		}
 
