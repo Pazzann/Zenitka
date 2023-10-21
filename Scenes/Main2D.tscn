@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://Scripts/2D/Main2D.cs" id="1_vkw7f"]
 [ext_resource type="Script" path="res://Scripts/2D/Camera.cs" id="3_ha2sy"]
 [ext_resource type="PackedScene" uid="uid://dkft2dlxunfv7" path="res://Prefabs/UI/SettingsPanel.tscn" id="3_lfrii"]
-[ext_resource type="Texture2D" uid="uid://dowxiscauhrwe" path="res://Assets/Styles/icon_settings.svg" id="4_c5q6u"]
 [ext_resource type="PackedScene" uid="uid://cm0kjp16exuaa" path="res://Prefabs/UI/Menu.tscn" id="4_qitgn"]
 [ext_resource type="Script" path="res://Scripts/2D/Camera2DTarget.cs" id="5_nimdy"]
+[ext_resource type="Texture2D" uid="uid://dhxeffueupvbi" path="res://Assets/Styles/icons-settings.svg" id="6_bruf2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtlii"]
 draw_center = false
@@ -77,11 +77,11 @@ scale = Vector2(4.39448, 5.45265)
 
 [node name="menu" parent="." instance=ExtResource("4_qitgn")]
 visible = false
-offset_left = 1689.0
-offset_top = -2950.0
-offset_right = 1689.0
-offset_bottom = -2950.0
-scale = Vector2(3.65661, 5.35625)
+offset_left = -811.0
+offset_top = -1906.0
+offset_right = -811.0
+offset_bottom = -1906.0
+scale = Vector2(6, 6)
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
 
@@ -99,24 +99,16 @@ position = Vector2(-2738, -1494)
 [node name="Anchor" type="Node2D" parent="."]
 position = Vector2(-2712, -2510)
 
-[node name="Button" type="Button" parent="."]
-offset_left = 2754.0
-offset_top = -3153.0
-offset_right = 2816.0
-offset_bottom = -3062.0
-theme_override_font_sizes/font_size = 120
-text = "☰"
-
 [node name="Button2" type="Button" parent="."]
 texture_filter = 2
-offset_left = -2988.0
-offset_top = -3326.0
-offset_right = -2468.0
-offset_bottom = -2806.0
+offset_left = -2943.0
+offset_top = -3291.0
+offset_right = -2423.0
+offset_bottom = -2771.0
 scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(260.931, 255.448)
+pivot_offset = Vector2(261.069, 266.553)
 theme_override_styles/focus = SubResource("StyleBoxFlat_rtlii")
-icon = ExtResource("4_c5q6u")
+icon = ExtResource("6_bruf2")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -132,5 +124,4 @@ script = ExtResource("5_nimdy")
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
-[connection signal="pressed" from="Button" to="." method="MenuButton"]
 [connection signal="pressed" from="Button2" to="." method="SettingsButton"]

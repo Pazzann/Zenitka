@@ -25,6 +25,7 @@ namespace Zenitka.Scripts._2D
 		private int _firedBurstBulletCount = 0;
 
 		private static Random _rng = new Random();
+		
 
 		public override void _Ready()
 		{
@@ -35,6 +36,8 @@ namespace Zenitka.Scripts._2D
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 		}
+
+		
 
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
 		{
@@ -51,6 +54,7 @@ namespace Zenitka.Scripts._2D
 			bullet.StartAngle = angleRad;
 
 			AddChild(bullet);
+			MoveChild(bullet, 0);
 
 			// if (_firedBurstBulletCount++ < 5)
 			// 	ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
@@ -70,6 +74,7 @@ namespace Zenitka.Scripts._2D
 
 			target.GlobalPosition = startPos;
 			AddChild(target);
+			MoveChild(target, 0);
 
 			//target.StartVelocity = -target.StartVelocity;
 
@@ -113,36 +118,7 @@ namespace Zenitka.Scripts._2D
 			return pos;
 		}
 
-		private void MenuButton()
-		{
-			// var button = GetNode<Button>("Button");
-			// var pos = button.GlobalPosition;
-			//
-			// PackedScene menuScene = GD.Load<PackedScene>("res://Prefabs/UI/Menu.tscn");
-			// var menu = menuScene.Instantiate() as Menu;
-			// menu.GlobalPosition = new Vector2(pos[0] - 450, pos[1] + 500);
-			// GD.Print(pos[0] - 450, pos[1] + 500);
-			// AddChild(menu);
-			//
-			// button.Hide();
-			var settingsPanel = GetNode<Control>("menu");
-			if (!settingsPanel.Visible)
-			{
-				GD.Print("in");
-				settingsPanel.Show();
-				var animation = GetNode<AnimationPlayer>("menu/Animation");
-				animation.Play("in");
-			}
-			else
-			{
-				GD.Print("out");
-				var animation = GetNode<AnimationPlayer>("menu/Animation");
-				animation.Play("out");
-
-
-			}
-
-		}
+		
 
 		private void SettingsButton()
 		{

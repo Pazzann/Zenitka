@@ -29,7 +29,7 @@ namespace Zenitka
 			public static Vector2 ZenithDetectionCoordinates{ get; set; } // координати виявлення відносно зенітної установки
 			public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
 			public static Vector2 InitialVelocity{ get; set; } // вектор початкової швидкості (напрям, величина у м/с)
-			public static Vector2 ObjectSize{ get; set; } // розміри (довжина, товщина у м)
+			public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 			public static float RocketMassWithoutFuel{ get; set; } // масса ракети без палива
 			public static float FuelMass{ get; set; } // масса палива 
 			public static float AngularVelocity{ get; set; } // кутова швидкість (1/с) (швидкість повороту)
@@ -44,8 +44,8 @@ namespace Zenitka
 		{
 			public static Vector2 Velocity{ get; set; } // Вектор швидкості (напрям, величина у м/с)
 			public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
-			public static double Mass{ get; set; } // маса
-			public static double Altitude{ get; set; } // викривлення земної поверхні
+			public static float Mass{ get; set; } // маса
+			public static float Altitude{ get; set; } // викривлення земної поверхні
 			
 			static DefaultTarget()
 			{
@@ -57,12 +57,12 @@ namespace Zenitka
 		
 		public static class RocketTarget
 		{
-			public static double RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
-			public static double MaxAngularVelocity { get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
-			public static double DetonationDistance { get; set; }// дистанція підриву (м)
-			public static double ShrapnelVelocity { get; set; } // швидкість розльоту осколків
-			public static double RocketMassWithoutFuel { get; set; } // власна маса ракети
-			public static double FuelMass { get; set; } // маса палива
+			public static float RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
+			public static float MaxAngularVelocity { get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
+			public static float DetonationDistance { get; set; }// дистанція підриву (м)
+			public static float ShrapnelVelocity { get; set; } // швидкість розльоту осколків
+			public static float RocketMassWithoutFuel { get; set; } // власна маса ракети
+			public static float FuelMass { get; set; } // маса палива
 
 			static RocketTarget()
 			{
