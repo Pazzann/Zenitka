@@ -186,6 +186,9 @@ text = "координати виявлення відносно зенітно�
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
 layout_mode = 2
 
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
 layout_mode = 2
 theme_override_constants/separation = 30
@@ -400,4 +403,5 @@ text = "Застосувати"
 layout_mode = 2
 text = "Закрити"
 
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Button2" to="." method="SaveButton"]
 [connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Button" to="." method="CloseButton"]
