@@ -71,7 +71,7 @@ namespace Zenitka.Scripts._2D
         private const int ITERATIONS = 200;
 
         private const float SECTOR_ARC = Mathf.Pi / SECTORS;
-        private const float TIME_STEP = 0.025f; 
+        private const float TIME_STEP = 0.02f; 
 
         private const float SCALE = 1f;
 
@@ -102,7 +102,7 @@ namespace Zenitka.Scripts._2D
             var bestTimeOfCollision = 9999f;
             var bestDistance = float.MaxValue;
 
-            for (int i = 50; i < SECTORS; ++i) {
+            for (int i = 0; i < SECTORS; ++i) {
                 float angle = i * SECTOR_ARC + SECTOR_ARC / 2f;
                 var (distance, time) = ComputeClosestDistance(angle);
 

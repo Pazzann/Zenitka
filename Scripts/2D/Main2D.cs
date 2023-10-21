@@ -9,7 +9,7 @@ namespace Zenitka.Scripts._2D
 {
 	public partial class Main2D : Node2D
 	{
-		private static float BARREL_LENGTH = 0f;
+		private static float BARREL_LENGTH = 200f;
 		private static float MUZZLE_SPEED = 2000f;
 		private static float TARGET_SPEED = 2000f;
 
@@ -20,7 +20,6 @@ namespace Zenitka.Scripts._2D
 
 		private Node2D _anchor1;
 		private Node2D _anchor2;
-
 
 		private int _firedBurstBulletCount = 0;
 
@@ -89,7 +88,7 @@ namespace Zenitka.Scripts._2D
 				new Vector2(0f, 9.8f)
 			).Aim();
 
-			_cannon.RotateToAndSignal(angle, timeOfCollision);
+			_cannon.RotateToAndSignal(angle, timeOfCollision - 0.05f);
 
 			// var bullet = _bulletScene.Instantiate() as Target;
 			// bullet._Ready();
@@ -99,7 +98,7 @@ namespace Zenitka.Scripts._2D
 
 			// _cannon.RotateToAndSignal(a[0] - 0.1f, a[0]);
 		}
-
+ 
 		private Vector2 GenerateTargetSpawnlocation()
 		{
 			var pos = new Vector2(0.0f, _anchor2.GlobalPosition.Y);
@@ -138,10 +137,7 @@ namespace Zenitka.Scripts._2D
 				GD.Print("out");
 				var animation = GetNode<AnimationPlayer>("menu/Animation");
 				animation.Play("out");
-
-
 			}
-
 		}
 
 		private void SettingsButton()

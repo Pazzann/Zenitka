@@ -30,7 +30,6 @@ namespace Zenitka.Scripts._2D.Targets
 			_animation.Play("fly2");
 		}
 
-
 		private void OnBodyEntered(Node body)
 		{
 			body.QueueFree();
