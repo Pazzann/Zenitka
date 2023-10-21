@@ -9,7 +9,7 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			Weight = 1.0f;
 			DragCoefficient = 0.05f;
-			StartVelocity = 500.0f;
+			StartVelocity = 100.0f;
 		}
 
 	}
