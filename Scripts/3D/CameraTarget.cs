@@ -17,9 +17,7 @@ public partial class CameraTarget : Camera3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (_timeBeforeStart > 266)
-		{
-			_target = GetNode<Target>("/root/Main3D/Target");
+			_target = GetNodeOrNull<Target>("/root/Main3D/Target");
 
 			if (_target != null)
 			{
@@ -44,10 +42,5 @@ public partial class CameraTarget : Camera3D
 				Transform = Transform.LookingAt(_target.Position, Vector3.Up);
 
 			}
-		}
-		else
-		{
-			_timeBeforeStart++;
-		}
 	}
 }

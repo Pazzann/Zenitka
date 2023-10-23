@@ -7,6 +7,8 @@ public partial class Camera2DTarget : Camera2D
 	private Target _target;
 	private float _zoom = 1f;
 	private int _timeBeforeStart=-2;
+
+	private Vector2 _targetStartingPosition;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -22,48 +24,32 @@ public partial class Camera2DTarget : Camera2D
 				MakeCurrent();
 			}
 		}
-		if (_timeBeforeStart >= 156)
+		_target = GetNodeOrNull<Target>("/root/Main2D/Target");
+		if (_target != null)
 		{
-
-			try
+			var currentZoom = Zoom;
+			Position = _target.Position;
+			if (Input.IsActionJustPressed("cam_zoom_out_3d") && _zoom >= 1.0f)
 			{
-				_target = GetNode<Target>("/root/Main2D/Target");
+				_zoom -= 0.5f;
+				currentZoom.X = _zoom;
+				currentZoom.Y = _zoom;
 			}
-			catch
+
+			if (Input.IsActionJustPressed("cam_zoom_in_3d") && _zoom < 20f)
 			{
+				_zoom += 0.5f;
+				currentZoom.X = _zoom;
+				currentZoom.Y = _zoom;
 			}
 
-
-
-			if (_target != null)
-			{
-				var targetPosition = _target.Position;
-				var currentZoom = Zoom;
-				Position = targetPosition;
-				if (Input.IsActionJustPressed("cam_zoom_out_3d") && _zoom >= 1.0f)
-				{
-					_zoom -= 0.5f;
-					currentZoom.X = _zoom;
-					currentZoom.Y = _zoom;
-				}
-
-				if (Input.IsActionJustPressed("cam_zoom_in_3d") && _zoom < 6f)
-				{
-					_zoom += 0.5f;
-					currentZoom.X = _zoom;
-					currentZoom.Y = _zoom;
-				}
-
-				Zoom = currentZoom;
-			}
-			else
-			{
-				_timeBeforeStart = 135;
-			}
+			Zoom = currentZoom;
 		}
-		else
-		{
-			_timeBeforeStart++;
-		}
+			
+	}
+	private void _on_target_spawn_timer_timeout()
+	{
+		_target = GetNode<Target>("/root/Main2D/Target");
+		_targetStartingPosition = _target.Position;
 	}
 }
