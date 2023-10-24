@@ -44,8 +44,6 @@ namespace Zenitka.Scripts._2D
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
 			
-			//bullet.Weight = Settings.Settings2D.DefaultGun.We
-			
 			bullet.SelfDestructionTime = timeOfCollision - 0.05f;
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 			bullet.Rotation = angleRad;
@@ -57,13 +55,15 @@ namespace Zenitka.Scripts._2D
 
 			AddChild(bullet);
 			MoveChild(bullet, 0);
+			
+			
 
-			// if (_firedBurstBulletCount++ < 5)
-			// 	ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
-			// 		{
-			// 			_cannon.RotateToAndSignal(angleRad + 0.02f, timeOfCollision);
-			// 		}
-			// 	);
+			if (_firedBurstBulletCount++ < 5)
+				ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
+				{
+				_cannon.RotateToAndSignal(angleRad + 0.02f, timeOfCollision);
+				}
+			);
 		}
 
 		private void OnTargetSpawnTimerTimeout()
@@ -85,7 +85,7 @@ namespace Zenitka.Scripts._2D
 					Vector2.Zero,
 					BARREL_LENGTH,
 					_cannon.GetAngle(),
-					_cannon.GunRotationSpeed,
+					Settings.Settings2D.DefaultGun.AngularVelocity,
 					1000f,
 					0.05f),
 				new ParticleState2D(
@@ -93,7 +93,7 @@ namespace Zenitka.Scripts._2D
 					new Vector2(target.StartVelocity, 0f),
 					Vector2.Zero,
 					0.05f),
-				new Vector2(0f, 9.8f)
+				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
 			).Aim();
 
 			_cannon.RotateToAndSignal(angle, timeOfCollision - 0.05f);

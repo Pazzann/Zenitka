@@ -84,9 +84,10 @@ offset_bottom = -1906.0
 scale = Vector2(6, 6)
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
+position = Vector2(-1, -184)
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(0, -1600)
+position = Vector2(-1, -1621)
 zoom = Vector2(0.2, 0.2)
 script = ExtResource("3_ha2sy")
 
