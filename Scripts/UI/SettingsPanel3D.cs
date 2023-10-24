@@ -7,6 +7,7 @@ namespace Zenitka.Scripts.UI
 	{
 		public override void _Ready()
 		{
+			/*
 			var node1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer/LineEdit");
 			node1.Text = Settings.Settings2D.DefaultGun.BulletSpeed.ToString();
 			var node2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer2/LineEdit");
@@ -82,12 +83,12 @@ namespace Zenitka.Scripts.UI
 			var node37 =
 				GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer8/LineEdit");
 			node37.Text = Settings.Settings2D.RocketTarget.AirResistance.ToString();
-
+*/
 		}
 
 		public void SaveButton()
 		{
-
+/*
 			var node1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer/LineEdit");
 			Settings.Settings2D.DefaultGun.BulletSpeed = node1.Text.ToFloat();
 			var node2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer2/LineEdit");
@@ -162,7 +163,7 @@ namespace Zenitka.Scripts.UI
 			var node37 =
 				GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer8/LineEdit");
 			Settings.Settings2D.RocketTarget.AirResistance = node37.Text.ToFloat();
-
+*/
 
 
 		}
@@ -178,8 +179,8 @@ namespace Zenitka.Scripts.UI
 
 
 			OptionButton optionButton = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton");
-			VBoxContainer default2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DDefault");
-			VBoxContainer rocket2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DRocket");
+			VBoxContainer default2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/3DDefault");
+			VBoxContainer rocket2D = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/3DRocket");
 			if (optionButton.Selected == 0)
 			{
 				default2D.Show();
@@ -194,9 +195,9 @@ namespace Zenitka.Scripts.UI
 
 			OptionButton optionButton2 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton2");
 			VBoxContainer defaultTarget2D =
-				GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget");
+				GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/3DDefaultTarget");
 			VBoxContainer rocketTarget2D =
-				GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget");
+				GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/3DRocketTarget");
 			if (optionButton2.Selected == 0)
 			{
 				defaultTarget2D.Show();
@@ -219,3 +220,8 @@ namespace Zenitka.Scripts.UI
 		}
 	}
 }
+
+
+
+
+
