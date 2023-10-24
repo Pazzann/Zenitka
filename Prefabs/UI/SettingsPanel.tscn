@@ -282,10 +282,6 @@ text = "Вектор швидкості (напрям, величина у м/с
 layout_mode = 2
 theme = ExtResource("1_r8vbj")
 
-[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_r8vbj")
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
 layout_mode = 2
 theme_override_constants/separation = 30
