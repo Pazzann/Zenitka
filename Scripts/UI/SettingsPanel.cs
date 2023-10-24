@@ -19,6 +19,8 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.DefaultGun.InitialElevationAngle = node2.Text.ToFloat();
 			var node3 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer3/LineEdit");
 			Settings.Settings2D.DefaultGun.AngularVelocity = node3.Text.ToFloat();
+			var node33 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer4/LineEdit");
+			Settings.Settings2D.DefaultGun.BulletMass = node33.Text.ToFloat();
 			
 			var node4 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer/LineEdit");
 			var node5 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer/LineEdit2");

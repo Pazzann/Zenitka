@@ -169,6 +169,17 @@ text = "кутова швидкість змінення напрямку ств
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer3"]
 layout_mode = 2
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer4"]
+layout_mode = 2
+text = "Масса пулі"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer4"]
+layout_mode = 2
+
 [node name="2DRocket" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 texture_filter = 2

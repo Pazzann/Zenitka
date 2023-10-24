@@ -18,6 +18,8 @@ namespace Zenitka
 				public static float InitialElevationAngle{ get; set; } // початковий кут підвищення каналу ствола
 				public static float AngularVelocity{ get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
 				
+				public static float BulletMass { get; set; } // Масса пули
+				
 				static DefaultGun()
 				{
 					BulletSpeed = 1000.0f;
