@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://3n6wbgd7i0ox"]
+[gd_scene load_steps=9 format=3 uid="uid://3n6wbgd7i0ox"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Main3D.cs" id="1_2igm4"]
 [ext_resource type="PackedScene" uid="uid://bt7u2b3j8v318" path="res://Prefabs/3D/Cannon.tscn" id="1_4hkxh"]
 [ext_resource type="Script" path="res://Scripts/3D/Camera3D.cs" id="3_2pk56"]
 [ext_resource type="Script" path="res://Scripts/3D/CameraTarget.cs" id="4_0nnjc"]
 [ext_resource type="Script" path="res://Scripts/3D/CameraTarget2.cs" id="5_3s1li"]
+[ext_resource type="PackedScene" uid="uid://bw5dxfeemcro7" path="res://Prefabs/UI/SettingsPanel3D.tscn" id="6_kptnd"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_161b6"]
 top_radius = 10.0
@@ -48,5 +49,7 @@ script = ExtResource("4_0nnjc")
 [node name="CameraTarget2" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 16, 11, 14.5)
 script = ExtResource("5_3s1li")
+
+[node name="SettingsPanel3D" parent="." instance=ExtResource("6_kptnd")]
 
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
