@@ -106,7 +106,8 @@ namespace Zenitka
 			{
 				public static float BulletSpeed { get; set; } // швидкість снаряда
 				public static float InitialElevationAngle { get; set; } // початковий кут підвищення каналу ствола
-				public static float AngularVelocity { get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
+				public static float AngularVelocityX { get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
+				public static float AngularVelocityY { get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
 
 				public static float BulletMass { get; set; } // Масса пули
 
@@ -117,7 +118,7 @@ namespace Zenitka
 				{
 					BulletSpeed = 1000.0f;
 					InitialElevationAngle = 0.0f;
-					AngularVelocity = 1.0f;
+					
 					BulletMass = 1.0f;
 				}
 			}
@@ -135,14 +136,15 @@ namespace Zenitka
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 				public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
 				public static float FuelMass { get; set; } // масса палива 
-				public static float AngularVelocity { get; set; } // кутова швидкість (1/с) (швидкість повороту)
+				public static float AngularVelocityX { get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
+				public static float AngularVelocityY { get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
 				public static float Gravity { get; set; } // Гравітація
 
 				static RocketGun()
 				{
 					InitialVelocity = new Vector2(0f, -1000f);
-					AngularVelocity = 1.0f;
+					
 				}
 			}
 
