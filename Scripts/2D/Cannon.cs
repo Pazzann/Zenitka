@@ -7,15 +7,13 @@ namespace Zenitka.Scripts._2D
 	public partial class Cannon : Node2D
 	{
 
-		public float GunRotationSpeed = 1f;
-
 		private Sprite2D _gun;
 		private Node2D _head;
 
 		public override void _Ready()
 		{
-			_gun = GetNode<Sprite2D>("Body/Gun");
-			_head = GetNode<Node2D>("Body/Gun/Head");
+			_gun = GetNode<Sprite2D>("Gun");
+			_head = GetNode<Node2D>("Gun/Head");
 		}
 
 		public Vector2 GetHeadPosition()
@@ -41,7 +39,7 @@ namespace Zenitka.Scripts._2D
 			{
 				var tween = CreateTween();
 
-				tween.TweenProperty(_gun, "rotation", targetAngle, diff / GunRotationSpeed)
+				tween.TweenProperty(_gun, "rotation", targetAngle, diff / Settings.Settings2D.DefaultGun.AngularVelocity)
 					.SetTrans(Tween.TransitionType.Linear);
 
 				tween.TweenCallback(Callable.From(() => Signal(timeOfCollision)));

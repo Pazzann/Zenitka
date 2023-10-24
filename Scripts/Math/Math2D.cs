@@ -122,5 +122,14 @@ namespace Zenitka.Scripts.Math
             return (float)System.Math.Log(startVelocityX / (startVelocityX -
                 x * stiffness + startPos.X * stiffness)) / stiffness;
         }
+
+        public static float AngleFromX(Target target, float x, Vector2 startPos, float alpha, float gravitationalAcceleration)
+        {
+            float startVelocityX = target.StartVelocity * (float)System.Math.Cos(alpha);
+            float startVelocityY = target.StartVelocity * (float)System.Math.Sin(alpha);
+            float stiffness = target.DragCoefficient / target.Weight;
+
+            return (float)System.Math.Atan((double)(stiffness * (gravitationalAcceleration + startVelocityY * stiffness) - (gravitationalAcceleration * startVelocityX * stiffness) / (startVelocityX - x * stiffness + target.StartPosition.X * stiffness)) / (startVelocityX * stiffness * stiffness));
+        }
     }
 }

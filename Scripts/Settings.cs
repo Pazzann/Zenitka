@@ -28,6 +28,7 @@ namespace Zenitka
 					BulletSpeed = 1000.0f;
 					InitialElevationAngle = 0.0f;
 					AngularVelocity = 1.0f;
+					BulletMass = 1.0f;
 				}
 			}
 			
