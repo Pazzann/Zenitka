@@ -43,6 +43,9 @@ namespace Zenitka.Scripts._2D
 			float angleRadF = angleRad;
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
+			
+			//bullet.Weight = Settings.Settings2D.DefaultGun.We
+			
 			bullet.SelfDestructionTime = timeOfCollision - 0.05f;
 			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
 			bullet.Rotation = angleRad;

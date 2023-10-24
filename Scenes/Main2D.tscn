@@ -121,8 +121,10 @@ libraries = {
 
 [node name="Camera2DTarget" type="Camera2D" parent="."]
 position = Vector2(0, -700)
+zoom = Vector2(0.7, 0.7)
 script = ExtResource("5_nimdy")
 
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
+[connection signal="timeout" from="TargetSpawnTimer" to="Camera2DTarget" method="_on_target_spawn_timer_timeout"]
 [connection signal="pressed" from="Button2" to="." method="SettingsButton"]
