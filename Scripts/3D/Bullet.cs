@@ -3,30 +3,38 @@ using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public partial class Bullet : RigidBody3D
+	public partial class Bullet : DynamicBody
 	{
 		private Timer _timer;
-		private float _lifespanSec = 10f;
-		
+
+		private float _lifespan = 10f;
+
+		public float Lifespan
+		{
+			get { return _lifespan; }
+			set
+			{
+				_lifespan = value;
+
+				if (_timer != null)
+					_timer.Start(_lifespan);
+			}
+		}
+
+		public event Action<Node2D> OnExploded;
+
 		public override void _Ready()
 		{
 			_timer = GetNode<Timer>("SuicideTimer");
-			_timer.Start(_lifespanSec);
+			_timer.Start(Lifespan);
 		}
-
-		public void SetLifespan(float lifespanSec) {
-			_lifespanSec = lifespanSec;
-		}
-
-		[Signal]
-		public delegate void ExplodedEventHandler(Node3D target);
 
 		private void OnSuicideTimerTimeout()
 		{
 			_timer.Stop();
 			QueueFree();
 
-			EmitSignal(SignalName.Exploded, null);
+			OnExploded?.Invoke(null);
 		}
 	}
 }

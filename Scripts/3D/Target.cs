@@ -3,34 +3,30 @@ using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public partial class Target : RigidBody3D {
-		private bool _isDetectable = false;
-		private bool _isWithinRange = false;
+	public partial class Target : DynamicBody {
+		public Vector3 CannonPosition { get; set; } = Vector3.Zero;
+		public float CannnonRange { get; set; } = 0f;
 
-		float _detectionRange = 0f;
+		public Action<bool> OnCannonVisiblityChanged { get; set; }
+		public bool WithinCannonRange { get; set; } = false; 
 
-		public override void _Ready()
-		{}
-
-		public void SetDetectionRange(float range) {
-			_detectionRange = range;
-		}
-
-		public void ScheduleSelfDestroyWhenOffscreen() {
-			_isDetectable = Position.LengthSquared() <= _detectionRange * _detectionRange;
-		}
-
-		public override void _Process(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
-			if (Position.LengthSquared() <= _detectionRange * _detectionRange) {
-				ToSignal(GetTree().CreateTimer(0.5f), SceneTreeTimer.SignalName.Timeout)
-					.OnCompleted(() => EmitSignal(SignalName.WentWithinRange3D));
-			} else if (_isDetectable) {
+			base._PhysicsProcess(delta);
+			UpdateVisibility();
+		}
+
+		private void UpdateVisibility() {
+			float distance = (GlobalPosition - CannonPosition).Length();
+
+			if (distance < CannnonRange && !WithinCannonRange) {
+				WithinCannonRange = true;
+				OnCannonVisiblityChanged?.Invoke(true);
+			} else if (distance > CannnonRange && WithinCannonRange) {
+				WithinCannonRange = false;
+				OnCannonVisiblityChanged?.Invoke(false);
 				QueueFree();
 			}
 		}
-
-		[Signal]
-		public delegate void WentWithinRange3DEventHandler();
 	}
 }

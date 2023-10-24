@@ -18,21 +18,21 @@ public partial class CameraTarget2 : Camera3D
 	public override void _Process(double delta)
 	{
 	
-			_target = GetNodeOrNull<Target>("/root/Main3D/Target");
+			// _target = GetNodeOrNull<Target>("/root/Main3D/Target");
 
-			if (_target != null)
-			{
+			// if (_target != null)
+			// {
 
-				var targetPosition = _target.Position;
-				var targetBasis = _target.Basis;
-				var targetLinearVelocity = _target.LinearVelocity;
-				Basis = targetBasis;
-				targetPosition.X -= targetLinearVelocity.X;
-				targetPosition.Z -= targetLinearVelocity.Z;
-				targetPosition.Y += 10;
-				Position = targetPosition;
-				Transform = Transform.LookingAt(_target.Position, Vector3.Up);
+			// 	var targetPosition = _target.Position;
+			// 	var targetBasis = _target.Basis;
+			// 	var targetLinearVelocity = _target.LinearVelocity;
+			// 	Basis = targetBasis;
+			// 	targetPosition.X -= targetLinearVelocity.X;
+			// 	targetPosition.Z -= targetLinearVelocity.Z;
+			// 	targetPosition.Y += 10;
+			// 	Position = targetPosition;
+			// 	Transform = Transform.LookingAt(_target.Position, Vector3.Up);
 
-			}
+			// }
 	}
 }

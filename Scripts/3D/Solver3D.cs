@@ -7,6 +7,13 @@ namespace Zenitka.Scripts._3D
 {
     public struct ParticleState3D
     {
+        public ParticleState3D() {
+            Position = Vector3.Zero;
+            Velocity = Vector3.Zero;
+            ConstantAcceleration = Vector3.Zero;
+            LinearDrag = 0f;
+        }
+
         public ParticleState3D(Vector3 position, Vector3 velocity, Vector3 constantAcceleration, float linearDrag)
         {
             Position = position;
@@ -17,6 +24,8 @@ namespace Zenitka.Scripts._3D
 
         public Vector3 ComputePosition(float t)
         {
+            // TODO: consider the case when [`LinearDrag`] equals 0
+
             return Position
                 + ConstantAcceleration * t / LinearDrag
                 - (ConstantAcceleration - LinearDrag * Velocity) / (LinearDrag * LinearDrag)
@@ -25,6 +34,8 @@ namespace Zenitka.Scripts._3D
 
         public Vector3 ComputeVelocity(float t)
         {
+            // TODO: consider the case when [`LinearDrag`] equals 0
+            
             return (ConstantAcceleration
                 - (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t)) / LinearDrag;
         }
@@ -66,8 +77,8 @@ namespace Zenitka.Scripts._3D
     }
 
     public class Solver3D {
-        private const int ANGLES = 100;
-        private const int ITERATIONS = 100;
+        private const int ANGLES = 40;
+        private const int ITERATIONS = 50;
 
         private const float DELTA_ANGLE = Mathf.Pi / ANGLES;
         private const float DELTA_TIME = 0.05f;
@@ -79,10 +90,11 @@ namespace Zenitka.Scripts._3D
         }
 
         // (direction, timeOfCollision)
-        public (Vector3, float) Aim() {
+        public (Vector3, float, ParticleState3D) Aim() {
             var bestDir = Vector3.Zero;
             var bestTimeOfCollision = 9999f;
             var bestDistance = 9999f;
+            var bestProjectile = new ParticleState3D(Vector3.Zero, Vector3.Zero, Vector3.Zero, 0f);
 
             for (int i = 0; i < ANGLES; ++i) {
                 var dirProj = Vector3.Forward.Rotated(Vector3.Up, i * DELTA_ANGLE + DELTA_ANGLE / 2f);
@@ -90,23 +102,26 @@ namespace Zenitka.Scripts._3D
 
                 for (int j = 0; j < ANGLES; ++j) {
                     var dir = dirProj.Rotated(axis, j * DELTA_ANGLE + DELTA_ANGLE / 2f).Normalized();
-                    var (timeOfCollision, distance) = FindClosestPointsOnTrajectory(dir);
+                    var (timeOfCollision, distance, projectile) = FindClosestPointsOnTrajectory(dir);
 
                     if (distance < bestDistance) {
                         bestDir = dir;
                         bestTimeOfCollision = timeOfCollision;
                         bestDistance = distance;
+                        bestProjectile = projectile;
                     }
                 }
             }
 
-            return (bestDir, bestTimeOfCollision);
+            GD.Print(bestDir, " ", bestTimeOfCollision, " ", bestDistance);
+
+            return (bestDir, bestTimeOfCollision, bestProjectile);
         }
 
         // (distance, timeOfCollision)
-        private (float, float) FindClosestPointsOnTrajectory(Vector3 direction) {
+        private (float, float, ParticleState3D) FindClosestPointsOnTrajectory(Vector3 direction) {
             var projectile = _cannon.CreateProjectile(direction, _gravity);
-            float offT = direction.AngleTo(_cannon.CurDirection) / _cannon.AngularRotSpeed;
+            float offT = (direction.AngleTo(_cannon.CurDirection) + 0.01f) / _cannon.AngularRotSpeed;
 
             var bestT = 9999f;
             var bestDistance = 9999f;
@@ -125,7 +140,7 @@ namespace Zenitka.Scripts._3D
                 }
             }
 
-            return (bestT, bestDistance);
+            return (bestT, bestDistance, projectile);
         }
 
         private CannonState3D _cannon;

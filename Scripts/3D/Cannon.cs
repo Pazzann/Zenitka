@@ -3,36 +3,36 @@ using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public partial class Cannon : CharacterBody3D
-	{		
-		private float _rotationSpeed = 10f;
+	public delegate void CannonAimed(ParticleState3D projectile, float collisionTime);
 
+	public partial class Cannon : CharacterBody3D
+	{	
 		private Marker3D _bulletSpawnLocation;
 
-		private float _barrelSize = 0f;
-
-		public void SetRotationSpeed(float speed) {
-			_rotationSpeed = speed;
+		public Vector3 BulletSpawnPosition
+		{
+			get { return _bulletSpawnLocation.GlobalPosition; }
 		}
+
+		public Vector3 AimDirection
+		{
+			get { return (BulletSpawnPosition - GlobalPosition).Normalized(); }
+		}
+
+		public float BarrelSize { get; private set; }
+		public float AngularRotationSpeed { get; set; } = 3f;
+
+		public event CannonAimed OnAimed;
 
 		public override void _Ready()
 		{
 			_bulletSpawnLocation = GetNode<Marker3D>("BulletSpawnLocation");
-			_barrelSize = _bulletSpawnLocation.Position.Length();
+			BarrelSize = _bulletSpawnLocation.Position.Length();
 		}
 		
-		public Vector3 GetBulletSpawnPosition() {
-			return _bulletSpawnLocation.GlobalPosition;
-		}
-
-		public float GetBarrelSize() {
-			return _barrelSize;
-		}
-		
-		public void RotateToAndSignal(Vector3 targetDirection) {
-			var diffAngleCos = targetDirection.Normalized().Dot(GetBulletSpawnPosition().Normalized());
-			var diffAngle = Mathf.Acos(diffAngleCos);
-			var animDuration = diffAngle / _rotationSpeed;
+		public void RotateToAndSignal(Vector3 targetDirection, ParticleState3D projectile, float collisionTime) {
+			var diffAngle = targetDirection.AngleTo(AimDirection);
+			var animDuration = diffAngle / AngularRotationSpeed;
 
 			var targetTransform = GlobalTransform.LookingAt(targetDirection, Vector3.Up);
 
@@ -42,12 +42,8 @@ namespace Zenitka.Scripts._3D
 				.SetEase(Tween.EaseType.In)
 				.SetTrans(Tween.TransitionType.Sine);
 
-			tween.TweenCallback(Callable.From(() => {
-				EmitSignal(SignalName.Aimed);
-			}));
+			tween.TweenCallback(Callable.From(() => OnAimed?.Invoke(projectile, collisionTime)));
 		}
 
-		[Signal]
-		public delegate void AimedEventHandler();
 	}
 }

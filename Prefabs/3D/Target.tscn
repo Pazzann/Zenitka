@@ -3,12 +3,14 @@
 [ext_resource type="Script" path="res://Scripts/3D/Target.cs" id="1_h5mlg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_856tk"]
+size = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gm2cn"]
 albedo_color = Color(1, 0.282353, 0.0823529, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_tctre"]
 material = SubResource("StandardMaterial3D_gm2cn")
+size = Vector3(2, 2, 2)
 
 [node name="Target" type="RigidBody3D"]
 script = ExtResource("1_h5mlg")
