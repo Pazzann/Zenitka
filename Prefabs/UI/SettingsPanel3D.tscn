@@ -1,0 +1,324 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw5dxfeemcro7"]
+
+[ext_resource type="Theme" uid="uid://hxpqxviknukd" path="res://Assets/Styles/base.tres" id="1_4ge5k"]
+
+[node name="SettingsPanel3D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -902.0
+offset_bottom = -494.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Зенітна гармата"
+popup/item_0/id = 0
+popup/item_1/text = "Зенітна ракетниця"
+popup/item_1/id = 1
+
+[node name="2DDefault" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+visible = false
+texture_filter = 2
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer"]
+layout_mode = 2
+text = "швидкість снаряда"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer2"]
+layout_mode = 2
+text = "початковий кут підвищення каналу ствола"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer3"]
+layout_mode = 2
+text = "кутова швидкість змінення напрямку ствола (1/с)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer3"]
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer4"]
+layout_mode = 2
+text = "Масса пулі"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer4"]
+layout_mode = 2
+
+[node name="2DRocket" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+visible = false
+texture_filter = 2
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
+layout_mode = 2
+text = "координати виявлення відносно зенітної установки"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+layout_mode = 2
+text = "координати кінцевої точки польоту цілі"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+layout_mode = 2
+text = "вектор початкової швидкості (напрям, величина у м/с)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+layout_mode = 2
+text = "розміри (довжина, товщина у м)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6"]
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+layout_mode = 2
+text = "власна маса ракети без палива, та маса палива"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer7"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer3"]
+layout_mode = 2
+text = "кутова швидкість (1/с) (швидкість повороту)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer3"]
+layout_mode = 2
+
+[node name="OptionButton2" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Звичайна ціль"
+popup/item_0/id = 0
+popup/item_1/text = "Аеродинамічна ціль"
+popup/item_1/id = 1
+
+[node name="2DDefaultTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+visible = false
+texture_filter = 2
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
+layout_mode = 2
+text = "Вектор швидкості (напрям, величина у м/с)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
+layout_mode = 2
+text = "розміри (довжина, товщина у м)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer3"]
+layout_mode = 2
+text = "маса"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer3"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
+layout_mode = 2
+text = "викривлення земної поверхні"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="2DRocketTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+visible = false
+texture_filter = 2
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer"]
+layout_mode = 2
+text = "прискорення, що надається ракетним двигуном (м/с2)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer2"]
+layout_mode = 2
+text = "максимальну кутову швидкість (швидкість повороту, 1/c)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer5"]
+layout_mode = 2
+text = "дистанція підриву (м)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer5"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer6"]
+layout_mode = 2
+text = "швидкість розльоту осколків"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer6"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
+layout_mode = 2
+text = "власна маса ракети без палива, та маса палива"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
+layout_mode = 2
+theme = ExtResource("1_4ge5k")
+
+[node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Застосувати"
+
+[node name="Button" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Закрити"
