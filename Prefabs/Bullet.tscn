@@ -64,7 +64,7 @@ script = ExtResource("1_7pnd0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-rotation = -1.5708
+rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_ka6gv")
 animation = &"explode"
 frame_progress = 0.115663

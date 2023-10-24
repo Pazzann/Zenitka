@@ -7,9 +7,9 @@ namespace Zenitka.Scripts._2D.Targets
 	{
 		public override void _Ready()
 		{
-			Weight = 1.0f;
-			DragCoefficient = 0.05f;
-			StartVelocity = 100.0f;
+			Weight = Settings.Settings2D.DefaultTarget.Mass;
+			DragCoefficient = Settings.Settings2D.DefaultTarget.AirResistance;
+			StartVelocity = Settings.Settings2D.DefaultTarget.Velocity;
 		}
 
 	}

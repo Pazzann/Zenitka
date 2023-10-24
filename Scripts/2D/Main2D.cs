@@ -40,16 +40,11 @@ namespace Zenitka.Scripts._2D
 
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
 		{
-			float angleRadF = angleRad;
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
 			
 			bullet.SelfDestructionTime = timeOfCollision - 0.05f;
-			bullet.Rotate(Mathf.Pi * 0.5f - angleRadF);
-			bullet.Rotation = angleRad;
-
 			bullet.GlobalPosition = new Vector2(0.0f, 0.0f);
-
 			bullet.GravityScale = 0f;
 			bullet.StartAngle = angleRad;
 
@@ -86,17 +81,17 @@ namespace Zenitka.Scripts._2D
 					BARREL_LENGTH,
 					_cannon.GetAngle(),
 					Settings.Settings2D.DefaultGun.AngularVelocity,
-					1000f,
-					0.05f),
+					Settings.Settings2D.DefaultGun.BulletSpeed,
+					Settings.Settings2D.DefaultGun.AirResistance),
 				new ParticleState2D(
 					startPos,
-					new Vector2(target.StartVelocity, 0f),
+					new Vector2(Settings.Settings2D.DefaultTarget.Velocity, 0f),
 					Vector2.Zero,
-					0.05f),
+					Settings.Settings2D.DefaultTarget.AirResistance),
 				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
 			).Aim();
 
-			_cannon.RotateToAndSignal(angle, timeOfCollision - 0.05f);
+			_cannon.RotateToAndSignal(angle - 0.04f, timeOfCollision - 0.05f);
 
 			// var bullet = _bulletScene.Instantiate() as Target;
 			// bullet._Ready();

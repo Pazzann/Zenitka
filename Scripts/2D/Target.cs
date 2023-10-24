@@ -29,30 +29,25 @@ namespace Zenitka.Scripts._2D
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 		{
+			base._IntegrateForces(state);
+			var velX = Math2D.XVelocityFromT(this, CurrentTime);
+			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.DefaultGun.Gravity);
 			if (IsExploded)
 			{
-				state.LinearVelocity /= 3.0f;
 				base._IntegrateForces(state);
+				state.LinearVelocity = new Vector2(velX, velY) / 3.0f;
 				return;
 			}
-			base._IntegrateForces(state);
-
-			float velX = Math2D.XVelocityFromT(this, CurrentTime);
-			float velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.DefaultGun.Gravity);
-
-			Rotation = -(Math2D.AngleFromX(this, Position.X,  StartPosition, StartAngle, Settings.Settings2D.DefaultGun.Gravity) - (float)System.Math.PI/2.0f);
-
+			
 			state.LinearVelocity = new Vector2(velX, velY);
+			Rotation = state.LinearVelocity.Normalized().Angle();
 		}
 
-		// public override void _PhysicsProcess(double delta)
-		// {
-		// 	CurrentTime += (float)delta;
-		// 	float velX = Math2D.XVelocityFromT(this, CurrentTime);
-		// 	float velY = Math2D.YVelocityFromT(this, CurrentTime, 9.8f);
+		public override void _PhysicsProcess(double delta)
+		{
+			CurrentTime += (float)delta;
+		}
 
-		// 	LinearVelocity = new Vector2(velX, velY);
-		// }
 
 		[Signal]
 		public delegate void WentWithinRangeEventHandler();

@@ -29,6 +29,8 @@ namespace Zenitka
 					InitialElevationAngle = 0.0f;
 					AngularVelocity = 1.0f;
 					BulletMass = 1.0f;
+					Gravity = 9.8f;
+					AirResistance = 0.05f;
 				}
 			}
 			
@@ -48,6 +50,7 @@ namespace Zenitka
 			{
 				InitialVelocity = new Vector2(0f, -1000f);
 				AngularVelocity = 1.0f;
+				
 			}
 		}
 		
@@ -61,9 +64,10 @@ namespace Zenitka
 			
 			static DefaultTarget()
 			{
-				Velocity = 1000.0f;
-				Mass = 10.0f;
-				
+				Velocity = 100.0f;
+				Mass = 1.0f;
+				AirResistance = 0.05f;
+
 			}
 
 		}
