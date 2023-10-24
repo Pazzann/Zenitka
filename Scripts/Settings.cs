@@ -20,6 +20,9 @@ namespace Zenitka
 				
 				public static float BulletMass { get; set; } // Масса пули
 				
+				public static float AirResistance { get; set; } // Коєфіціент опору повітря
+				public static float Gravity { get; set; } // Гравітація
+				
 				static DefaultGun()
 				{
 					BulletSpeed = 1000.0f;
@@ -37,6 +40,8 @@ namespace Zenitka
 			public static float RocketMassWithoutFuel{ get; set; } // масса ракети без палива
 			public static float FuelMass{ get; set; } // масса палива 
 			public static float AngularVelocity{ get; set; } // кутова швидкість (1/с) (швидкість повороту)
+			public static float AirResistance { get; set; } // Коєфіціент опору повітря
+			public static float Gravity { get; set; } // Гравітація
 			
 			static RocketGun()
 			{
@@ -51,6 +56,7 @@ namespace Zenitka
 			//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 			public static float Mass{ get; set; } // маса
 			//public static float Altitude{ get; set; } // викривлення земної поверхні
+			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 			
 			static DefaultTarget()
 			{
@@ -70,6 +76,7 @@ namespace Zenitka
 			public static float ShrapnelVelocity { get; set; } // швидкість розльоту осколків
 			public static float RocketMassWithoutFuel { get; set; } // власна маса ракети
 			public static float FuelMass { get; set; } // маса палива
+			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 
 			static RocketTarget()
 			{
