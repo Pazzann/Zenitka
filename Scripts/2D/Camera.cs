@@ -28,15 +28,15 @@ public partial class Camera : Camera2D
 		}
 		if (Input.IsActionJustPressed("cam_zoom_out_3d"))
 		{
-			Position = new Vector2(0f,-5400f);
+			Position = new Vector2(0f,-2700f);  
 			Zoom = new Vector2(0.2f,0.2f);
 		}
 		if (Input.IsActionJustPressed("cam_zoom_in_3d"))
 		{
 
-			_mousePosition = 10 * _mousePosition;
-			_mousePosition.Y = Position.Y + _startPosition.Y*(0.1f/Zoom.Y) + _mousePosition.Y * (0.1f / Zoom.Y);
-			_mousePosition.X = Position.X - 19200 * 0.5f*(0.1f/Zoom.X) + _mousePosition.X * (0.1f / Zoom.X);
+			_mousePosition = 5 * _mousePosition;
+			_mousePosition.Y = Position.Y + _startPosition.Y*(0.2f/Zoom.Y) + _mousePosition.Y * (0.2f / Zoom.Y);
+			_mousePosition.X = Position.X - 9600 * 0.5f*(0.2f/Zoom.X) + _mousePosition.X * (0.2f / Zoom.X);
 			if(_mousePosition.Y > Position.Y/1.3) { _mousePosition.Y = Position.Y/1.3f; }
 			Position = _mousePosition;
 			Zoom = Zoom * 1.3f;
