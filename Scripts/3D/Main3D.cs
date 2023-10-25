@@ -121,5 +121,31 @@ namespace Zenitka.Scripts._3D
 			
 			return TARGET_SPAWN_RADIUS * new Vector3(x, y, z).Normalized();
 		}
+		private void SettingsButton()
+		{
+			var settingsButtonAnimation = GetNode<AnimationPlayer>("Button2/AnimationPlayer");
+			var settingsPanel = GetNode<Control>("SettingsPanel3D");
+			if (!settingsPanel.Visible)
+			{
+				settingsPanel.Show();
+				var animation = GetNode<AnimationPlayer>("SettingsPanel3D/Animation");
+				animation.Play("in");
+				settingsButtonAnimation.Play("in");
+			}
+			else
+			{
+				// GD.Print("out");
+				var animation = GetNode<AnimationPlayer>("SettingsPanel3D/Animation");
+				animation.Play("out");
+				settingsButtonAnimation.Play("out");
+
+
+			}
+
+		}
 	}
+	
 }
+
+
+

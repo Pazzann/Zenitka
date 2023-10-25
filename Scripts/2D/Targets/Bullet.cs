@@ -12,15 +12,15 @@ namespace Zenitka.Scripts._2D.Targets
 		private CollisionShape2D _explosionCollision;
 		public float SelfDestructionTime
 		{
-			set => _selDestructionTime = value - 0.05f;
+			set => _selDestructionTime = value + 0.1f;
 			get => _selDestructionTime;
 		}
 
 		public override void _Ready()
 		{
-			Weight = 1.0f;
-			DragCoefficient = 0.05f;
-			StartVelocity = 1000.0f;
+			Weight = Settings.Settings2D.DefaultGun.BulletMass;
+			DragCoefficient = Settings.Settings2D.DefaultGun.AirResistance;
+			StartVelocity = Settings.Settings2D.DefaultGun.BulletSpeed;
 			_animation = GetChild(0) as AnimatedSprite2D;
 			_timer = (GetChild(2) as Timer);
 			_bulletCollision = GetChild(1) as CollisionShape2D;
@@ -33,6 +33,7 @@ namespace Zenitka.Scripts._2D.Targets
 		private void OnBodyEntered(Node body)
 		{
 			body.QueueFree();
+			_on_suicide_timer_timeout();
 		}
 
 		private void _on_suicide_timer_timeout()
@@ -42,7 +43,7 @@ namespace Zenitka.Scripts._2D.Targets
 			_animation.Connect("animation_looped", Callable.From(_destroy));
 			_bulletCollision.Disabled = true;
 			_explosionCollision.Disabled = false;
-
+			IsExploded = true;
 		}
 
 		private void _destroy()

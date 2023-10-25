@@ -8,13 +8,13 @@ namespace Zenitka.Scripts.UI
 		private void ContinueButon()
 		{
 			Pause();
-				
 		}
 	
 
 		private void MenuButton()
 		{
 			GetTree().ChangeSceneToFile("res://Scenes/MainUI.tscn");
+			GetTree().Paused = false;
 		}
 
 		// Called when the node enters the scene tree for the first time.

@@ -94,6 +94,13 @@ namespace Zenitka.Scripts.Math
                            (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
                            (gravitationalAcceleration + startTargetVelocityY * stiffness)) / (stiffness * stiffness);
         }
+        public static Vector2 ComputeVelocity(Target target, float t, float gravitationalAcceleration)
+        {
+            var startVelocity = Vector2.FromAngle(target.StartAngle) * target.StartVelocity;
+            float stiffness = target.DragCoefficient / target.Weight;
+            var constantAcceleration = new Vector2(0, gravitationalAcceleration);
+            return (constantAcceleration - (constantAcceleration - stiffness * startVelocity) * Mathf.Exp(-stiffness * t)) / stiffness;
+        }
 
         public static float YPositionFromX(Target target, float gravitationalAcceleration, float x, Vector2 startPos,
             float angle)
@@ -121,6 +128,16 @@ namespace Zenitka.Scripts.Math
             float stiffness = target.DragCoefficient / target.Weight;
             return (float)System.Math.Log(startVelocityX / (startVelocityX -
                 x * stiffness + startPos.X * stiffness)) / stiffness;
+        }
+
+        public static float AngleFromX(Target target, float x, float alpha, float gravitationalAcceleration)
+        {
+            float startVelocityX = target.StartVelocity * (float)System.Math.Cos(alpha);
+            float startVelocityY = target.StartVelocity * (float)System.Math.Sin(alpha);
+            float stiffness = target.DragCoefficient / target.Weight;
+            GD.Print(gravitationalAcceleration);
+
+            return (float)System.Math.Atan((double)(stiffness * (gravitationalAcceleration + startVelocityY * stiffness) - (gravitationalAcceleration * startVelocityX * stiffness) / (startVelocityX - x * stiffness + target.StartPosition.X * stiffness)) / (startVelocityX * stiffness * stiffness));
         }
     }
 }
