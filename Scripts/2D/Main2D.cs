@@ -1,9 +1,6 @@
 using Godot;
 using System;
-using System.Runtime.Intrinsics;
 using Zenitka.Scripts._2D.Targets;
-using Zenitka.Scripts.Math;
-using Zenitka.Scripts.UI;
 
 
 namespace Zenitka.Scripts._2D
@@ -63,10 +60,13 @@ namespace Zenitka.Scripts._2D
 			var target = _targetScene.Instantiate() as Target;
 			_firedBurstBulletCount = 0;
 
-			var startPos = GenerateTargetSpawnlocation();
+			var targetState = CreateTarget();
 			//startPos.X += 5000f;
 
-			target.GlobalPosition = startPos;
+			target.GlobalPosition = targetState.Position;
+			target.StartVelocity = targetState.Velocity.Length();
+			target.StartAngle = targetState.Velocity.Angle();
+
 			AddChild(target);
 			MoveChild(target, 0);
 
@@ -80,11 +80,7 @@ namespace Zenitka.Scripts._2D
 					Settings.Settings2D.DefaultGun.AngularVelocity,
 					Settings.Settings2D.DefaultGun.BulletSpeed,
 					Settings.Settings2D.DefaultGun.AirResistance / Settings.Settings2D.DefaultGun.BulletMass),
-				new ParticleState2D(
-					startPos,
-					new Vector2(Settings.Settings2D.DefaultTarget.Velocity, 0f),
-					Vector2.Zero,
-					Settings.Settings2D.DefaultTarget.AirResistance / Settings.Settings2D.DefaultTarget.Mass),
+				targetState,
 				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
 			).Aim();
 
@@ -99,16 +95,27 @@ namespace Zenitka.Scripts._2D
 			// _cannon.RotateToAndSignal(a[0] - 0.1f, a[0]);
 		}
  
-		private Vector2 GenerateTargetSpawnlocation()
+		private ParticleState2D CreateTarget()
 		{
-			var pos = new Vector2(0.0f, _anchor2.GlobalPosition.Y);
-
 			Random rand = new Random();
-			pos.X = (rand.Next(0, 2) == 0) ? _anchor1.GlobalPosition.X : _anchor2.GlobalPosition.X;
 
-			pos.Y = rand.Next(-2000, -500);
+			bool kind = rand.Next(2) == 0;
+			var angle = MathUtils.RandRange(-Mathf.Pi / 6f, Mathf.Pi / 6f);
+			
+			var pos = Vector2.Zero;
+			var vel = Vector2.Zero;
 
-			return pos;
+			if (kind) {
+				pos = new Vector2(_anchor1.GlobalPosition.X, MathUtils.RandRange(_anchor2.GlobalPosition.Y, 300f));
+				vel = Vector2.FromAngle(angle);
+			} else {
+				pos = new Vector2(_anchor2.GlobalPosition.X, MathUtils.RandRange(_anchor2.GlobalPosition.Y, 300f));
+				vel = Vector2.FromAngle(Mathf.Pi - angle);
+			}
+
+			vel *= Settings.Settings2D.DefaultTarget.Velocity;
+
+			return new ParticleState2D(pos, vel, Vector2.Zero, Settings.Settings2D.DefaultTarget.AirResistance / Settings.Settings2D.DefaultTarget.Mass);
 		}
 
 		
