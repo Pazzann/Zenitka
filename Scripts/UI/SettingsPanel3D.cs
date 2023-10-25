@@ -7,6 +7,8 @@ namespace Zenitka.Scripts.UI
 	{
 		public override void _Ready()
 		{
+			var node11 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/HBoxContainer6/LineEdit");
+			node11.Text = Settings.Settings3D.Gravity.ToString();
 			
 			var node1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer/LineEdit");
 			node1.Text = Settings.Settings3D.DefaultGun.BulletSpeed.ToString();
@@ -91,6 +93,9 @@ namespace Zenitka.Scripts.UI
 
 		public void SaveButton()
 		{
+			var node11 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/HBoxContainer6/LineEdit");
+			Settings.Settings3D.Gravity = node11.Text.ToFloat();
+			
 			var node1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer/LineEdit");
 			Settings.Settings3D.DefaultGun.BulletSpeed = node1.Text.ToFloat();
 			var node2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer2/LineEdit");
