@@ -47,33 +47,35 @@ namespace Zenitka.Scripts._3D
     public struct CannonState3D
     {
         public CannonState3D(
-            Vector3 projectileSpawnPosition,
+            Vector3 position,
             Vector3 curDirection,
+            float barrelLength,
             float angularRotSpeed,
             float projectileSpeed,
             float projectileAcceleration,
             float projectileLinearDrag)
         {
-            ProjectileSpawnPosition = projectileSpawnPosition;
+            Position = position;
             CurDirection = curDirection.Normalized();
             AngularRotSpeed = angularRotSpeed;
             ProjectileSpeed = projectileSpeed;
             ProjectileAcceleration = projectileAcceleration;
             ProjectileLinearDrag = projectileLinearDrag;
+            BarrelLength = barrelLength;
         }
 
         // direction vector must be normalized
         public ParticleState3D CreateProjectile(in Vector3 direction, in Vector3 gravity)
         {
             return new ParticleState3D(
-                ProjectileSpawnPosition,
+                Position + direction * BarrelLength,
                 ProjectileSpeed * direction,
                 ProjectileAcceleration * direction + gravity,
                 ProjectileLinearDrag);
         }
 
-        public Vector3 ProjectileSpawnPosition, CurDirection;
-        public float AngularRotSpeed, ProjectileSpeed, ProjectileAcceleration, ProjectileLinearDrag;
+        public Vector3 CurDirection, Position;
+        public float AngularRotSpeed, ProjectileSpeed, ProjectileAcceleration, ProjectileLinearDrag, BarrelLength;
     }
 
     public class Solver3D {
@@ -113,7 +115,7 @@ namespace Zenitka.Scripts._3D
                 }
             }
 
-            GD.Print(bestDir, " ", bestTimeOfCollision, " ", bestDistance);
+            //GD.Print(bestDir, " ", bestTimeOfCollision, " ", bestDistance);
 
             return (bestDir, bestTimeOfCollision, bestProjectile);
         }
@@ -121,7 +123,11 @@ namespace Zenitka.Scripts._3D
         // (distance, timeOfCollision)
         private (float, float, ParticleState3D) FindClosestPointsOnTrajectory(Vector3 direction) {
             var projectile = _cannon.CreateProjectile(direction, _gravity);
-            float offT = (direction.AngleTo(_cannon.CurDirection) + 0.01f) / _cannon.AngularRotSpeed;
+
+            var curDirProj = _cannon.CurDirection - _cannon.CurDirection.Project(Vector3.Up);
+            var directionProj = direction - direction.Project(Vector3.Up);
+
+            float offT = (curDirProj.AngleTo(directionProj) + directionProj.AngleTo(direction)) / _cannon.AngularRotSpeed;
 
             var bestT = 9999f;
             var bestDistance = 9999f;

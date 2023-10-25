@@ -7,13 +7,13 @@ namespace Zenitka.Scripts._3D
 	{
 		// private static float BULLET_SPEED = 10f;
 		// private static float TARGET_SPEED = 10f;
-		private const float TARGET_SPAWN_RADIUS = 15f;
+		private const float TARGET_SPAWN_RADIUS = 80f;
 
-		private const float TARGET_SPEED = 50f;
+		private const float TARGET_SPEED = 40f;
 		private const float TARGET_LINEAR_DRAG = 0.05f;
 		private const float TARGET_MASS = 1f;
 
-		private const float BULLET_SPEED = 100f;
+		private const float BULLET_SPEED = 60f;
 		private const float BULLET_LINEAR_DRAG = 0.05f;
 		private const float BULLET_MASS = 1f;
 
@@ -36,18 +36,30 @@ namespace Zenitka.Scripts._3D
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
 		}
 		
-		private void OnCannonAimed(ParticleState3D projectile, float collisionTime)
+		private void OnCannonAimed(ParticleState3D projectile1, ParticleState3D projectile2, float collisionTime)
 		{
 			//GD.Print("aimed");
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
 			AddChild(bullet);
 
-			bullet.State = projectile;
+			bullet.State = projectile1;
 			bullet.Lifespan = 10f;
 			
 			bullet.OnExploded += (target) => {
-				GD.Print("Hit");
+				if (target != null) 
+					GD.Print("Hit 1");
+			};
+
+			var bullet1 = _bulletScene.Instantiate() as Bullet;
+			AddChild(bullet1);
+
+			bullet1.State = projectile2;
+			bullet1.Lifespan = 10f;
+			
+			bullet1.OnExploded += (target) => {
+				if (target != null)
+					GD.Print("Hit 2");
 			};
 		}
 		
@@ -61,7 +73,7 @@ namespace Zenitka.Scripts._3D
 			var targetState = new ParticleState3D(
 				startPos,
 				TARGET_SPEED * (endPos - startPos).Normalized(),
-				Vector3.Zero,
+				GRAVITY,
 				TARGET_LINEAR_DRAG
 			);
 
@@ -77,15 +89,16 @@ namespace Zenitka.Scripts._3D
 				if (visible) {
 					var (dir, timeOfCollision, projectile) = new Solver3D(
 						new CannonState3D(
-							_cannon.BulletSpawnPosition,
+							_cannon.Origin,
 							_cannon.AimDirection,
+							_cannon.BarrelSize,
 							_cannon.AngularRotationSpeed,
 							BULLET_SPEED,
 							0f,
 							BULLET_LINEAR_DRAG
 						),
 						targetState,
-						new Vector3(0f, -9.8f, 0f)
+						GRAVITY
 					).Aim();
 
 					if (dir.LengthSquared() > 0.001f)

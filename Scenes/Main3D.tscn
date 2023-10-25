@@ -20,7 +20,7 @@ script = ExtResource("1_2igm4")
 [node name="Cannon" parent="." instance=ExtResource("1_4hkxh")]
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
-wait_time = 4.521
+wait_time = 1.337
 autostart = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

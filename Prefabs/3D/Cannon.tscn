@@ -1,29 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bt7u2b3j8v318"]
+[gd_scene load_steps=4 format=3 uid="uid://bt7u2b3j8v318"]
 
-[ext_resource type="Script" path="res://Scripts/3D/Cannon.cs" id="1_jjwqs"]
+[ext_resource type="Script" path="res://Scripts/3D/Cannon.cs" id="1_266eq"]
+[ext_resource type="PackedScene" uid="uid://cqylwb3aelqw7" path="res://Assets/AntiAir.blend" id="2_4xccs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c6tab"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_mwon0"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_rbuv3"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 1.0
-
 [node name="Cannon" type="CharacterBody3D"]
-script = ExtResource("1_jjwqs")
+script = ExtResource("1_266eq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.383531, -0.0856782)
 shape = SubResource("BoxShape3D_c6tab")
 
-[node name="Body" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_mwon0")
-
-[node name="Barrel" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
-mesh = SubResource("CylinderMesh_rbuv3")
-
-[node name="BulletSpawnLocation" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+[node name="AntiAir" parent="." instance=ExtResource("2_4xccs")]
