@@ -160,8 +160,7 @@ namespace Zenitka.Scripts.UI
 			// var node37 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer8/LineEdit");
 			// Settings.Settings2D.RocketTarget.AirResistance = node37.Text.ToFloat();
 			
-
-
+			
 		}
 
 
