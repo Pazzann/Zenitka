@@ -105,13 +105,13 @@ namespace Zenitka
 
 				static RocketTarget()
 				{
-					RocketAcceleration = 2000.0f;
-					StartVelocity = 300.0f;
+					RocketAcceleration = 200.0f;
+					StartVelocity = 1000.0f;
 					FuelCost = 0.1f;
 					DetonationDistance = 1.0f;
 					ShrapnelVelocity = 4.0f;
 					RocketMassWithoutFuel = 1;
-					FuelMass = 6f;
+					FuelMass = 0.2f;
 					AirResistance = 0.05f;
 				}
 			}

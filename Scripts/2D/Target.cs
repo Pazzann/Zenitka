@@ -1,5 +1,6 @@
 using Godot;
 using System;
+
 using Zenitka.Scripts.Math;
 
 namespace Zenitka.Scripts._2D
@@ -14,6 +15,7 @@ namespace Zenitka.Scripts._2D
 		public Vector2 StartPosition { get; set; }
 		public float ConstantAcceleration { get; set; }
 
+		
 		public float CurrentTime = 0.0f;
 		public float StartAngle = 0.0f;
 
@@ -30,9 +32,15 @@ namespace Zenitka.Scripts._2D
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 		{
+			
 			base._IntegrateForces(state);
+			
+			Rotation = state.LinearVelocity.Normalized().Angle();
+			
 			var velX = Math2D.XVelocityFromT(this, CurrentTime);
 			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.Gravity);
+			
+				
 			if (IsExploded)
 			{
 				base._IntegrateForces(state);
@@ -53,7 +61,7 @@ namespace Zenitka.Scripts._2D
 			velY *= randEnvY;
 			
 			state.LinearVelocity = new Vector2(velX, velY);
-			Rotation = state.LinearVelocity.Normalized().Angle();
+			
 		}
 
 		public override void _PhysicsProcess(double delta)

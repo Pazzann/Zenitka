@@ -67,6 +67,7 @@ radius = 37.0
 
 [node name="Rocket1" type="RigidBody2D"]
 collision_mask = 2
+gravity_scale = 0.0
 max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
@@ -74,17 +75,20 @@ freeze_mode = 1
 script = ExtResource("1_ibmgh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_1t060")
 animation = &"fly"
-frame_progress = 0.311842
+frame_progress = 0.390882
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
 position = Vector2(6.5, -3.32801e-07)
 rotation = 1.5708
+scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_3cdij")
 debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
 
 [node name="ExplosionBound" type="CollisionShape2D" parent="."]
+scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_nw4hi")
 disabled = true
 debug_color = Color(0.196078, 0.568627, 0.807843, 0.419608)

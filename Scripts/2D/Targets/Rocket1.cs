@@ -26,6 +26,7 @@ namespace Zenitka.Scripts._2D.Targets
 			ConstantAcceleration = Settings.Settings2D.RocketTarget.RocketAcceleration;
 			StartPosition = new Vector2(Position.X, Position.Y);
 			
+			
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 			_currentFuel = Settings.Settings2D.RocketTarget.FuelMass;
 			DragCoefficient = Settings.Settings2D.RocketTarget.AirResistance;
