@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://bg1vxa6qyb30f" path="res://Assets/Sprites/RocketExplosion/RocketExplosion6.png" id="7_1qbl3"]
 [ext_resource type="Texture2D" uid="uid://bq8jwakje7a04" path="res://Assets/Sprites/RocketExplosion/RocketExplosion7.png" id="8_v6uk6"]
 [ext_resource type="Texture2D" uid="uid://o1mt0ssfs7ho" path="res://Assets/Sprites/RocketExplosion/RocketExplosion8.png" id="9_hga58"]
-[ext_resource type="Texture2D" uid="uid://b0lshr2nocrv6" path="res://Assets/Sprites/Rocket/Rocket1.png" id="10_8qyjt"]
-[ext_resource type="Texture2D" uid="uid://hmy3weempph" path="res://Assets/Sprites/Rocket/Rocket2.png" id="11_2cvgn"]
-[ext_resource type="Texture2D" uid="uid://balh0ik147yma" path="res://Assets/Sprites/Rocket/Rocket3.png" id="12_hhfaa"]
+[ext_resource type="Texture2D" uid="uid://ca5dmx14fg2wf" path="res://Assets/Sprites/Rocket2/Rocket2.png" id="10_rjef4"]
+[ext_resource type="Texture2D" uid="uid://lh0tlqvhpjxc" path="res://Assets/Sprites/Rocket2/Rocket3.png" id="11_t3n6h"]
+[ext_resource type="Texture2D" uid="uid://dxodqdyjpatu" path="res://Assets/Sprites/Rocket2/Rocket4.png" id="12_wijl3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1t060"]
 animations = [{
@@ -46,13 +46,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_8qyjt")
+"texture": ExtResource("10_rjef4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_2cvgn")
+"texture": ExtResource("11_t3n6h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_hhfaa")
+"texture": ExtResource("12_wijl3")
 }],
 "loop": true,
 "name": &"fly",

@@ -86,8 +86,10 @@ namespace Zenitka.Scripts._2D
 				Marker2D pos = _rocketCannon.GetChild(0) as Marker2D;
 
 				Rocket2 rocket = _rocketAmmoScene.Instantiate() as Rocket2;
-				rocket.GlobalPosition = pos.GlobalPosition;
+				rocket.GlobalPosition = new Vector2(0,0);
 				rocket.FollowTarget = target;
+				
+				GD.Print(1);
 				
 				AddChild(rocket);
 				
