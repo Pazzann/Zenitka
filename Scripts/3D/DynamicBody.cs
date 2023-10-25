@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace Zenitka.Scripts._3D
 {
@@ -32,8 +31,9 @@ namespace Zenitka.Scripts._3D
 			base._PhysicsProcess(delta);
 			_time += (float) delta;
 
-			GD.Print(LinearVelocity);
-			Transform = Transform.LookingAt(-LinearVelocity, Vector3.Up);
+			Transform = Transform.LookingAt(Vector3.Up, Vector3.Forward);
+			//GD.Print(LinearVelocity);
+			//Transform = Transform.LookingAt(-LinearVelocity, Vector3.Up);
 		}
 
 		private void Reset() {
