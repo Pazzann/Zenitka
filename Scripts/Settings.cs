@@ -11,14 +11,15 @@ namespace Zenitka
 
 		public static class Settings2D
 		{
-			public static bool IsDefaultGun { get; set; }
-			public static bool IsDefaultTarget { get; set; }
-			public static float AirResistance { get; set; } // Коєфіціент опору повітря
+			public static bool IsNotDefaultGun { get; set; }
+			public static bool IsNotDefaultTarget { get; set; }
 			public static float Gravity { get; set; } // Гравітація
 			public static int Random { get; set; } // Коєфіціент випадковості
 
 			static Settings2D()
 			{
+				IsNotDefaultGun = false;
+				IsNotDefaultTarget = false;
 				Gravity = 9.8f;
 				Random = 10;
 			}
@@ -28,11 +29,8 @@ namespace Zenitka
 				public static float BulletSpeed { get; set; } // швидкість снаряда
 				public static float InitialElevationAngle { get; set; } // початковий кут підвищення каналу ствола
 				public static float AngularVelocity { get; set; } // Кутова швидкість змінення напрямку ствола (1/с)
-
 				public static float BulletMass { get; set; } // Масса пули
-
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
-				public static float Gravity { get; set; } // Гравітація
 				public static int SalvoSize { get; set; } // Розмір залпа
 
 				static DefaultGun()
@@ -41,7 +39,6 @@ namespace Zenitka
 					InitialElevationAngle = 0.0f;
 					AngularVelocity = 1.0f;
 					BulletMass = 1.0f;
-					Gravity = 9.8f;
 					AirResistance = 0.05f;
 					SalvoSize = 1;
 				}
@@ -61,7 +58,6 @@ namespace Zenitka
 				public static float FuelMass { get; set; } // масса палива 
 				public static float AngularVelocity { get; set; } // кутова швидкість (1/с) (швидкість повороту)
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
-				public static float Gravity { get; set; } // Гравітація
 				public static float FuelCost { get; set; } // Затрата топлива
 
 				static RocketGun()
@@ -94,6 +90,8 @@ namespace Zenitka
 				public static float
 					RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
 
+				
+				//remove
 				public static float
 					MaxAngularVelocity { get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
 				public static float StartVelocity { get; set; } // Стартовая скорость
@@ -107,9 +105,14 @@ namespace Zenitka
 
 				static RocketTarget()
 				{
-					RocketAcceleration = 2.0f;
-
-					// значения по умолчанию
+					RocketAcceleration = 2000.0f;
+					StartVelocity = 300.0f;
+					FuelCost = 0.1f;
+					DetonationDistance = 1.0f;
+					ShrapnelVelocity = 4.0f;
+					RocketMassWithoutFuel = 1;
+					FuelMass = 6f;
+					AirResistance = 0.05f;
 				}
 			}
 		}

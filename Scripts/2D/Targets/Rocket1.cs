@@ -29,7 +29,7 @@ namespace Zenitka.Scripts._2D.Targets
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 			_currentFuel = Settings.Settings2D.RocketTarget.FuelMass;
 			DragCoefficient = Settings.Settings2D.RocketTarget.AirResistance;
-			StartVelocity = Settings.Settings2D.RocketTarget.;
+			StartVelocity = Settings.Settings2D.RocketTarget.StartVelocity;
 			_animation = GetChild(0) as AnimatedSprite2D;
 			_rocketCollision = GetChild(1) as CollisionShape2D;
 			_explosionCollision = GetChild(2) as CollisionShape2D;
@@ -43,7 +43,7 @@ namespace Zenitka.Scripts._2D.Targets
 			CurrentTime += (float)delta;
 			if (_currentFuel > 0)
 			{
-				_currentFuel -= Settings.Settings2D.RocketTarget. * (float)delta;
+				_currentFuel -= Settings.Settings2D.RocketTarget.FuelCost * (float)delta;
 			}
 			else
 			{

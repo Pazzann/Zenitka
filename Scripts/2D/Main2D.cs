@@ -9,6 +9,7 @@ namespace Zenitka.Scripts._2D
 	{
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
+		private PackedScene _rocketTargetScene;
 
 		private Cannon _cannon;
 
@@ -33,6 +34,7 @@ namespace Zenitka.Scripts._2D
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
+			_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/Rocket1.tscn");
 		}
 
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
@@ -61,7 +63,8 @@ namespace Zenitka.Scripts._2D
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var target = _targetScene.Instantiate() as Target;
+			var scene = (Settings.Settings2D.IsNotDefaultTarget) ? _rocketTargetScene : _targetScene;
+			var target = scene.Instantiate() as Target;
 			_firedBurstBulletCount = 0;
 
 			var targetState = CreateTarget();

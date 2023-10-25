@@ -84,7 +84,7 @@ namespace Zenitka.Scripts.Math
             float startTargetVelocityX = obj.StartVelocity * (float)System.Math.Cos(obj.StartAngle);
             float stiffness = obj.DragCoefficient / obj.Weight;
             float constAccelerationX =
-                obj.ConstantAcceleration * (float)System.Math.Cos(-obj.Rotation + System.Math.PI / 2.0f);
+                obj.ConstantAcceleration * (float)System.Math.Cos(0.5f * Mathf.Pi - obj.Rotation);
             
             return ((-1) * constAccelerationX * stiffness +
                     (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
@@ -96,7 +96,7 @@ namespace Zenitka.Scripts.Math
             float startTargetVelocityY = obj.StartVelocity * (float)System.Math.Sin(obj.StartAngle);
             float stiffness = obj.DragCoefficient / obj.Weight;
             float constAccelerationY =
-                obj.ConstantAcceleration * (float)System.Math.Sin(-obj.Rotation + System.Math.PI / 2.0f) + gravitationalAcceleration;
+                obj.ConstantAcceleration * (float)System.Math.Sin(0.5f * Mathf.Pi - obj.Rotation) + gravitationalAcceleration;
             
             return (-1) * ((-1) * constAccelerationY * stiffness +
                            (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *

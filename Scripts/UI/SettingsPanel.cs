@@ -173,8 +173,8 @@ namespace Zenitka.Scripts.UI
 			
 			OptionButton optionButton = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton");
 			OptionButton optionButton2 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton2");
-			Settings.Settings2D.IsDefaultGun = Convert.ToBoolean(optionButton.Selected);
-			Settings.Settings2D.IsDefaultTarget = Convert.ToBoolean(optionButton2.Selected);
+			Settings.Settings2D.IsNotDefaultGun = Convert.ToBoolean(optionButton.Selected);
+			Settings.Settings2D.IsNotDefaultTarget = Convert.ToBoolean(optionButton2.Selected);
 			
 
 		}

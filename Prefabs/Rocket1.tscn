@@ -76,7 +76,7 @@ script = ExtResource("1_ibmgh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1t060")
 animation = &"fly"
-frame_progress = 0.349636
+frame_progress = 0.311842
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
 position = Vector2(6.5, -3.32801e-07)
