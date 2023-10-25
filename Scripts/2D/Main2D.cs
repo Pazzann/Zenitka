@@ -140,6 +140,23 @@ namespace Zenitka.Scripts._2D
 			
 
 		}
+
+		public override void _Process(double delta)
+		{
+			var roc = GetNode<Node2D>("RocketCannon");
+			var def = GetNode<Node2D>("Cannon");
+			if (Settings.Settings2D.IsNotDefaultGun && roc.Visible == false)
+			{
+				roc.Show();
+				def.Hide();
+			}
+
+			if (!Settings.Settings2D.IsNotDefaultGun && roc.Visible == true)
+			{
+				def.Show();
+				roc.Hide();
+			}
+		}
 	}
 }
 
