@@ -53,7 +53,7 @@ namespace Zenitka
 				public static float
 					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 				public static float
-					RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
+					RocketForce { get; set; } // сила тяги, що надається ракетним двигуном (кг * м / с2)
 
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 				public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
@@ -64,7 +64,11 @@ namespace Zenitka
 
 				static RocketGun()
 				{
-					
+					InitialVelocity = 1000f;
+					RocketForce = 300f;
+					RocketMassWithoutFuel = 10f;
+					FuelMass = 20;
+					FuelCost = 4;
 					AngularVelocity = 1.0f;
 				}
 			}
