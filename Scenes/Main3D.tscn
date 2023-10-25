@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://3n6wbgd7i0ox"]
+[gd_scene load_steps=16 format=3 uid="uid://3n6wbgd7i0ox"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Main3D.cs" id="1_2igm4"]
 [ext_resource type="PackedScene" uid="uid://bt7u2b3j8v318" path="res://Prefabs/3D/Cannon.tscn" id="1_4hkxh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/3D/CameraTarget2.cs" id="5_3s1li"]
 [ext_resource type="PackedScene" uid="uid://bw5dxfeemcro7" path="res://Prefabs/UI/SettingsPanel3D.tscn" id="6_o0hwh"]
 [ext_resource type="Texture2D" uid="uid://dhxeffueupvbi" path="res://Assets/Styles/icons-settings.svg" id="7_n1efw"]
+[ext_resource type="PackedScene" uid="uid://cm0kjp16exuaa" path="res://Prefabs/UI/Menu.tscn" id="8_ld3at"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_161b6"]
 top_radius = 10.0
@@ -132,6 +133,14 @@ expand_icon = true
 libraries = {
 "": SubResource("AnimationLibrary_8fcmw")
 }
+
+[node name="menu" parent="." instance=ExtResource("8_ld3at")]
+visible = false
+offset_left = 725.0
+offset_top = 444.0
+offset_right = -379.1
+offset_bottom = -1174.98
+scale = Vector2(1.68592, 1.59534)
 
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
 [connection signal="pressed" from="Button2" to="." method="SettingsButton"]
