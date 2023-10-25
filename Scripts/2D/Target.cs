@@ -31,7 +31,7 @@ namespace Zenitka.Scripts._2D
 		{
 			base._IntegrateForces(state);
 			var velX = Math2D.XVelocityFromT(this, CurrentTime);
-			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.DefaultGun.Gravity);
+			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.Gravity);
 			if (IsExploded)
 			{
 				base._IntegrateForces(state);
@@ -41,11 +41,11 @@ namespace Zenitka.Scripts._2D
 			var rand = new Random();
 			
 			bool kindX = rand.Next(2) == 1;
-			int randCoefX = rand.Next(10);
+			int randCoefX = rand.Next(Settings.Settings2D.Random);
 			float randEnvX = (kindX)? 1 - randCoefX * 0.001f : 1 + randCoefX * 0.001f;
 			
 			bool kindY = rand.Next(2) == 1;
-			int randCoefY = rand.Next(10);
+			int randCoefY = rand.Next(Settings.Settings2D.Random);
 			float randEnvY = (kindY)? 1 - randCoefY * 0.001f : 1 + randCoefY * 0.001f;
 			
 			velX *= randEnvX;

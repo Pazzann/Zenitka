@@ -14,6 +14,13 @@ namespace Zenitka
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 			public static float Gravity { get; set; } // Гравітація
 			public static int Random { get; set; } // Коєфіціент випадковості
+
+			static Settings2D()
+			{
+				Gravity = 9.8f;
+				Random = 10;
+			}
+			
 			public static class DefaultGun
 			{
 				public static float BulletSpeed { get; set; } // швидкість снаряда
