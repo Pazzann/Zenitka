@@ -71,6 +71,7 @@ script = ExtResource("1_vkw7f")
 layer = 3
 
 [node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("3_lfrii")]
+visible = false
 anchors_preset = -1
 offset_left = 66.0
 offset_top = 132.0
@@ -80,10 +81,10 @@ scale = Vector2(0.792309, 0.986202)
 
 [node name="menu" parent="CanvasLayer" instance=ExtResource("4_qitgn")]
 visible = false
-offset_left = 379.0
-offset_top = 277.0
-offset_right = 379.0
-offset_bottom = 277.0
+offset_left = 778.0
+offset_top = 481.0
+offset_right = 778.0
+offset_bottom = 481.0
 scale = Vector2(1.48863, 1.48863)
 
 [node name="Button2" type="Button" parent="CanvasLayer"]
