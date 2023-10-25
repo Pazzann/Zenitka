@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Statistics.cs" id="5_7cxfb"]
 [ext_resource type="Script" path="res://Scripts/2D/Camera2DTarget.cs" id="5_nimdy"]
 [ext_resource type="Texture2D" uid="uid://dhxeffueupvbi" path="res://Assets/Styles/icons-settings.svg" id="6_bruf2"]
-[ext_resource type="PackedScene" path="res://Prefabs/RocketCannon.tscn" id="10_438pu"]
+[ext_resource type="PackedScene" uid="uid://wy15pbfofou6" path="res://Prefabs/RocketCannon.tscn" id="10_438pu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtlii"]
 draw_center = false
@@ -227,7 +227,7 @@ zoom = Vector2(0.2, 0.2)
 script = ExtResource("3_ha2sy")
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 6.873
 autostart = true
 
 [node name="Anchor2" type="Node2D" parent="."]

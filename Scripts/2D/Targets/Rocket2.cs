@@ -27,8 +27,8 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
-			_acceleration = Settings.Settings2D.RocketGun.RocketAcceleration;
-			StartPosition = new Vector2(Position.X, Position.Y);
+			_acceleration = Settings.Settings2D.RocketGun.RocketForce;
+			StartPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y);
 			
 			Weight = Settings.Settings2D.RocketGun.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 			_currentFuel = Settings.Settings2D.RocketGun.FuelMass;
@@ -42,13 +42,13 @@ namespace Zenitka.Scripts._2D.Targets
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 		}
 
-        public override void _IntegrateForces(PhysicsDirectBodyState2D state)
-        {
-            base._IntegrateForces(state);
+		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+		{
+			base._IntegrateForces(state);
 			ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _acceleration / Weight;
-        }
+		}
 
-        public override void _PhysicsProcess(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
 			CurrentTime += (float)delta;
 			if (_currentFuel > 0 && (FollowTarget.GlobalPosition - GlobalPosition).Length() > 10f)
@@ -57,15 +57,17 @@ namespace Zenitka.Scripts._2D.Targets
 			}
 			else
 			{
+				if(IsExploded)
+					return;
 				_currentFuel = 0;
 				_acceleration = 0;
-				_destroy();
+				Destroy();
 			}
 			
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
 		
-		private void _destroy()
+		public override void Destroy()
 		{
 			_animation.Play("explode");
 			

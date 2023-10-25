@@ -97,7 +97,7 @@ namespace Zenitka.Scripts.Math
             float stiffness = obj.DragCoefficient / obj.Weight;
             float constAccelerationY =
                 obj.ConstantAcceleration * (float)System.Math.Sin(0.5f * Mathf.Pi - obj.Rotation) + gravitationalAcceleration;
-            GD.Print(System.Math.Sin(0.5f * Mathf.Pi - obj.Rotation));
+           
             return (-1) * ((-1) * constAccelerationY * stiffness +
                            (float)System.Math.Exp((-1) * t * (double)stiffness) * stiffness *
                            (constAccelerationY  + startTargetVelocityY * stiffness)) / (stiffness * stiffness);
