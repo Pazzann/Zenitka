@@ -128,9 +128,9 @@ color = Color(0.0941176, 0.0901961, 0.0705882, 1)
 [node name="Label" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
 offset_left = 9.0
-offset_top = 20.0
+offset_top = 23.0
 offset_right = 204.0
-offset_bottom = 68.0
+offset_bottom = 71.0
 scale = Vector2(0.65487, 0.66093)
 text = "Витрачено куль"
 label_settings = SubResource("LabelSettings_1pwct")
@@ -148,9 +148,9 @@ label_settings = SubResource("LabelSettings_1pwct")
 [node name="Label3" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 72.0
+offset_top = 69.0
 offset_right = 197.0
-offset_bottom = 120.0
+offset_bottom = 117.0
 scale = Vector2(0.65487, 0.66093)
 text = "Збито снарядів"
 label_settings = SubResource("LabelSettings_1pwct")
@@ -167,19 +167,19 @@ label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="UsedAmmo" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
-offset_left = 205.0
-offset_top = 22.0
-offset_right = 392.0
-offset_bottom = 70.0
+offset_left = 206.0
+offset_top = 25.0
+offset_right = 393.0
+offset_bottom = 73.0
 scale = Vector2(0.65487, 0.66093)
 text = "0"
 label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="DetectedTargets" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
-offset_left = 206.0
+offset_left = 207.0
 offset_top = 49.0
-offset_right = 393.0
+offset_right = 394.0
 offset_bottom = 97.0
 scale = Vector2(0.65487, 0.66093)
 text = "0"
@@ -187,27 +187,27 @@ label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="DestroyedTargets" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
-offset_left = 206.0
-offset_top = 75.0
-offset_right = 393.0
-offset_bottom = 123.0
+offset_left = 207.0
+offset_top = 70.0
+offset_right = 394.0
+offset_bottom = 118.0
 scale = Vector2(0.65487, 0.66093)
 text = "0"
 label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="Label5" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
-offset_left = 8.0
+offset_left = 10.0
 offset_top = 92.0
-offset_right = 95.0
+offset_right = 97.0
 offset_bottom = 118.0
 text = "Швидкість"
 
 [node name="speed" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
-offset_left = 207.0
+offset_left = 208.0
 offset_top = 95.0
-offset_right = 247.0
+offset_right = 248.0
 offset_bottom = 121.0
 text = "1"
 
@@ -220,6 +220,7 @@ zoom = Vector2(0.1, 0.1)
 script = ExtResource("3_ha2sy")
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
+wait_time = 1.719
 autostart = true
 
 [node name="Anchor2" type="Node2D" parent="."]
