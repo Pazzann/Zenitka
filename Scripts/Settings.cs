@@ -154,7 +154,7 @@ namespace Zenitka
 					ZenithDetectionCoordinates { get; set; } // координати виявлення відносно зенітної установки //torad
 
 				//public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
-				public static Vector2
+				public static float
 					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
@@ -167,7 +167,7 @@ namespace Zenitka
 
 				static RocketGun()
 				{
-					InitialVelocity = new Vector2(0f, -1000f);
+					
 					
 				}
 			}

@@ -102,8 +102,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 2786.0
-offset_bottom = 1634.0
+offset_right = 3804.0
+offset_bottom = 2220.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0941176, 0.0901961, 0.0705882, 1)
@@ -283,6 +283,7 @@ text = "вектор початкової швидкості (напрям, ве
 layout_mode = 2
 
 [node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/3DRocket/HBoxContainer5"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/3DRocket"]
