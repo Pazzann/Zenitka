@@ -9,15 +9,7 @@ namespace Zenitka.Scripts._3D
 		// private static float TARGET_SPEED = 10f;
 		private const float TARGET_SPAWN_RADIUS = 80f;
 
-		private const float TARGET_SPEED = 40f;
-		private const float TARGET_LINEAR_DRAG = 0.05f;
-		private const float TARGET_MASS = 1f;
-
-		private const float BULLET_SPEED = 60f;
-		private const float BULLET_LINEAR_DRAG = 0.05f;
-		private const float BULLET_MASS = 1f;
-
-		private static readonly Vector3 GRAVITY = new Vector3(0f, -9.8f, 0f);
+		private static readonly Vector3 GRAVITY = new Vector3(0f, 0f, 0f);
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
@@ -80,9 +72,9 @@ namespace Zenitka.Scripts._3D
 
 			var targetState = new ParticleState3D(
 				startPos,
-				TARGET_SPEED * (endPos - startPos).Normalized(),
+				Settings.Settings3D.DefaultTarget.Velocity * (endPos - startPos).Normalized(),
 				GRAVITY,
-				TARGET_LINEAR_DRAG
+				Settings.Settings3D.DefaultTarget.AirResistance / Settings.Settings3D.DefaultTarget.Mass
 			);
 
 			var target = _targetScene.Instantiate() as Target;
@@ -92,7 +84,7 @@ namespace Zenitka.Scripts._3D
 
 			target.CannonPosition = _cannon.GlobalPosition;
 			target.CannnonRange = 100f;
-		
+
 			target.OnCannonVisiblityChanged = (visible) => {
 				if (visible) {
 					var (dir, timeOfCollision, projectile) = new Solver3D(
@@ -101,9 +93,9 @@ namespace Zenitka.Scripts._3D
 							_cannon.AimDirection,
 							_cannon.BarrelSize,
 							_cannon.AngularRotationSpeed,
-							BULLET_SPEED,
+							Settings.Settings3D.DefaultGun.BulletSpeed,
 							0f,
-							BULLET_LINEAR_DRAG
+							Settings.Settings3D.DefaultGun.AirResistance / Settings.Settings3D.DefaultGun.BulletMass
 						),
 						targetState,
 						GRAVITY
