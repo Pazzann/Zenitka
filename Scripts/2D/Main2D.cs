@@ -31,7 +31,6 @@ namespace Zenitka.Scripts._2D
 			_ammoLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/UsedAmmo");
 			_detectedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DetectedTargets");
 
-
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 		}
@@ -41,7 +40,7 @@ namespace Zenitka.Scripts._2D
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
 
-			bullet.SelfDestructionTime = timeOfCollision - 0.2f;
+			bullet.SelfDestructionTime = timeOfCollision - 0.07f;
 			bullet.GlobalPosition = Vector2.Zero;
 			bullet.GravityScale = 0f;
 			bullet.StartAngle = angleRad;
@@ -51,10 +50,7 @@ namespace Zenitka.Scripts._2D
 
 			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
 
-			
-				GD.Print("hh ", Settings.Settings2D.DefaultGun.SalvoSize);
-
-			if (_firedBurstBulletCount++ < Settings.Settings2D.DefaultGun.SalvoSize)
+			if (++_firedBurstBulletCount < Settings.Settings2D.DefaultGun.SalvoSize)
 			{
 				ToSignal(GetTree().CreateTimer(0.1f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
 				{
@@ -91,7 +87,7 @@ namespace Zenitka.Scripts._2D
 				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
 			).Aim();
 
-			_cannon.RotateToAndSignal(angle - BURST_STEP * Settings.Settings2D.DefaultGun.SalvoSize / 2f, timeOfCollision);
+			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision);
 		}
 
 		private ParticleState2D CreateTarget()

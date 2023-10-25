@@ -12,8 +12,11 @@ script = ExtResource("1_5upuh")
 position = Vector2(-0.352478, 15.8615)
 texture = ExtResource("3_vi2l7")
 
-[node name="Head" type="Node2D" parent="Gun"]
-position = Vector2(4.16077, -196.253)
+[node name="Bullet1" type="Marker2D" parent="Gun"]
+position = Vector2(-13.3941, -65.2084)
+
+[node name="Bullet2" type="Marker2D" parent="Gun"]
+position = Vector2(13.3941, -64.5034)
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 3
