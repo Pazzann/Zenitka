@@ -68,28 +68,49 @@ _data = {
 script = ExtResource("1_vkw7f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -2
+layer = 3
 
 [node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("3_lfrii")]
-offset_left = -2621.0
-offset_top = -2841.0
-offset_right = -2621.0
-offset_bottom = -2841.0
-scale = Vector2(4.39448, 5.45265)
-
-[node name="menu" parent="." instance=ExtResource("4_qitgn")]
 visible = false
-offset_left = -811.0
-offset_top = -1906.0
-offset_right = -811.0
-offset_bottom = -1906.0
-scale = Vector2(6, 6)
+anchors_preset = -1
+offset_left = 28.0
+offset_top = 165.0
+offset_right = 28.0
+offset_bottom = 165.0
+scale = Vector2(1.16997, 1.45169)
+
+[node name="menu" parent="CanvasLayer" instance=ExtResource("4_qitgn")]
+visible = false
+offset_left = 379.0
+offset_top = 277.0
+offset_right = 379.0
+offset_bottom = 277.0
+scale = Vector2(1.48863, 1.48863)
+
+[node name="Button2" type="Button" parent="CanvasLayer"]
+texture_filter = 2
+offset_left = -188.0
+offset_top = -195.0
+offset_right = 332.0
+offset_bottom = 325.0
+scale = Vector2(0.214897, 0.214897)
+pivot_offset = Vector2(261.069, 266.553)
+theme_override_styles/focus = SubResource("StyleBoxFlat_rtlii")
+icon = ExtResource("6_bruf2")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Button2"]
+libraries = {
+"": SubResource("AnimationLibrary_8fcmw")
+}
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(-1, -184)
+position = Vector2(-1, -182)
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(0, -1621)
+position = Vector2(0, -1622)
 zoom = Vector2(0.2, 0.2)
 script = ExtResource("3_ha2sy")
 
@@ -108,26 +129,7 @@ position = Vector2(0, -700)
 zoom = Vector2(0.6, 0.6)
 script = ExtResource("5_nimdy")
 
-[node name="Button2" type="Button" parent="."]
-texture_filter = 2
-offset_left = -2841.47
-offset_top = -3176.72
-offset_right = -2321.47
-offset_bottom = -2656.72
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(261.069, 266.553)
-theme_override_styles/focus = SubResource("StyleBoxFlat_rtlii")
-icon = ExtResource("6_bruf2")
-flat = true
-icon_alignment = 1
-expand_icon = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Button2"]
-libraries = {
-"": SubResource("AnimationLibrary_8fcmw")
-}
-
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
 [connection signal="timeout" from="TargetSpawnTimer" to="Camera2DTarget" method="_on_target_spawn_timer_timeout"]
-[connection signal="pressed" from="Button2" to="." method="SettingsButton"]
