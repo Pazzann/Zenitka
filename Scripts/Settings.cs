@@ -65,11 +65,11 @@ namespace Zenitka
 				static RocketGun()
 				{
 					InitialVelocity = 1000f;
-					RocketForce = 300f;
-					RocketMassWithoutFuel = 10f;
-					FuelMass = 20;
-					FuelCost = 4;
-					AngularVelocity = 1.0f;
+					RocketForce = 4000f;
+					RocketMassWithoutFuel = 1f;
+					FuelMass = 4;
+					FuelCost = 0.1f;
+					AngularVelocity = 4.0f;
 				}
 			}
 
@@ -87,7 +87,7 @@ namespace Zenitka
 				static DefaultTarget()
 				{
 					Velocity = 1000.0f;
-					Mass = 10.0f;
+					Mass = 1.0f;
 					AirResistance = 0.05f;
 				}
 			}
@@ -118,7 +118,7 @@ namespace Zenitka
 					DetonationDistance = 1.0f;
 					ShrapnelVelocity = 4.0f;
 					RocketMassWithoutFuel = 1;
-					FuelMass = 0.2f;
+					FuelMass = 4f;
 					AirResistance = 0.05f;
 				}
 			}

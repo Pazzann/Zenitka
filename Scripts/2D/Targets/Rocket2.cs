@@ -3,14 +3,11 @@ using System;
 
 namespace Zenitka.Scripts._2D.Targets
 {
-	public partial class Rocket2 : Target
+	public partial class Rocket2 : RigidBody2D
 	{
 		private AnimatedSprite2D _animation;
-		private Timer _timer;
-		private float _selDestructionTime;
 
 		private CollisionShape2D _rocketCollision;
-		private CollisionShape2D _explosionCollision;
 
 		private float _acceleration;
 
@@ -19,11 +16,17 @@ namespace Zenitka.Scripts._2D.Targets
 		public Node2D FollowTarget { get; set; }
 		
 		private Label _destroyedLabel;
-		public float SelfDestructionTime
-		{
-			set => _selDestructionTime = value + 0.1f;
-			get => _selDestructionTime;
-		}
+		public float Weight { get; set; }
+		public float DragCoefficient { get; set; }
+		public float StartVelocity { get; set; }
+		public Vector2 StartPosition { get; set; }
+		public float ConstantAcceleration { get; set; }
+
+		
+		public float CurrentTime = 0.0f;
+		public float StartAngle = 0.0f;
+
+		public bool IsExploded;
 
 		public override void _Ready()
 		{
@@ -36,15 +39,22 @@ namespace Zenitka.Scripts._2D.Targets
 			StartVelocity = Settings.Settings2D.RocketGun.InitialVelocity;
 			_animation = GetChild(0) as AnimatedSprite2D;
 			_rocketCollision = GetChild(1) as CollisionShape2D;
-			_explosionCollision = GetChild(2) as CollisionShape2D;
+			
 			_animation.Play("fly");
 			
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
+		
+			
 		}
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 		{
+			if(IsExploded)
+				state.LinearVelocity = new Vector2(0,0);
 			base._IntegrateForces(state);
+
+			if (!IsExploded)
+				Rotation = state.LinearVelocity.Normalized().Angle();
 			ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _acceleration / Weight;
 		}
 
@@ -67,16 +77,32 @@ namespace Zenitka.Scripts._2D.Targets
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
 		
-		public override void Destroy()
+		public void Destroy()
 		{
 			_animation.Play("explode");
 			
 			_animation.Connect("animation_looped", Callable.From(QueueFree));
 			_rocketCollision.Disabled = true;
-			_explosionCollision.Disabled = false;
+			
 			IsExploded = true;
 		}
+		private void _on_body_entered(Node body)
+		{
+			(body as Target).Destroy();
+			Destroy();
+			_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
+		}
+		private void _on_button_pressed()
+		{
+			Destroy();
+		}
+
 	}
 }
+
+
+
+
+
 
 

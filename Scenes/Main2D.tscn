@@ -139,7 +139,7 @@ offset_top = 23.0
 offset_right = 204.0
 offset_bottom = 71.0
 scale = Vector2(0.65487, 0.66093)
-text = "Витрачено куль"
+text = "Витрачено боєприпасів"
 label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="Label2" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
@@ -149,7 +149,7 @@ offset_top = 45.0
 offset_right = 246.0
 offset_bottom = 93.0
 scale = Vector2(0.65487, 0.66093)
-text = "Снарядів виявлено"
+text = "Цілей виявлено"
 label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="Label3" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
@@ -159,7 +159,7 @@ offset_top = 69.0
 offset_right = 197.0
 offset_bottom = 117.0
 scale = Vector2(0.65487, 0.66093)
-text = "Збито снарядів"
+text = "Збито цілей"
 label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="Label4" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
@@ -241,12 +241,13 @@ position = Vector2(0, -700)
 zoom = Vector2(0.6, 0.6)
 script = ExtResource("5_nimdy")
 
+[node name="RocketMarker" type="Marker2D" parent="."]
+position = Vector2(-517, -391)
+scale = Vector2(4, 4)
+
 [node name="RocketCannon" parent="." instance=ExtResource("10_438pu")]
 position = Vector2(46, -368)
 scale = Vector2(4, 4)
-
-[node name="Marker2D" type="Marker2D" parent="RocketCannon"]
-position = Vector2(-140.75, -5.75)
 
 [connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]

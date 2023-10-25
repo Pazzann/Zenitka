@@ -63,7 +63,7 @@ namespace Zenitka.Scripts._2D
 			state.LinearVelocity = new Vector2(velX, velY);
 			
 		}
-
+		
 		public override void _PhysicsProcess(double delta)
 		{
 			CurrentTime += (float)delta;

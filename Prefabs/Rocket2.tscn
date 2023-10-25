@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ca5dmx14fg2wf" path="res://Assets/Sprites/Rocket2/Rocket2.png" id="10_rjef4"]
 [ext_resource type="Texture2D" uid="uid://lh0tlqvhpjxc" path="res://Assets/Sprites/Rocket2/Rocket3.png" id="11_t3n6h"]
 [ext_resource type="Texture2D" uid="uid://dxodqdyjpatu" path="res://Assets/Sprites/Rocket2/Rocket4.png" id="12_wijl3"]
+[ext_resource type="Theme" uid="uid://hxpqxviknukd" path="res://Assets/Styles/base.tres" id="13_faumv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1t060"]
 animations = [{
@@ -62,9 +63,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cdij"]
 size = Vector2(14, 67)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nw4hi"]
-radius = 37.0
-
 [node name="Rocket2" type="RigidBody2D"]
 light_mask = 2
 collision_mask = 2
@@ -78,8 +76,7 @@ script = ExtResource("1_ijvoh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_1t060")
-animation = &"fly"
-frame_progress = 0.390882
+animation = &"explode"
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
 position = Vector2(6.5, -3.32801e-07)
@@ -88,8 +85,14 @@ scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_3cdij")
 debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
 
-[node name="ExplosionBound" type="CollisionShape2D" parent="."]
-scale = Vector2(5, 5)
-shape = SubResource("CircleShape2D_nw4hi")
-disabled = true
-debug_color = Color(0.196078, 0.568627, 0.807843, 0.419608)
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -174.0
+offset_top = -71.0
+offset_right = 201.0
+offset_bottom = 72.0
+theme = ExtResource("13_faumv")
+text = "Косплей москви"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

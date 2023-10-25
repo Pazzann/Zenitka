@@ -6,18 +6,8 @@ namespace Zenitka.Scripts._2D.Targets
 	public partial class Rocket1 : Target
 	{
 		private AnimatedSprite2D _animation;
-		private Timer _timer;
-		private float _selDestructionTime;
-
 		private CollisionShape2D _rocketCollision;
-
 		private float _currentFuel;
-		
-		public float SelfDestructionTime
-		{
-			set => _selDestructionTime = value + 0.1f;
-			get => _selDestructionTime;
-		}
 
 		public override void _Ready()
 		{

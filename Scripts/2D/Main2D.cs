@@ -13,7 +13,7 @@ namespace Zenitka.Scripts._2D
 		private PackedScene _rocketAmmoScene;
 
 		private Cannon _cannon;
-		private Node2D _rocketCannon;
+		private Marker2D _rocketCannon;
 
 		private Node2D _anchor1;
 		private Node2D _anchor2;
@@ -39,7 +39,7 @@ namespace Zenitka.Scripts._2D
 			_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/Rocket1.tscn");
 			
 			_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/Rocket2.tscn");
-			_rocketCannon = GetNode<Node2D>("RocketCannon");
+			_rocketCannon = GetNode<Marker2D>("RocketMarker");
 		}
 
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
@@ -83,16 +83,12 @@ namespace Zenitka.Scripts._2D
 			
 			if (Settings.Settings2D.IsNotDefaultGun)
 			{
-				Marker2D pos = _rocketCannon.GetChild(0) as Marker2D;
-
 				Rocket2 rocket = _rocketAmmoScene.Instantiate() as Rocket2;
-				rocket.GlobalPosition = new Vector2(0,0);
+				rocket.GlobalPosition = _rocketCannon.Position;
 				rocket.FollowTarget = target;
 				
-				GD.Print(1);
-				
 				AddChild(rocket);
-				
+				_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
 				
 				return;
 			}
