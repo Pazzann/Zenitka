@@ -72,8 +72,10 @@ namespace Zenitka.Scripts._2D
 			//startPos.X += 5000f;
 
 			target.GlobalPosition = targetState.Position;
+			// target.StartVelocity = 100f;
+			// target.StartAngle = Mathf.Pi / 3f;
 			target.StartVelocity = targetState.Velocity.Length();
-			target.StartAngle = targetState.Velocity.Angle();
+			target.StartAngle = -targetState.Velocity.Angle();
 
 			AddChild(target);
 			MoveChild(target, 0);
@@ -110,16 +112,16 @@ namespace Zenitka.Scripts._2D
 			Random rand = new Random();
 
 			bool kind = rand.Next(2) == 0;
+			//var angle = -0.1f;
 			var angle = MathUtils.RandRange(-Mathf.Pi / 6f, Mathf.Pi / 6f);
 			
-			var pos = Vector2.Zero;
-			var vel = Vector2.Zero;
+			Vector2 pos, vel;
 
 			if (kind) {
-				pos = new Vector2(_anchor1.GlobalPosition.X, MathUtils.RandRange(_anchor2.GlobalPosition.Y, 300f));
+				pos = new Vector2(_anchor1.GlobalPosition.X, MathUtils.RandRange(_anchor2.GlobalPosition.Y, -300f));
 				vel = Vector2.FromAngle(angle);
 			} else {
-				pos = new Vector2(_anchor2.GlobalPosition.X, MathUtils.RandRange(_anchor2.GlobalPosition.Y, 300f));
+				pos = new Vector2(_anchor2.GlobalPosition.X, MathUtils.RandRange(_anchor2.GlobalPosition.Y, -300f));
 				vel = Vector2.FromAngle(Mathf.Pi - angle);
 			}
 
@@ -127,8 +129,6 @@ namespace Zenitka.Scripts._2D
 
 			return new ParticleState2D(pos, vel, Vector2.Zero, Settings.Settings2D.DefaultTarget.AirResistance / Settings.Settings2D.DefaultTarget.Mass);
 		}
-
-		
 
 		private void SettingsButton()
 		{

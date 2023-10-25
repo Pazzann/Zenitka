@@ -143,8 +143,6 @@ namespace Zenitka.Scripts._2D
                 }
             }
 
-            //GD.Print("angle: ", angle, " distance: ", bestDistance, " time: ", bestT);
-
             return (bestDistance, bestT);
         }
     }

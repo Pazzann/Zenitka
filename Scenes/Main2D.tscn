@@ -202,7 +202,6 @@ zoom = Vector2(0.1, 0.1)
 script = ExtResource("3_ha2sy")
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
-wait_time = 1.719
 autostart = true
 
 [node name="Anchor2" type="Node2D" parent="."]
