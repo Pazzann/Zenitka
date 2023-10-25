@@ -22,6 +22,7 @@ namespace Zenitka
 
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
 				public static float Gravity { get; set; } // Гравітація
+				public static float SalvoSize { get; set; } // Розмір залпа
 
 				static DefaultGun()
 				{

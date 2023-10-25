@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 namespace Zenitka.Scripts._2D.Targets
 {
@@ -10,6 +11,8 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private CollisionShape2D _bulletCollision;
 		private CollisionShape2D _explosionCollision;
+		
+		private Label _destroyedLabel;
 		public float SelfDestructionTime
 		{
 			set => _selDestructionTime = value + 0.1f;
@@ -28,12 +31,15 @@ namespace Zenitka.Scripts._2D.Targets
 			_timer.WaitTime = ((double)SelfDestructionTime);
 			_timer.Start();
 			_animation.Play("fly2");
+			
+			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 		}
 
 		private void OnBodyEntered(Node body)
 		{
 			body.QueueFree();
 			_on_suicide_timer_timeout();
+			_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
 		}
 
 		private void _on_suicide_timer_timeout()

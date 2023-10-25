@@ -22,13 +22,19 @@ namespace Zenitka.Scripts._2D
 		private int _firedBurstBulletCount = 0;
 
 		private static Random _rng = new Random();
-		
 
+		private Label _ammoLabel;
+		private Label _detectedLabel;
+		
 		public override void _Ready()
 		{
 			_cannon = GetNode<Cannon>("Cannon");
 			_anchor1 = GetNode<Node2D>("Anchor");
 			_anchor2 = GetNode<Node2D>("Anchor2");
+
+			_ammoLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/UsedAmmo");
+			_detectedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DetectedTargets");
+			
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
@@ -46,6 +52,8 @@ namespace Zenitka.Scripts._2D
 
 			AddChild(bullet);
 			MoveChild(bullet, 0);
+
+			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text)  + 1).ToString();
 
 			// if (_firedBurstBulletCount++ < 5)
 			// 	ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
@@ -69,6 +77,8 @@ namespace Zenitka.Scripts._2D
 
 			AddChild(target);
 			MoveChild(target, 0);
+			
+			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text)  + 1).ToString();
 
 			//target.StartVelocity = -target.StartVelocity;
 

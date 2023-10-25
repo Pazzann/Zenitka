@@ -20,7 +20,7 @@ public partial class Camera : Camera2D
 				MakeCurrent();
 			}
 		}
-		if (Input.IsActionJustPressed("cam_zoom_out_3d")&&Zoom.X>0.2f)
+		if (Input.IsActionJustPressed("cam_zoom_out_3d")&&Zoom.X>0.1f)
 		{
 			Zoom = Zoom / 1.3f;
 			Position = new Vector2(Position.X * 1.3f, Position.Y * 1.3f);

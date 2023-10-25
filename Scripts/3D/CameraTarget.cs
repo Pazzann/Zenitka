@@ -23,10 +23,7 @@ public partial class CameraTarget : Camera3D
 
 			if (_target != null)
 			{
-				if(_target.LinearVelocity.Normalized()!=new Vector3(0,0,0))
-				{
-				_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
-				}
+
 			 	if (Input.IsActionPressed("cam_zoom_in_3d") && _zoom - ZOOM_SPEED > 0.3f)
 			 	{
 			 		_zoom -= ZOOM_SPEED;
@@ -36,8 +33,9 @@ public partial class CameraTarget : Camera3D
 			 	{
 			 		_zoom += ZOOM_SPEED;
 			 	}
-			 	Basis = _targetBasis; 
-			 	Position = _target.Position;
+				_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
+				Basis = _target.Basis;
+				Position = _target.Position;
 				if (_targetLinearVelocityNormalized != new Vector3(0, 0, 0))
 				{
 					Translate(new Vector3(-_targetLinearVelocityNormalized.X * 5 * _zoom, 10 * _zoom, -_targetLinearVelocityNormalized.Z * 5 * _zoom));
@@ -46,13 +44,15 @@ public partial class CameraTarget : Camera3D
 				{ Translate(new Vector3(-5 * _zoom, 10 * _zoom, -5 * _zoom)); }
 				Transform = Transform.LookingAt(_target.Position, Vector3.Up);
 
-			}
+
+		}
 	}
 	private void _on_target_spawn_timer_timeout()
 	{
-		_target = GetNodeOrNull<Target>("/root/Main3D/Target");
-		_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
-		_targetBasis = _target.Basis;
+		_target = GetNode<Target>("/root/Main3D/Target");
+		if (_target != null)
+		{
+		}
 	}
 }
 
