@@ -48,7 +48,6 @@ public partial class Camera : Camera2D
 		if (@event is InputEventMouseMotion eventMouseMotion)
 		{
 			_mousePosition = eventMouseMotion.Position;
-			GD.Print("Mouse Motion at: ", _mousePosition);
 		}
 
 	}
