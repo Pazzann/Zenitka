@@ -50,7 +50,7 @@ namespace Zenitka
 					ZenithDetectionCoordinates { get; set; } // координати виявлення відносно зенітної установки //torad
 
 				//public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
-				public static Vector2
+				public static float
 					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 				public static float
 					RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
@@ -64,7 +64,7 @@ namespace Zenitka
 
 				static RocketGun()
 				{
-					InitialVelocity = new Vector2(0f, -1000f);
+					
 					AngularVelocity = 1.0f;
 				}
 			}
@@ -140,13 +140,13 @@ namespace Zenitka
 
 				static DefaultGun()
 				{
-					BulletSpeed = 1000.0f;
+					BulletSpeed = 20.0f;
 					InitialElevationAngle = 0.0f;
-					
-					BulletMass = 1.0f;
+					AngularVelocityX = 1f;
+					BulletMass = 1f;
+					AirResistance = 0.05f;
 				}
 			}
-
 
 			public static class RocketGun
 			{
@@ -154,7 +154,7 @@ namespace Zenitka
 					ZenithDetectionCoordinates { get; set; } // координати виявлення відносно зенітної установки //torad
 
 				//public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
-				public static Vector2
+				public static float
 					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
@@ -167,7 +167,7 @@ namespace Zenitka
 
 				static RocketGun()
 				{
-					InitialVelocity = new Vector2(0f, -1000f);
+					
 					
 				}
 			}
@@ -184,13 +184,11 @@ namespace Zenitka
 
 				static DefaultTarget()
 				{
-					Velocity = 1000.0f;
-					Mass = 10.0f;
-
+					Velocity = 10.0f;
+					Mass = 1f;
+					AirResistance = 0.05f;
 				}
-
 			}
-
 
 			public static class RocketTarget
 			{
