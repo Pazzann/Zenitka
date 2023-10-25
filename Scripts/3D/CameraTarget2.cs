@@ -9,7 +9,6 @@ public partial class CameraTarget2 : Camera3D
 	private float _zoom = 1f;
 	private Target _target;
 	private Vector3 _targetLinearVelocityNormalized;
-	private Basis _targetBasis;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -22,11 +21,8 @@ public partial class CameraTarget2 : Camera3D
 		_target = GetNodeOrNull<Target>("/root/Main3D/Target");
 		if (_target != null)
 		{
-			if (_target.LinearVelocity.Normalized() != new Vector3(0, 0, 0))
-			{
-				_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
-			}
-			Basis = _targetBasis;
+			_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
+			Basis = _target.Basis;
 			Position = _target.Position;
 			if (_targetLinearVelocityNormalized != new Vector3(0, 0, 0))
 			{
@@ -35,14 +31,14 @@ public partial class CameraTarget2 : Camera3D
 			else
 			{ Translate(new Vector3(-5, 10, -5)); }
 			Transform = Transform.LookingAt(_target.Position, Vector3.Up);
-
 		}
 	}
 	private void _on_target_spawn_timer_timeout()
 	{
-		_target = GetNodeOrNull<Target>("/root/Main3D/Target");
-		_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
-		_targetBasis = _target.Basis;
+		_target = GetNode<Target>("/root/Main3D/Target");
+		if (_target != null)
+		{
+		}
 	}
 }
 
