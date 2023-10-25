@@ -9,6 +9,7 @@ namespace Zenitka.Scripts._2D
 	{
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
+		private PackedScene _rocketTargetScene;
 
 		private Cannon _cannon;
 
@@ -20,7 +21,7 @@ namespace Zenitka.Scripts._2D
 		private Label _ammoLabel;
 		private Label _detectedLabel;
 
-		private const float BURST_STEP = 0.02f;
+		private const float BURST_STEP = 0.01f;
 
 		public override void _Ready()
 		{
@@ -33,6 +34,7 @@ namespace Zenitka.Scripts._2D
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
+			_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/Rocket1.tscn");
 		}
 
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
@@ -61,7 +63,8 @@ namespace Zenitka.Scripts._2D
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var target = _targetScene.Instantiate() as Target;
+			var scene = (Settings.Settings2D.IsNotDefaultTarget) ? _rocketTargetScene : _targetScene;
+			var target = scene.Instantiate() as Target;
 			_firedBurstBulletCount = 0;
 
 			var targetState = CreateTarget();
@@ -84,7 +87,7 @@ namespace Zenitka.Scripts._2D
 					Settings.Settings2D.DefaultGun.BulletSpeed,
 					Settings.Settings2D.DefaultGun.AirResistance / Settings.Settings2D.DefaultGun.BulletMass),
 				targetState,
-				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
+				new Vector2(0f, Settings.Settings2D.Gravity)
 			).Aim();
 
 			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision);
@@ -132,9 +135,10 @@ namespace Zenitka.Scripts._2D
 				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("out");
 				settingsButtonAnimation.Play("out");
-
+				
 
 			}
+			
 
 		}
 	}

@@ -56,6 +56,7 @@ radius = 32.0
 
 [node name="Bullet" type="RigidBody2D"]
 collision_mask = 2
+gravity_scale = 0.0
 max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
@@ -66,7 +67,7 @@ script = ExtResource("1_7pnd0")
 texture_filter = 1
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_ka6gv")
-animation = &"explode"
+animation = &"fly2"
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

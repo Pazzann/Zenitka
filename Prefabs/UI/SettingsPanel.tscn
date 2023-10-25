@@ -323,6 +323,28 @@ text = "коефіцієнт опору повітря"
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer8"]
 layout_mode = 2
 
+[node name="HBoxContainer9" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer9"]
+layout_mode = 2
+text = "Затрати палива"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer9"]
+layout_mode = 2
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer10"]
+layout_mode = 2
+text = "прискорення, що надається ракетним двигуном (м/с2)"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer10"]
+layout_mode = 2
+
 [node name="OptionButton2" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
 texture_filter = 2
 layout_mode = 2
@@ -479,6 +501,28 @@ layout_mode = 2
 text = "коефіцієнт опору повітря"
 
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer8"]
+layout_mode = 2
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer9"]
+layout_mode = 2
+text = "Стартова швидкість"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer9"]
+layout_mode = 2
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer10"]
+layout_mode = 2
+text = "Затрати палива"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer10"]
 layout_mode = 2
 
 [node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]

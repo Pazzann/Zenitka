@@ -13,7 +13,7 @@ namespace Zenitka.Scripts._2D
 		public override void _Ready()
 		{
 			_gun = GetNode<Sprite2D>("Gun");
-			_head = GetNode<Node2D>("Gun/Head");
+			_head = GetNode<Node2D>("Gun/Bullet1");
 		}
 
 		public Vector2 GetHeadPosition()

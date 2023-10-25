@@ -1,0 +1,94 @@
+[gd_scene load_steps=16 format=3 uid="uid://l5aldnajwrmi"]
+
+[ext_resource type="Script" path="res://Scripts/2D/Targets/Rocket1.cs" id="1_ibmgh"]
+[ext_resource type="Texture2D" uid="uid://cijsda3jvg8ur" path="res://Assets/Sprites/RocketExplosion/RocketExplosion1.png" id="2_t81mn"]
+[ext_resource type="Texture2D" uid="uid://fyivqv5tptuj" path="res://Assets/Sprites/RocketExplosion/RocketExplosion2.png" id="3_7g484"]
+[ext_resource type="Texture2D" uid="uid://bk6bvolbqd64k" path="res://Assets/Sprites/RocketExplosion/RocketExplosion3.png" id="4_bgs4w"]
+[ext_resource type="Texture2D" uid="uid://cy5gsegbbenc6" path="res://Assets/Sprites/RocketExplosion/RocketExplosion4.png" id="5_gb15a"]
+[ext_resource type="Texture2D" uid="uid://lpmlvu5r8yvs" path="res://Assets/Sprites/RocketExplosion/RocketExplosion5.png" id="6_1o6n6"]
+[ext_resource type="Texture2D" uid="uid://bg1vxa6qyb30f" path="res://Assets/Sprites/RocketExplosion/RocketExplosion6.png" id="7_8e8ll"]
+[ext_resource type="Texture2D" uid="uid://bq8jwakje7a04" path="res://Assets/Sprites/RocketExplosion/RocketExplosion7.png" id="8_2a3hq"]
+[ext_resource type="Texture2D" uid="uid://o1mt0ssfs7ho" path="res://Assets/Sprites/RocketExplosion/RocketExplosion8.png" id="9_u5okv"]
+[ext_resource type="Texture2D" uid="uid://b0lshr2nocrv6" path="res://Assets/Sprites/Rocket/Rocket1.png" id="10_ctnug"]
+[ext_resource type="Texture2D" uid="uid://hmy3weempph" path="res://Assets/Sprites/Rocket/Rocket2.png" id="11_gqrpx"]
+[ext_resource type="Texture2D" uid="uid://balh0ik147yma" path="res://Assets/Sprites/Rocket/Rocket3.png" id="12_ah5ta"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1t060"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_t81mn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7g484")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_bgs4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gb15a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1o6n6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8e8ll")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2a3hq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_u5okv")
+}],
+"loop": true,
+"name": &"explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ctnug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gqrpx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ah5ta")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cdij"]
+size = Vector2(14, 67)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nw4hi"]
+radius = 37.0
+
+[node name="Rocket1" type="RigidBody2D"]
+collision_mask = 2
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+can_sleep = false
+freeze_mode = 1
+script = ExtResource("1_ibmgh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_1t060")
+animation = &"fly"
+frame_progress = 0.390882
+
+[node name="BoundingBox" type="CollisionShape2D" parent="."]
+position = Vector2(6.5, -3.32801e-07)
+rotation = 1.5708
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_3cdij")
+debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
+
+[node name="ExplosionBound" type="CollisionShape2D" parent="."]
+scale = Vector2(5, 5)
+shape = SubResource("CircleShape2D_nw4hi")
+disabled = true
+debug_color = Color(0.196078, 0.568627, 0.807843, 0.419608)

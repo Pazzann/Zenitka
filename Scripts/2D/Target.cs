@@ -1,5 +1,6 @@
 using Godot;
 using System;
+
 using Zenitka.Scripts.Math;
 
 namespace Zenitka.Scripts._2D
@@ -12,7 +13,9 @@ namespace Zenitka.Scripts._2D
 		public float DragCoefficient { get; set; }
 		public float StartVelocity { get; set; }
 		public Vector2 StartPosition { get; set; }
+		public float ConstantAcceleration { get; set; }
 
+		
 		public float CurrentTime = 0.0f;
 		public float StartAngle = 0.0f;
 
@@ -29,9 +32,15 @@ namespace Zenitka.Scripts._2D
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 		{
+			
 			base._IntegrateForces(state);
+			
+			Rotation = state.LinearVelocity.Normalized().Angle();
+			
 			var velX = Math2D.XVelocityFromT(this, CurrentTime);
-			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.DefaultGun.Gravity);
+			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.Gravity);
+			
+				
 			if (IsExploded)
 			{
 				base._IntegrateForces(state);
@@ -41,18 +50,18 @@ namespace Zenitka.Scripts._2D
 			var rand = new Random();
 			
 			bool kindX = rand.Next(2) == 1;
-			int randCoefX = rand.Next(10);
+			int randCoefX = rand.Next(Settings.Settings2D.Random);
 			float randEnvX = (kindX)? 1 - randCoefX * 0.001f : 1 + randCoefX * 0.001f;
 			
 			bool kindY = rand.Next(2) == 1;
-			int randCoefY = rand.Next(10);
+			int randCoefY = rand.Next(Settings.Settings2D.Random);
 			float randEnvY = (kindY)? 1 - randCoefY * 0.001f : 1 + randCoefY * 0.001f;
 			
 			velX *= randEnvX;
 			velY *= randEnvY;
 			
 			state.LinearVelocity = new Vector2(velX, velY);
-			Rotation = state.LinearVelocity.Normalized().Angle();
+			
 		}
 
 		public override void _PhysicsProcess(double delta)
