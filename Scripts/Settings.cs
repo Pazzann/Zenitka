@@ -11,6 +11,8 @@ namespace Zenitka
 
 		public static class Settings2D
 		{
+			public static bool IsDefaultGun { get; set; }
+			public static bool IsDefaultTarget { get; set; }
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 			public static float Gravity { get; set; } // Гравітація
 			public static int Random { get; set; } // Коєфіціент випадковості
@@ -53,6 +55,7 @@ namespace Zenitka
 				public static float AngularVelocity { get; set; } // кутова швидкість (1/с) (швидкість повороту)
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
 				public static float Gravity { get; set; } // Гравітація
+				public static float FuelCost { get; set; } // Затрата топлива
 
 				static RocketGun()
 				{
@@ -86,6 +89,8 @@ namespace Zenitka
 
 				public static float
 					MaxAngularVelocity { get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
+				public static float StartVelocity { get; set; } // Стартовая скорость
+				public static float FuelCost { get; set; } // Затрата топлива
 
 				public static float DetonationDistance { get; set; } // дистанція підриву (м)
 				public static float ShrapnelVelocity { get; set; } // швидкість розльоту осколків
