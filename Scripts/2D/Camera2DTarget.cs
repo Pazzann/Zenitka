@@ -22,6 +22,10 @@ public partial class Camera2DTarget : Camera2D
 			}
 		}
 		_target = GetNodeOrNull<Target>("/root/Main2D/Target");
+		if(_target == null)
+		{
+		 _target = GetNodeOrNull<Target>("/root/Main2D/Rocket1");
+		}
 		if (_target != null)
 		{
 			Position = _target.Position;
@@ -39,6 +43,10 @@ public partial class Camera2DTarget : Camera2D
 	}
 	private void _on_target_spawn_timer_timeout()
 	{
+		if (_target == null)
+		{
+			_target = GetNodeOrNull<Target>("/root/Main2D/Rocket1");
+		}
 		_target = GetNode<Target>("/root/Main2D/Target");
 		_targetStartingPosition = _target.Position;
 	}
