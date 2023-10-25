@@ -71,6 +71,8 @@ namespace Zenitka.Scripts.UI
 			// Settings.Settings2D.DefaultTarget.Altitude = node20.Text.ToFloat();
 			var node36 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer5/LineEdit");
 			node36.Text = Settings.Settings2D.DefaultTarget.AirResistance.ToString();
+			var node57 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer6/LineEdit");
+			node57.Text = Settings.Settings2D.DefaultTarget.Acceleration.ToString();
 			
 			var node21 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer/LineEdit");
 			node21.Text = Settings.Settings2D.RocketTarget.RocketAcceleration.ToString();
@@ -155,6 +157,8 @@ namespace Zenitka.Scripts.UI
 			// Settings.Settings2D.DefaultTarget.Altitude = node20.Text.ToFloat();
 			var node36 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer5/LineEdit");
 			Settings.Settings2D.DefaultTarget.AirResistance = node36.Text.ToFloat();
+			var node57 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer6/LineEdit");
+			Settings.Settings2D.DefaultTarget.Acceleration = node57.Text.ToFloat();
 			
 			var node21 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer/LineEdit");
 			Settings.Settings2D.RocketTarget.RocketAcceleration = node21.Text.ToFloat();

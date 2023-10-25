@@ -423,6 +423,17 @@ text = "коефіцієнт опору повітря"
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer5"]
 layout_mode = 2
 
+[node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer6"]
+layout_mode = 2
+text = "Прискорення"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer6"]
+layout_mode = 2
+
 [node name="2DRocketTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 texture_filter = 2

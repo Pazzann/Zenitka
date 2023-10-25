@@ -78,6 +78,7 @@ namespace Zenitka
 
 				//public static float Altitude{ get; set; } // викривлення земної поверхні
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
+				public static float Acceleration { get; set; } // прискорення
 
 				static DefaultTarget()
 				{
