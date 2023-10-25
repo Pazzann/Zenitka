@@ -115,19 +115,19 @@ namespace Zenitka.Scripts._2D
 
 		private void SettingsButton()
 		{
-			var settingsButtonAnimation = GetNode<AnimationPlayer>("Button2/AnimationPlayer");
-			var settingsPanel = GetNode<Control>("SettingsPanel");
+			var settingsButtonAnimation = GetNode<AnimationPlayer>("CanvasLayer/Button2/AnimationPlayer");
+			var settingsPanel = GetNode<Control>("CanvasLayer/SettingsPanel");
 			if (!settingsPanel.Visible)
 			{
 				settingsPanel.Show();
-				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("in");
 				settingsButtonAnimation.Play("in");
 			}
 			else
 			{
 				// GD.Print("out");
-				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("out");
 				settingsButtonAnimation.Play("out");
 
