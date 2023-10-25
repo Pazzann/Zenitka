@@ -16,16 +16,19 @@ public partial class Statistics : Control
 		Label speedLabel = GetNode<Label>("ColorRect/speed");
 		if (Input.IsActionJustPressed("time+"))
 		{
-			Engine.TimeScale += 0.1;
-			speedLabel.Text = Engine.TimeScale.ToString();
+			if (speedLabel.Text.ToFloat() < 10)
+			{
+				Engine.TimeScale += 0.1;
+				speedLabel.Text = Math.Round(Engine.TimeScale, 1).ToString();
+			}
 		}
 
 		if (Input.IsActionJustPressed("time-"))
 		{
-			if (Engine.TimeScale > 0.1)
+			if (speedLabel.Text.ToFloat() > 0.1)
 			{
 				Engine.TimeScale -= 0.1;
-				speedLabel.Text = Engine.TimeScale.ToString();
+				speedLabel.Text = Math.Round(Engine.TimeScale, 1).ToString();
 			}
 		}
 	}
