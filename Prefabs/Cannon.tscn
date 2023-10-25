@@ -13,7 +13,7 @@ position = Vector2(-0.352478, 15.8615)
 texture = ExtResource("3_vi2l7")
 
 [node name="Head" type="Node2D" parent="Gun"]
-position = Vector2(4.16077, -196.253)
+position = Vector2(-0.704955, -64.1509)
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("2_myj8v")
