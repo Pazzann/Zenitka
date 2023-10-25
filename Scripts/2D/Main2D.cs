@@ -85,6 +85,7 @@ namespace Zenitka.Scripts._2D
 					_cannon.GetAngle(),
 					Settings.Settings2D.DefaultGun.AngularVelocity,
 					Settings.Settings2D.DefaultGun.BulletSpeed,
+					0f,
 					Settings.Settings2D.DefaultGun.AirResistance / Settings.Settings2D.DefaultGun.BulletMass),
 				targetState,
 				new Vector2(0f, Settings.Settings2D.Gravity)

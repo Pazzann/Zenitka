@@ -5,13 +5,14 @@ namespace Zenitka.Scripts._2D
     public struct CannonState2D
     {
         public Vector2 Position;
-        public float BarrelLength, CurAngle, AngularRotSpeed, ProjectileSpeed, ProjectileLinearDrag;
+        public float BarrelLength, CurAngle, AngularRotSpeed, ProjectileSpeed, ProjectileAcceleration, ProjectileLinearDrag;
 
         public CannonState2D(Vector2 position,
                              float barrelLength,
                              float curAngle,
                              float angularRotSpeed,
                              float projectileSpeed,
+                             float projectileAcceleration,
                              float projectileLinearDrag)
         {
             Position = position;
@@ -19,6 +20,7 @@ namespace Zenitka.Scripts._2D
             CurAngle = curAngle;
             AngularRotSpeed = angularRotSpeed;
             ProjectileSpeed = projectileSpeed;
+            ProjectileAcceleration = projectileAcceleration;
             ProjectileLinearDrag = projectileLinearDrag;
         }
 
@@ -29,7 +31,7 @@ namespace Zenitka.Scripts._2D
             return new ParticleState2D(
                 Position + BarrelLength * d,
                 ProjectileSpeed * d,
-                gravity,
+                gravity + d * ProjectileAcceleration,
                 ProjectileLinearDrag);
         }
     }
@@ -52,6 +54,9 @@ namespace Zenitka.Scripts._2D
         
         public Vector2 ComputePosition(float t)
         {
+            if (LinearDrag == 0f) 
+                return ConstantAcceleration * t * t / 2f + Velocity * t;
+
             return Position
                 + ConstantAcceleration * t / LinearDrag
                 - (ConstantAcceleration - LinearDrag * Velocity) / (LinearDrag * LinearDrag)
@@ -60,6 +65,9 @@ namespace Zenitka.Scripts._2D
 
         public Vector2 ComputeVelocity(float t)
         {
+            if (LinearDrag == 0f) 
+                return ConstantAcceleration * t + Velocity;
+
             return (ConstantAcceleration
                 - (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t)) / LinearDrag;
         }
