@@ -41,15 +41,8 @@ theme_override_constants/separation = 40
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "2D Зенітна Гармата"
-
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "2D Зенітна Ракетна
- установка"
+theme_override_font_sizes/font_size = 100
+text = "    2D    "
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -60,17 +53,8 @@ theme_override_constants/separation = 40
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
 texture_filter = 1
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "3D Зенітна Гармата"
-
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer2"]
-texture_filter = 1
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "3D Зенітна Ракетна
- установка"
+theme_override_font_sizes/font_size = 100
+text = "    3D    "
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="Button2D"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="ButtonRocket2D"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button" to="." method="Button3D"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button2" to="." method="ButtonRocket3D"]
