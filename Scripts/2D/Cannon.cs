@@ -43,7 +43,6 @@ namespace Zenitka.Scripts._2D
 					.SetTrans(Tween.TransitionType.Linear);
 
 				tween.TweenCallback(Callable.From(() => Signal(timeOfCollision)));
-
 			}
 		}
 

@@ -9,7 +9,6 @@ namespace Zenitka
 		public bool IsGun = true;
 		public bool IsDefaultTarget = true;
 
-
 		public static class Settings2D
 		{
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
@@ -37,7 +36,6 @@ namespace Zenitka
 					AirResistance = 0.05f;
 				}
 			}
-
 
 			public static class RocketGun
 			{
@@ -78,9 +76,7 @@ namespace Zenitka
 					Mass = 10.0f;
 					AirResistance = 0.05f;
 				}
-
 			}
-
 
 			public static class RocketTarget
 			{
