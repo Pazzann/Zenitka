@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b654r1mknj116"]
+[gd_scene load_steps=14 format=3 uid="uid://b654r1mknj116"]
 
 [ext_resource type="PackedScene" uid="uid://85lv0slp0cd2" path="res://Prefabs/Cannon.tscn" id="1_un41y"]
 [ext_resource type="Script" path="res://Scripts/2D/Main2D.cs" id="1_vkw7f"]
@@ -64,6 +64,9 @@ _data = {
 "out": SubResource("Animation_y1vbf")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_1pwct"]
+font_size = 24
+
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
 
@@ -71,6 +74,7 @@ script = ExtResource("1_vkw7f")
 layer = 3
 
 [node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("3_lfrii")]
+visible = false
 anchors_preset = -1
 offset_left = 66.0
 offset_top = 132.0
@@ -105,35 +109,96 @@ libraries = {
 "": SubResource("AnimationLibrary_8fcmw")
 }
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Statistics" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 1768.0
-offset_top = 986.0
-offset_right = 1808.0
-offset_bottom = 1026.0
-scale = Vector2(2.44551, 2.44551)
+offset_left = 1670.0
+offset_top = 960.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Statistics"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(1.55612, 1)
+offset_right = 250.0
+offset_bottom = 120.0
 color = Color(0.0941176, 0.0901961, 0.0705882, 1)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/ColorRect"]
+[node name="Label" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 15.0
+offset_top = 28.0
+offset_right = 210.0
+offset_bottom = 76.0
 scale = Vector2(0.65487, 0.66093)
-text = "Test"
+text = "Витрачено куль"
+label_settings = SubResource("LabelSettings_1pwct")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 53.0
+offset_right = 252.0
+offset_bottom = 101.0
+scale = Vector2(0.65487, 0.66093)
+text = "Снарядів виявлено"
+label_settings = SubResource("LabelSettings_1pwct")
+
+[node name="Label3" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 80.0
+offset_right = 203.0
+offset_bottom = 128.0
+scale = Vector2(0.65487, 0.66093)
+text = "Збито снарядів"
+label_settings = SubResource("LabelSettings_1pwct")
+
+[node name="Label4" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = -1.0
+offset_right = 252.0
+offset_bottom = 47.0
+scale = Vector2(0.65487, 0.66093)
+text = "Статистика"
+label_settings = SubResource("LabelSettings_1pwct")
+
+[node name="UsedAmmo" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 30.0
+offset_right = 398.0
+offset_bottom = 78.0
+scale = Vector2(0.65487, 0.66093)
+text = "0"
+label_settings = SubResource("LabelSettings_1pwct")
+
+[node name="DetectedTargets" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 57.0
+offset_right = 399.0
+offset_bottom = 105.0
+scale = Vector2(0.65487, 0.66093)
+text = "0"
+label_settings = SubResource("LabelSettings_1pwct")
+
+[node name="DestroyedTargets" type="Label" parent="CanvasLayer/Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 83.0
+offset_right = 399.0
+offset_bottom = 131.0
+scale = Vector2(0.65487, 0.66093)
+text = "0"
+label_settings = SubResource("LabelSettings_1pwct")
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
 position = Vector2(-1, -182)
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(0, -1622)
-zoom = Vector2(0.2, 0.2)
+position = Vector2(4, -5400)
+zoom = Vector2(0.1, 0.1)
 script = ExtResource("3_ha2sy")
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
@@ -141,10 +206,10 @@ wait_time = 1.719
 autostart = true
 
 [node name="Anchor2" type="Node2D" parent="."]
-position = Vector2(-2738, -1494)
+position = Vector2(8908, -4345)
 
 [node name="Anchor" type="Node2D" parent="."]
-position = Vector2(-2712, -2510)
+position = Vector2(-9326, -5399)
 
 [node name="Camera2DTarget" type="Camera2D" parent="."]
 position = Vector2(0, -700)
