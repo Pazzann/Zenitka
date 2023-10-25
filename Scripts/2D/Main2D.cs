@@ -51,6 +51,9 @@ namespace Zenitka.Scripts._2D
 
 			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
 
+			
+				GD.Print("hh ", Settings.Settings2D.DefaultGun.SalvoSize);
+
 			if (_firedBurstBulletCount++ < Settings.Settings2D.DefaultGun.SalvoSize)
 			{
 				ToSignal(GetTree().CreateTimer(0.1f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>

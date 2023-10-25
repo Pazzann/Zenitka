@@ -34,6 +34,7 @@ namespace Zenitka
 					BulletMass = 1.0f;
 					Gravity = 9.8f;
 					AirResistance = 0.05f;
+					SalvoSize = 1;
 				}
 			}
 
