@@ -42,13 +42,13 @@ namespace Zenitka.Scripts._2D.Targets
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 		}
 
-        public override void _IntegrateForces(PhysicsDirectBodyState2D state)
-        {
-            base._IntegrateForces(state);
+		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+		{
+			base._IntegrateForces(state);
 			ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _acceleration / Weight;
-        }
+		}
 
-        public override void _PhysicsProcess(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
 			CurrentTime += (float)delta;
 			if (_currentFuel > 0 && (FollowTarget.GlobalPosition - GlobalPosition).Length() > 10f)
