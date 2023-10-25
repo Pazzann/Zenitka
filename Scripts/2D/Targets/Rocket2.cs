@@ -59,13 +59,13 @@ namespace Zenitka.Scripts._2D.Targets
 			{
 				_currentFuel = 0;
 				_acceleration = 0;
-				_destroy();
+				Destroy();
 			}
 			
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
 		
-		private void _destroy()
+		public override void Destroy()
 		{
 			_animation.Play("explode");
 			
