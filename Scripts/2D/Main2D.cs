@@ -135,9 +135,10 @@ namespace Zenitka.Scripts._2D
 				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("out");
 				settingsButtonAnimation.Play("out");
-
+				
 
 			}
+			
 
 		}
 	}

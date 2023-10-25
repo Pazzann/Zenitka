@@ -67,7 +67,7 @@ namespace Zenitka.Scripts.UI
 			node19.Text = Settings.Settings2D.DefaultTarget.Mass.ToString();
 			// var node20 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4/LineEdit");
 			// Settings.Settings2D.DefaultTarget.Altitude = node20.Text.ToFloat();
-			var node36 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer8/LineEdit");
+			var node36 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer5/LineEdit");
 			node36.Text = Settings.Settings2D.DefaultTarget.AirResistance.ToString();
 			
 			var node21 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer/LineEdit");
@@ -175,6 +175,7 @@ namespace Zenitka.Scripts.UI
 			OptionButton optionButton2 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton2");
 			Settings.Settings2D.IsNotDefaultGun = Convert.ToBoolean(optionButton.Selected);
 			Settings.Settings2D.IsNotDefaultTarget = Convert.ToBoolean(optionButton2.Selected);
+			
 			
 
 		}
