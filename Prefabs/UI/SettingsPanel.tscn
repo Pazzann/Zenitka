@@ -120,17 +120,6 @@ theme_override_constants/margin_bottom = 5
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 30
-
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/HBoxContainer5"]
-layout_mode = 2
-text = "коефіцієнт опору повітря"
-
-[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/HBoxContainer5"]
-layout_mode = 2
-
 [node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
@@ -225,6 +214,17 @@ text = "розмір залпа"
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer7"]
 layout_mode = 2
 
+[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer5"]
+layout_mode = 2
+text = "коефіцієнт опору повітря"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer5"]
+layout_mode = 2
+
 [node name="2DRocket" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
 texture_filter = 2
@@ -312,6 +312,17 @@ text = "кутова швидкість (1/с) (швидкість поворо�
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer3"]
 layout_mode = 2
 
+[node name="HBoxContainer8" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer8"]
+layout_mode = 2
+text = "коефіцієнт опору повітря"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer8"]
+layout_mode = 2
+
 [node name="OptionButton2" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
 texture_filter = 2
 layout_mode = 2
@@ -378,6 +389,17 @@ text = "викривлення земної поверхні"
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer4"]
 layout_mode = 2
 theme = ExtResource("1_r8vbj")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer5"]
+layout_mode = 2
+text = "коефіцієнт опору повітря"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget/HBoxContainer5"]
+layout_mode = 2
 
 [node name="2DRocketTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
 visible = false
@@ -447,6 +469,17 @@ theme = ExtResource("1_r8vbj")
 [node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer7"]
 layout_mode = 2
 theme = ExtResource("1_r8vbj")
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer8"]
+layout_mode = 2
+text = "коефіцієнт опору повітря"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer8"]
+layout_mode = 2
 
 [node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
