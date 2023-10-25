@@ -78,6 +78,7 @@ namespace Zenitka
 
 				//public static float Altitude{ get; set; } // викривлення земної поверхні
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
+				public static float Acceleration { get; set; } // прискорення
 
 				static DefaultTarget()
 				{
@@ -122,6 +123,9 @@ namespace Zenitka
 
 		public static class Settings3D
 		{
+			public static bool IsNotDefaultGun { get; set; }
+			public static bool IsNotDefaultTarget { get; set; }
+			public static float Gravity { get; set; } // Гравітація
 			public static class DefaultGun
 			{
 				public static float BulletSpeed { get; set; } // швидкість снаряда
