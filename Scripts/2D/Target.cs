@@ -38,6 +38,18 @@ namespace Zenitka.Scripts._2D
 				state.LinearVelocity = new Vector2(velX, velY) / 3.0f;
 				return;
 			}
+			var rand = new Random();
+			
+			bool kindX = rand.Next(2) == 1;
+			int randCoefX = rand.Next(10);
+			float randEnvX = (kindX)? 1 - randCoefX * 0.001f : 1 + randCoefX * 0.001f;
+			
+			bool kindY = rand.Next(2) == 1;
+			int randCoefY = rand.Next(10);
+			float randEnvY = (kindY)? 1 - randCoefY * 0.001f : 1 + randCoefY * 0.001f;
+			
+			velX *= randEnvX;
+			velY *= randEnvY;
 			
 			state.LinearVelocity = new Vector2(velX, velY);
 			Rotation = state.LinearVelocity.Normalized().Angle();
