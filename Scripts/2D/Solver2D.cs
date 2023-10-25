@@ -52,6 +52,9 @@ namespace Zenitka.Scripts._2D
         
         public Vector2 ComputePosition(float t)
         {
+            if (LinearDrag == 0f) 
+                return ConstantAcceleration * t * t / 2f + Velocity * t;
+
             return Position
                 + ConstantAcceleration * t / LinearDrag
                 - (ConstantAcceleration - LinearDrag * Velocity) / (LinearDrag * LinearDrag)
@@ -60,6 +63,9 @@ namespace Zenitka.Scripts._2D
 
         public Vector2 ComputeVelocity(float t)
         {
+            if (LinearDrag == 0f) 
+                return ConstantAcceleration * t + Velocity;
+
             return (ConstantAcceleration
                 - (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t)) / LinearDrag;
         }
