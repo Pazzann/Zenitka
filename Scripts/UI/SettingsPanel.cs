@@ -20,6 +20,8 @@ namespace Zenitka.Scripts.UI
 			node34.Text = Settings.Settings2D.DefaultGun.AirResistance.ToString();
 			var node40 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer6/LineEdit");
 			node40.Text = Settings.Settings2D.DefaultGun.Gravity.ToString();
+			var node49 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer7/LineEdit");
+			node49.Text = Settings.Settings2D.DefaultGun.SalvoSize.ToString();
 			
 			var node4 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer/LineEdit");
 			var node5 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer/LineEdit2");
@@ -91,6 +93,8 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.DefaultGun.AirResistance = node34.Text.ToFloat();
 			var node40 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer6/LineEdit");
 			Settings.Settings2D.DefaultGun.Gravity = node40.Text.ToFloat();
+			var node49 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer7/LineEdit");
+			Settings.Settings2D.DefaultGun.SalvoSize = node49.Text.ToFloat();
 			
 			var node4 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer/LineEdit");
 			var node5 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer/LineEdit2");

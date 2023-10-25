@@ -67,27 +67,73 @@ _data = {
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
 
-[node name="SettingsPanel" parent="." instance=ExtResource("3_lfrii")]
-visible = false
-offset_left = -2621.0
-offset_top = -2841.0
-offset_right = -2621.0
-offset_bottom = -2841.0
-scale = Vector2(4.39448, 5.45265)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
 
-[node name="menu" parent="." instance=ExtResource("4_qitgn")]
+[node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("3_lfrii")]
 visible = false
-offset_left = -811.0
-offset_top = -1906.0
-offset_right = -811.0
-offset_bottom = -1906.0
-scale = Vector2(6, 6)
+anchors_preset = -1
+offset_left = 66.0
+offset_top = 132.0
+offset_right = 66.0
+offset_bottom = 132.0
+scale = Vector2(0.792309, 0.986202)
+
+[node name="menu" parent="CanvasLayer" instance=ExtResource("4_qitgn")]
+visible = false
+offset_left = 778.0
+offset_top = 481.0
+offset_right = 778.0
+offset_bottom = 481.0
+scale = Vector2(1.48863, 1.48863)
+
+[node name="Button2" type="Button" parent="CanvasLayer"]
+texture_filter = 2
+offset_left = -218.0
+offset_top = -222.0
+offset_right = 302.0
+offset_bottom = 298.0
+scale = Vector2(0.15, 0.151)
+pivot_offset = Vector2(261.069, 266.553)
+theme_override_styles/focus = SubResource("StyleBoxFlat_rtlii")
+icon = ExtResource("6_bruf2")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Button2"]
+libraries = {
+"": SubResource("AnimationLibrary_8fcmw")
+}
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1768.0
+offset_top = 986.0
+offset_right = 1808.0
+offset_bottom = 1026.0
+scale = Vector2(2.44551, 2.44551)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.55612, 1)
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(0.65487, 0.66093)
+text = "Test"
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(-1, -184)
+position = Vector2(-1, -182)
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(0, -1621)
+position = Vector2(0, -1622)
 zoom = Vector2(0.2, 0.2)
 script = ExtResource("3_ha2sy")
 
@@ -101,31 +147,12 @@ position = Vector2(-2738, -1494)
 [node name="Anchor" type="Node2D" parent="."]
 position = Vector2(-2712, -2510)
 
-[node name="Button2" type="Button" parent="."]
-texture_filter = 2
-offset_left = -2943.0
-offset_top = -3291.0
-offset_right = -2423.0
-offset_bottom = -2771.0
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(261.069, 266.553)
-theme_override_styles/focus = SubResource("StyleBoxFlat_rtlii")
-icon = ExtResource("6_bruf2")
-flat = true
-icon_alignment = 1
-expand_icon = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Button2"]
-libraries = {
-"": SubResource("AnimationLibrary_8fcmw")
-}
-
 [node name="Camera2DTarget" type="Camera2D" parent="."]
 position = Vector2(0, -700)
 zoom = Vector2(0.6, 0.6)
 script = ExtResource("5_nimdy")
 
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
 [connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
 [connection signal="timeout" from="TargetSpawnTimer" to="Camera2DTarget" method="_on_target_spawn_timer_timeout"]
-[connection signal="pressed" from="Button2" to="." method="SettingsButton"]

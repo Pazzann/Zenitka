@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.Intrinsics;
 using Zenitka.Scripts._2D.Targets;
 using Zenitka.Scripts.Math;
 using Zenitka.Scripts.UI;
@@ -9,7 +10,7 @@ namespace Zenitka.Scripts._2D
 {
 	public partial class Main2D : Node2D
 	{
-		private static float BARREL_LENGTH = 200f;
+		private static float BARREL_LENGTH = 64f;
 		private static float MUZZLE_SPEED = 2000f;
 		private static float TARGET_SPEED = 2000f;
 
@@ -36,29 +37,25 @@ namespace Zenitka.Scripts._2D
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 		}
 
-		
-
 		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
 		{
 
 			var bullet = _bulletScene.Instantiate() as Bullet;
 			
-			bullet.SelfDestructionTime = timeOfCollision - 0.05f;
-			bullet.GlobalPosition = new Vector2(0.0f, 0.0f);
+			bullet.SelfDestructionTime = timeOfCollision - 0.07f;;
+			bullet.GlobalPosition = Vector2.Zero;
 			bullet.GravityScale = 0f;
 			bullet.StartAngle = angleRad;
 
 			AddChild(bullet);
 			MoveChild(bullet, 0);
-			
-			
 
-			if (_firedBurstBulletCount++ < 10)
-				ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
-				{
-				_cannon.RotateToAndSignal(angleRad + 0.02f, timeOfCollision);
-				}
-			);
+			// if (_firedBurstBulletCount++ < 5)
+			// 	ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
+			// 	{
+			// 	_cannon.RotateToAndSignal(angleRad + 0.02f, timeOfCollision);
+			// 	}
+			// );
 		}
 
 		private void OnTargetSpawnTimerTimeout()
@@ -78,20 +75,20 @@ namespace Zenitka.Scripts._2D
 			var (angle, timeOfCollision) = new Solver2D(
 				new CannonState2D(
 					Vector2.Zero,
-					BARREL_LENGTH,
+					0f,
 					_cannon.GetAngle(),
 					Settings.Settings2D.DefaultGun.AngularVelocity,
 					Settings.Settings2D.DefaultGun.BulletSpeed,
-					Settings.Settings2D.DefaultGun.AirResistance),
+					Settings.Settings2D.DefaultGun.AirResistance / Settings.Settings2D.DefaultGun.BulletMass),
 				new ParticleState2D(
 					startPos,
 					new Vector2(Settings.Settings2D.DefaultTarget.Velocity, 0f),
 					Vector2.Zero,
-					Settings.Settings2D.DefaultTarget.AirResistance),
+					Settings.Settings2D.DefaultTarget.AirResistance / Settings.Settings2D.DefaultTarget.Mass),
 				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
 			).Aim();
 
-			_cannon.RotateToAndSignal(angle - 0.1f, timeOfCollision);
+			_cannon.RotateToAndSignal(angle, timeOfCollision);
 
 			// var bullet = _bulletScene.Instantiate() as Target;
 			// bullet._Ready();
@@ -106,7 +103,6 @@ namespace Zenitka.Scripts._2D
 		{
 			var pos = new Vector2(0.0f, _anchor2.GlobalPosition.Y);
 
-
 			Random rand = new Random();
 			pos.X = (rand.Next(0, 2) == 0) ? _anchor1.GlobalPosition.X : _anchor2.GlobalPosition.X;
 
@@ -119,19 +115,19 @@ namespace Zenitka.Scripts._2D
 
 		private void SettingsButton()
 		{
-			var settingsButtonAnimation = GetNode<AnimationPlayer>("Button2/AnimationPlayer");
-			var settingsPanel = GetNode<Control>("SettingsPanel");
+			var settingsButtonAnimation = GetNode<AnimationPlayer>("CanvasLayer/Button2/AnimationPlayer");
+			var settingsPanel = GetNode<Control>("CanvasLayer/SettingsPanel");
 			if (!settingsPanel.Visible)
 			{
 				settingsPanel.Show();
-				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("in");
 				settingsButtonAnimation.Play("in");
 			}
 			else
 			{
 				// GD.Print("out");
-				var animation = GetNode<AnimationPlayer>("SettingsPanel/Animation");
+				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("out");
 				settingsButtonAnimation.Play("out");
 

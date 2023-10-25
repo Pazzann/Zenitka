@@ -68,10 +68,10 @@ namespace Zenitka.Scripts._2D
     public class Solver2D
     {
         private const int SECTORS = 500;
-        private const int ITERATIONS = 200;
+        private const int ITERATIONS = 400;
 
         private const float SECTOR_ARC = Mathf.Pi / SECTORS;
-        private const float TIME_STEP = 0.05f; 
+        private const float TIME_STEP = 0.02f; 
 
         private const float SCALE = 1f;
 
