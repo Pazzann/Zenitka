@@ -38,9 +38,9 @@ namespace Zenitka.Scripts.UI
 			// var node7 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer2/LineEdit2");
 			// Settings.Settings2D.RocketGun.TargetEndCoordinates = new Vector2(node6.Text.ToFloat(), node7.Text.ToFloat());
 			var node8 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5/LineEdit");
-			var node9 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5/LineEdit2");
-			node8.Text = Settings.Settings2D.RocketGun.InitialVelocity[0].ToString();
-			node9.Text = Settings.Settings2D.RocketGun.InitialVelocity[1].ToString();
+			// var node9 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5/LineEdit2");
+			node8.Text = Settings.Settings2D.RocketGun.InitialVelocity.ToString();
+			
 			// var node10 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6/LineEdit");
 			// var node11 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6/LineEdit2");
 			// Settings.Settings2D.RocketGun.Size = new Vector2(node10.Text.ToFloat(), node11.Text.ToFloat());
@@ -126,7 +126,7 @@ namespace Zenitka.Scripts.UI
 			// Settings.Settings2D.RocketGun.TargetEndCoordinates = new Vector2(node6.Text.ToFloat(), node7.Text.ToFloat());
 			var node8 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5/LineEdit");
 			var node9 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5/LineEdit2");
-			Settings.Settings2D.RocketGun.InitialVelocity = new Vector2(node8.Text.ToFloat(), node9.Text.ToFloat());
+			Settings.Settings2D.RocketGun.InitialVelocity = node8.Text.ToFloat();
 			// var node10 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6/LineEdit");
 			// var node11 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer6/LineEdit2");
 			// Settings.Settings2D.RocketGun.Size = new Vector2(node10.Text.ToFloat(), node11.Text.ToFloat());

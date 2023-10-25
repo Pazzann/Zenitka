@@ -226,7 +226,6 @@ text = "коефіцієнт опору повітря"
 layout_mode = 2
 
 [node name="2DRocket" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
-visible = false
 texture_filter = 2
 layout_mode = 2
 theme_override_constants/separation = 10
@@ -271,6 +270,7 @@ text = "вектор початкової швидкості (напрям, ве
 layout_mode = 2
 
 [node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
