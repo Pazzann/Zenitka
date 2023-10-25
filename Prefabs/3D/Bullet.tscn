@@ -8,9 +8,12 @@
 size = Vector3(0.1, 0.1, 0.3)
 
 [node name="Bullet" type="RigidBody3D"]
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_ioofg")
 
 [node name="BoundingBox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15)
 shape = SubResource("BoxShape3D_g8gjo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -23,3 +26,5 @@ skeleton = NodePath("")
 
 [node name="Bullet" parent="." instance=ExtResource("3_pqjc4")]
 transform = Transform3D(0.3, 0, 0, 0, -0.3, 4.52987e-08, 0, -4.52987e-08, -0.3, 0, 0, 0)
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

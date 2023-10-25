@@ -21,7 +21,7 @@ namespace Zenitka.Scripts._3D
 			}
 		}
 
-		public event Action<Node2D> OnExploded;
+		public event Action<Node3D> OnExploded;
 
 		public override void _Ready()
 		{
@@ -31,10 +31,14 @@ namespace Zenitka.Scripts._3D
 
 		private void OnSuicideTimerTimeout()
 		{
-			_timer.Stop();
-			QueueFree();
-
 			OnExploded?.Invoke(null);
+			QueueFree();
+		}
+
+		private void OnBodyEntered(Node body)
+		{
+			OnExploded?.Invoke(body as Node3D);
+			QueueFree();
 		}
 	}
 }

@@ -47,8 +47,12 @@ namespace Zenitka.Scripts._3D
 			bullet.Lifespan = 10f;
 			
 			bullet.OnExploded += (target) => {
-				if (target != null) 
-					GD.Print("Hit 1");
+				if (target != null) {
+					GD.Print("Hit");
+					target.QueueFree();
+				} else {
+					GD.Print("Missed.");
+				}
 			};
 
 			var bullet1 = _bulletScene.Instantiate() as Bullet;
@@ -58,8 +62,12 @@ namespace Zenitka.Scripts._3D
 			bullet1.Lifespan = 10f;
 			
 			bullet1.OnExploded += (target) => {
-				if (target != null)
-					GD.Print("Hit 2");
+				if (target != null) {
+					GD.Print("Hit");
+					target.QueueFree();
+				} else {
+					GD.Print("Missed.");
+				}
 			};
 		}
 		
