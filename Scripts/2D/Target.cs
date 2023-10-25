@@ -83,6 +83,11 @@ namespace Zenitka.Scripts._2D
 					.OnCompleted(() => EmitSignal(SignalName.WentWithinRange));
 			}
 		}
+
+		public virtual void Destroy()
+		{
+			QueueFree();
+		}
 		
 		private void OnVisibleOnScreenNotifier2dScreenExited()
 		{

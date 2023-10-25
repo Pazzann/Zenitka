@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://l5aldnajwrmi"]
+[gd_scene load_steps=15 format=3 uid="uid://l5aldnajwrmi"]
 
 [ext_resource type="Script" path="res://Scripts/2D/Targets/Rocket1.cs" id="1_ibmgh"]
 [ext_resource type="Texture2D" uid="uid://cijsda3jvg8ur" path="res://Assets/Sprites/RocketExplosion/RocketExplosion1.png" id="2_t81mn"]
@@ -62,11 +62,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cdij"]
 size = Vector2(14, 67)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nw4hi"]
-radius = 37.0
-
 [node name="Rocket1" type="RigidBody2D"]
-collision_mask = 2
+collision_layer = 2
 gravity_scale = 0.0
 max_contacts_reported = 1
 contact_monitor = true
@@ -86,9 +83,3 @@ rotation = 1.5708
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_3cdij")
 debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
-
-[node name="ExplosionBound" type="CollisionShape2D" parent="."]
-scale = Vector2(5, 5)
-shape = SubResource("CircleShape2D_nw4hi")
-disabled = true
-debug_color = Color(0.196078, 0.568627, 0.807843, 0.419608)

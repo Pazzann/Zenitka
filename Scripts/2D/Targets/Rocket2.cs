@@ -3,16 +3,18 @@ using System;
 
 namespace Zenitka.Scripts._2D.Targets
 {
-	public partial class Rocket1 : Target
+	public partial class Rocket2 : Target
 	{
 		private AnimatedSprite2D _animation;
 		private Timer _timer;
 		private float _selDestructionTime;
 
 		private CollisionShape2D _rocketCollision;
+		private CollisionShape2D _explosionCollision;
 
 		private float _currentFuel;
 		
+		private Label _destroyedLabel;
 		public float SelfDestructionTime
 		{
 			set => _selDestructionTime = value + 0.1f;
@@ -21,7 +23,7 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
-			ConstantAcceleration = Settings.Settings2D.RocketTarget.RocketAcceleration;
+			ConstantAcceleration = Settings.Settings2D.RocketGun.RocketAcceleration;
 			StartPosition = new Vector2(Position.X, Position.Y);
 			
 			
@@ -31,7 +33,10 @@ namespace Zenitka.Scripts._2D.Targets
 			StartVelocity = Settings.Settings2D.RocketTarget.StartVelocity;
 			_animation = GetChild(0) as AnimatedSprite2D;
 			_rocketCollision = GetChild(1) as CollisionShape2D;
+			_explosionCollision = GetChild(2) as CollisionShape2D;
 			_animation.Play("fly");
+			
+			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 		}
 		
 		public override void _PhysicsProcess(double delta)
@@ -45,19 +50,20 @@ namespace Zenitka.Scripts._2D.Targets
 			{
 				_currentFuel = 0;
 				ConstantAcceleration = 0;
-				Destroy();
+				_destroy();
 			}
 			
 			
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
 		
-		public override void Destroy()
+		private void _destroy()
 		{
 			_animation.Play("explode");
 			
 			_animation.Connect("animation_looped", Callable.From(QueueFree));
 			_rocketCollision.Disabled = true;
+			_explosionCollision.Disabled = false;
 			IsExploded = true;
 		}
 	}

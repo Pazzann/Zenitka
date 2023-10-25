@@ -14,6 +14,9 @@ namespace Zenitka.Scripts._2D.Targets
 			DragCoefficient = Settings.Settings2D.DefaultTarget.AirResistance;
 			StartVelocity = Settings.Settings2D.DefaultTarget.Velocity;
 		}
-
+		public override void Destroy()
+		{
+			QueueFree();
+		}
 	}
 }

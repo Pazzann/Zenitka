@@ -224,10 +224,10 @@ wait_time = 2.0
 autostart = true
 
 [node name="Anchor2" type="Node2D" parent="."]
-position = Vector2(9372, -10569)
+position = Vector2(9494, -5496)
 
 [node name="Anchor" type="Node2D" parent="."]
-position = Vector2(-9406, -10503)
+position = Vector2(-9514, -5458)
 
 [node name="Camera2DTarget" type="Camera2D" parent="."]
 position = Vector2(0, -700)
