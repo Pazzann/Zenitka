@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://cqyjudybfj8y3"]
 
-[ext_resource type="Script" path="res://Scripts/2D/Targets/Rocket1.cs" id="1_dqw6o"]
+[ext_resource type="Script" path="res://Scripts/2D/Targets/Rocket2.cs" id="1_ijvoh"]
 [ext_resource type="Texture2D" uid="uid://cijsda3jvg8ur" path="res://Assets/Sprites/RocketExplosion/RocketExplosion1.png" id="2_52ylb"]
 [ext_resource type="Texture2D" uid="uid://fyivqv5tptuj" path="res://Assets/Sprites/RocketExplosion/RocketExplosion2.png" id="3_6qswt"]
 [ext_resource type="Texture2D" uid="uid://bk6bvolbqd64k" path="res://Assets/Sprites/RocketExplosion/RocketExplosion3.png" id="4_3e6nh"]
@@ -73,7 +73,7 @@ max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
 freeze_mode = 1
-script = ExtResource("1_dqw6o")
+script = ExtResource("1_ijvoh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
