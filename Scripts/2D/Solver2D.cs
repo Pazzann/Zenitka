@@ -71,7 +71,7 @@ namespace Zenitka.Scripts._2D
         private const int ITERATIONS = 200;
 
         private const float SECTOR_ARC = Mathf.Pi / SECTORS;
-        private const float TIME_STEP = 0.02f; 
+        private const float TIME_STEP = 0.05f; 
 
         private const float SCALE = 1f;
 
@@ -113,9 +113,9 @@ namespace Zenitka.Scripts._2D
                 }
             }
 
-            GD.Print("Best angle: ", bestAngle);
-            GD.Print("Best time: ", bestTimeOfCollision);
-            GD.Print("Best distance: ", bestDistance);
+            //GD.Print("Best angle: ", bestAngle);
+            //GD.Print("Best time: ", bestTimeOfCollision);
+            //GD.Print("Best distance: ", bestDistance);
 
             return (bestAngle, bestTimeOfCollision);
         }
@@ -132,7 +132,7 @@ namespace Zenitka.Scripts._2D
 
                 var p1 = projectile.ComputePosition(t);
                 var p2 = _target.ComputePosition(t + Mathf.Abs(angle - _cannon.CurAngle) / _cannon.AngularRotSpeed);
-
+                
                 //GD.Print(p1, " ", p2, " ", (p1 - p2).Length());
 
                 var distance = (p1 - p2).Length();

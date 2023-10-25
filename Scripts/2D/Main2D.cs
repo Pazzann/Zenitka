@@ -53,7 +53,7 @@ namespace Zenitka.Scripts._2D
 			
 			
 
-			if (_firedBurstBulletCount++ < 5)
+			if (_firedBurstBulletCount++ < 10)
 				ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
 				{
 				_cannon.RotateToAndSignal(angleRad + 0.02f, timeOfCollision);
@@ -91,7 +91,7 @@ namespace Zenitka.Scripts._2D
 				new Vector2(0f, Settings.Settings2D.DefaultGun.Gravity)
 			).Aim();
 
-			_cannon.RotateToAndSignal(angle - 0.04f, timeOfCollision - 0.05f);
+			_cannon.RotateToAndSignal(angle - 0.1f, timeOfCollision);
 
 			// var bullet = _bulletScene.Instantiate() as Target;
 			// bullet._Ready();

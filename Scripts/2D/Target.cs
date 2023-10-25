@@ -67,7 +67,6 @@ namespace Zenitka.Scripts._2D
 		private void OnVisibleOnScreenNotifier2dScreenExited()
 		{
 			if (!_isOffscreen) {
-				GD.Print("target self-destroyed as it went offscreen");
 				QueueFree();
 			}
 		}

@@ -72,7 +72,7 @@ namespace Zenitka
 				{
 					Velocity = 1000.0f;
 					Mass = 10.0f;
-
+					AirResistance = 0.05f;
 				}
 
 			}

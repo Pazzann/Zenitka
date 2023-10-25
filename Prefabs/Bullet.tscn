@@ -67,7 +67,6 @@ texture_filter = 1
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_ka6gv")
 animation = &"explode"
-frame_progress = 0.115663
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
