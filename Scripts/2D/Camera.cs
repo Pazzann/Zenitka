@@ -29,7 +29,7 @@ public partial class Camera : Camera2D
 		if (Input.IsActionJustPressed("cam_zoom_out_3d"))
 		{
 			Position = new Vector2(0f,-5400f);
-			Zoom = new Vector2(0.1f,0.1f);
+			Zoom = new Vector2(0.2f,0.2f);
 		}
 		if (Input.IsActionJustPressed("cam_zoom_in_3d"))
 		{

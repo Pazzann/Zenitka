@@ -91,9 +91,9 @@ namespace Zenitka.Scripts._2D
 		
 		private void OnVisibleOnScreenNotifier2dScreenExited()
 		{
-			if (!_isOffscreen) {
+			/*if (!_isOffscreen) {
 				QueueFree();
-			}
+			}*/
 		}
 	}
 }

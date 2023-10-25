@@ -48,7 +48,6 @@ namespace Zenitka.Scripts._2D
 			bullet.StartAngle = angleRad;
 
 			AddChild(bullet);
-			MoveChild(bullet, 0);
 
 			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
 
@@ -74,7 +73,6 @@ namespace Zenitka.Scripts._2D
 			target.StartAngle = -targetState.Velocity.Angle();
 
 			AddChild(target);
-			MoveChild(target, 0);
 
 			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
 
@@ -98,7 +96,7 @@ namespace Zenitka.Scripts._2D
 			Random rand = new Random();
 
 			bool kind = rand.Next(2) == 0;
-			var angle = MathUtils.RandRange(-Mathf.Pi / 6f, Mathf.Pi / 6f);
+			var angle = MathUtils.RandRange(-Mathf.Pi / 24f, Mathf.Pi / 6f);
 
 			Vector2 pos, vel;
 
