@@ -67,7 +67,7 @@ namespace Zenitka.Scripts._2D
 
     public class Solver2D
     {
-        private const int SECTORS = 500;
+        private const int SECTORS = 600;
         private const int ITERATIONS = 400;
 
         private const float SECTOR_ARC = Mathf.Pi / SECTORS;

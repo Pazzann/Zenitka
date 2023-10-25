@@ -21,6 +21,10 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
+			StartPosition = new Vector2(Position.X, Position.Y);
+			ConstantAcceleration = 0;
+			
+			
 			Weight = Settings.Settings2D.DefaultGun.BulletMass;
 			DragCoefficient = Settings.Settings2D.DefaultGun.AirResistance;
 			StartVelocity = Settings.Settings2D.DefaultGun.BulletSpeed;
