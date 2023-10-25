@@ -12,6 +12,7 @@ namespace Zenitka.Scripts._2D
 		public float DragCoefficient { get; set; }
 		public float StartVelocity { get; set; }
 		public Vector2 StartPosition { get; set; }
+		public float ConstantAcceleration { get; set; }
 
 		public float CurrentTime = 0.0f;
 		public float StartAngle = 0.0f;

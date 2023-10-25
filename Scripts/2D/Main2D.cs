@@ -20,7 +20,7 @@ namespace Zenitka.Scripts._2D
 		private Label _ammoLabel;
 		private Label _detectedLabel;
 
-		private const float BURST_STEP = 0.02f;
+		private const float BURST_STEP = 0.01f;
 
 		public override void _Ready()
 		{
