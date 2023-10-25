@@ -16,7 +16,7 @@ public partial class Statistics : Control
 		Label speedLabel = GetNode<Label>("ColorRect/speed");
 		if (Input.IsActionJustPressed("time+"))
 		{
-			if (speedLabel.Text.ToFloat() < 10)
+			if (speedLabel.Text.ToFloat() < 4)
 			{
 				Engine.TimeScale += 0.1;
 				speedLabel.Text = Math.Round(Engine.TimeScale, 1).ToString();

@@ -9,12 +9,11 @@ namespace Zenitka
 		public bool IsGun = true;
 		public bool IsDefaultTarget = true;
 
-
 		public static class Settings2D
 		{
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 			public static float Gravity { get; set; } // Гравітація
-			public static float Random { get; set; } // Коєфіціент випадковості
+			public static int Random { get; set; } // Коєфіціент випадковості
 			public static class DefaultGun
 			{
 				public static float BulletSpeed { get; set; } // швидкість снаряда
@@ -25,7 +24,7 @@ namespace Zenitka
 
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
 				public static float Gravity { get; set; } // Гравітація
-				public static float SalvoSize { get; set; } // Розмір залпа
+				public static int SalvoSize { get; set; } // Розмір залпа
 
 				static DefaultGun()
 				{
@@ -35,9 +34,9 @@ namespace Zenitka
 					BulletMass = 1.0f;
 					Gravity = 9.8f;
 					AirResistance = 0.05f;
+					SalvoSize = 1;
 				}
 			}
-
 
 			public static class RocketGun
 			{
@@ -78,9 +77,7 @@ namespace Zenitka
 					Mass = 10.0f;
 					AirResistance = 0.05f;
 				}
-
 			}
-
 
 			public static class RocketTarget
 			{

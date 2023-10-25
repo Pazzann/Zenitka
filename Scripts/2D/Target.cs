@@ -60,7 +60,6 @@ namespace Zenitka.Scripts._2D
 			CurrentTime += (float)delta;
 		}
 
-
 		[Signal]
 		public delegate void WentWithinRangeEventHandler();
 		
