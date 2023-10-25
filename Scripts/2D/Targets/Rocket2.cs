@@ -57,6 +57,8 @@ namespace Zenitka.Scripts._2D.Targets
 			}
 			else
 			{
+				if(IsExploded)
+					return;
 				_currentFuel = 0;
 				_acceleration = 0;
 				Destroy();
