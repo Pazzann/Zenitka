@@ -41,7 +41,7 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private void OnBodyEntered(Node body)
 		{
-			body.QueueFree();
+			(body as Target).Destroy();
 			_on_suicide_timer_timeout();
 			_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
 		}
@@ -50,13 +50,15 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			_animation.Play("explode");
 			
-			_animation.Connect("animation_looped", Callable.From(_destroy));
+			_animation.Connect("animation_looped", Callable.From(QueueFree));
 			_bulletCollision.Disabled = true;
 			_explosionCollision.Disabled = false;
 			IsExploded = true;
 		}
+		
+		
 
-		private void _destroy()
+		public override void Destroy()
 		{
 			QueueFree();
 		}
