@@ -52,6 +52,8 @@ namespace Zenitka
 				//public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
 				public static Vector2
 					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
+				public static float
+					RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
 
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 				public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
