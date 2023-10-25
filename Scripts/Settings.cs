@@ -136,13 +136,13 @@ namespace Zenitka
 
 				static DefaultGun()
 				{
-					BulletSpeed = 1000.0f;
+					BulletSpeed = 20.0f;
 					InitialElevationAngle = 0.0f;
-					
-					BulletMass = 1.0f;
+					AngularVelocityX = 1f;
+					BulletMass = 1f;
+					AirResistance = 0.05f;
 				}
 			}
-
 
 			public static class RocketGun
 			{
@@ -180,13 +180,11 @@ namespace Zenitka
 
 				static DefaultTarget()
 				{
-					Velocity = 1000.0f;
-					Mass = 10.0f;
-
+					Velocity = 10.0f;
+					Mass = 1f;
+					AirResistance = 0.05f;
 				}
-
 			}
-
 
 			public static class RocketTarget
 			{

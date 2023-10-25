@@ -31,6 +31,9 @@ namespace Zenitka.Scripts._3D
 		{
 			base._PhysicsProcess(delta);
 			_time += (float) delta;
+
+			GD.Print(LinearVelocity);
+			Transform = Transform.LookingAt(-LinearVelocity, Vector3.Up);
 		}
 
 		private void Reset() {
