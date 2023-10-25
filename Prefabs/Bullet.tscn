@@ -54,7 +54,7 @@ size = Vector2(4, 19)
 [sub_resource type="CircleShape2D" id="CircleShape2D_nw4hi"]
 radius = 32.0
 
-[node name="Bullet2" type="RigidBody2D"]
+[node name="Bullet" type="RigidBody2D"]
 collision_mask = 2
 max_contacts_reported = 1
 contact_monitor = true

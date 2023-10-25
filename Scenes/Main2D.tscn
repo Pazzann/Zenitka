@@ -71,12 +71,11 @@ script = ExtResource("1_vkw7f")
 layer = 3
 
 [node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("3_lfrii")]
-visible = false
 anchors_preset = -1
-offset_left = 88.0
-offset_top = 38.0
-offset_right = 88.0
-offset_bottom = 38.0
+offset_left = 66.0
+offset_top = 132.0
+offset_right = 66.0
+offset_bottom = 132.0
 scale = Vector2(0.792309, 0.986202)
 
 [node name="menu" parent="CanvasLayer" instance=ExtResource("4_qitgn")]
@@ -105,6 +104,29 @@ expand_icon = true
 libraries = {
 "": SubResource("AnimationLibrary_8fcmw")
 }
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1768.0
+offset_top = 986.0
+offset_right = 1808.0
+offset_bottom = 1026.0
+scale = Vector2(2.44551, 2.44551)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.55612, 1)
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(0.65487, 0.66093)
+text = "Test"
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
 position = Vector2(-1, -182)
