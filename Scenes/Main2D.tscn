@@ -73,11 +73,11 @@ layer = 3
 [node name="SettingsPanel" parent="CanvasLayer" instance=ExtResource("3_lfrii")]
 visible = false
 anchors_preset = -1
-offset_left = 28.0
-offset_top = 165.0
-offset_right = 28.0
-offset_bottom = 165.0
-scale = Vector2(1.16997, 1.45169)
+offset_left = 88.0
+offset_top = 38.0
+offset_right = 88.0
+offset_bottom = 38.0
+scale = Vector2(0.792309, 0.986202)
 
 [node name="menu" parent="CanvasLayer" instance=ExtResource("4_qitgn")]
 visible = false
@@ -89,11 +89,11 @@ scale = Vector2(1.48863, 1.48863)
 
 [node name="Button2" type="Button" parent="CanvasLayer"]
 texture_filter = 2
-offset_left = -188.0
-offset_top = -195.0
-offset_right = 332.0
-offset_bottom = 325.0
-scale = Vector2(0.214897, 0.214897)
+offset_left = -218.0
+offset_top = -222.0
+offset_right = 302.0
+offset_bottom = 298.0
+scale = Vector2(0.15, 0.151)
 pivot_offset = Vector2(261.069, 266.553)
 theme_override_styles/focus = SubResource("StyleBoxFlat_rtlii")
 icon = ExtResource("6_bruf2")
