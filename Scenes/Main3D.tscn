@@ -134,4 +134,6 @@ libraries = {
 }
 
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
+[connection signal="timeout" from="TargetSpawnTimer" to="CameraTarget" method="_on_target_spawn_timer_timeout"]
+[connection signal="timeout" from="TargetSpawnTimer" to="SubViewport/CameraTarget2" method="_on_target_spawn_timer_timeout"]
 [connection signal="pressed" from="Button2" to="." method="SettingsButton"]
