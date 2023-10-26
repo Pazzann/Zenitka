@@ -28,7 +28,7 @@ namespace Zenitka.Scripts._2D.Targets
 		public override void _Ready()
 		{
 			_acceleration = Settings.Settings2D.RocketGun.RocketForce;
-			StartPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y);
+			StartPosition = new Vector2(Position.X, Position.Y);
 			
 			Weight = Settings.Settings2D.RocketGun.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 			_currentFuel = Settings.Settings2D.RocketGun.FuelMass;
