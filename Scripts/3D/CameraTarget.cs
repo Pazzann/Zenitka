@@ -11,7 +11,7 @@ public partial class CameraTarget : Camera3D
 	private Node3D _rocket;
 	private Vector3 _targetLinearVelocityNormalized;
 	private Basis _targetBasis;
-	private bool _first = true;
+	private float _timeBeforeStart = 0;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -27,7 +27,10 @@ public partial class CameraTarget : Camera3D
 
 		if (_target != null)
 		{
-
+			if (_target.LinearVelocity != new Vector3(0, 0, 0))
+			{
+				_rocket.Transform = _rocket.Transform.LookingAt(-_target.LinearVelocity * 3, Vector3.Up);
+			}
 			if (Input.IsActionPressed("cam_zoom_in_3d") && _zoom - ZOOM_SPEED > 0.3f)
 			{
 				_zoom -= ZOOM_SPEED;
@@ -37,21 +40,25 @@ public partial class CameraTarget : Camera3D
 			{
 				_zoom += ZOOM_SPEED;
 			}
-			_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
-			Basis = _target.Basis;
-			Position = _target.Position;
-			if (_targetLinearVelocityNormalized != new Vector3(0, 0, 0))
+			if (_timeBeforeStart == 5)
 			{
-				Translate(new Vector3(-_targetLinearVelocityNormalized.X * 5 * _zoom, 10 * _zoom, -_targetLinearVelocityNormalized.Z * 5 * _zoom));
+				_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
+				Basis = _target.Basis;
+				Position = _target.Position;
+				if (_targetLinearVelocityNormalized != new Vector3(0, 0, 0))
+				{
+					Translate(new Vector3(-_targetLinearVelocityNormalized.X * 5 * _zoom, 10 * _zoom, -_targetLinearVelocityNormalized.Z * 5 * _zoom));
+				}
+				else
+				{ Translate(new Vector3(-5 * _zoom, 10 * _zoom, -5 * _zoom)); }
+				Transform = Transform.LookingAt(_target.Position, Vector3.Up);
 			}
 			else
-			{ Translate(new Vector3(-5 * _zoom, 10 * _zoom, -5 * _zoom)); }
-			Transform = Transform.LookingAt(_target.Position, Vector3.Up);
-			if (_target.LinearVelocity != new Vector3(0, 0, 0))
-			{
-					_rocket.Transform=_rocket.Transform.LookingAt(-_target.LinearVelocity*3,Vector3.Up);
-			}
+				_timeBeforeStart++;
+
 		}
+		else
+			_timeBeforeStart = 0;
 
 	}
 	private void _on_target_spawn_timer_timeout()
