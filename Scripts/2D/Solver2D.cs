@@ -7,7 +7,7 @@ namespace Zenitka.Scripts._2D
     public struct CannonState2D
     {
         public Vector2 Position;
-        public float BarrelLength, CurAngle, AngularRotSpeed, ProjectileSpeed, ProjectileAcceleration, ProjectileLinearDrag;
+        public float BarrelLength, CurAngle, AngularRotSpeed, ProjectileSpeed, ProjectileAcceleration, ProjectileLinearDrag, ProjectileMass;
         public float ProjectileSelfPropellingAcceleration;
 
         public CannonState2D(Vector2 position,
@@ -17,7 +17,8 @@ namespace Zenitka.Scripts._2D
                              float projectileSpeed,
                              float projectileAcceleration,
                              float projectileLinearDrag,
-                             float projectileSelfPropellingAcceleration)
+                             float projectileSelfPropellingAcceleration,
+                             float projectileMass)
         {
             Position = position;
             BarrelLength = barrelLength;
@@ -27,6 +28,7 @@ namespace Zenitka.Scripts._2D
             ProjectileAcceleration = projectileAcceleration;
             ProjectileLinearDrag = projectileLinearDrag;
             ProjectileSelfPropellingAcceleration = projectileSelfPropellingAcceleration;
+            ProjectileMass = projectileMass;
         }
 
         public readonly ParticleState2D CreateProjectile(float angle, Vector2 gravity) {
@@ -38,26 +40,29 @@ namespace Zenitka.Scripts._2D
                 ProjectileSpeed * d,
                 gravity + d * ProjectileAcceleration,
                 ProjectileLinearDrag,
-                ProjectileSelfPropellingAcceleration);
+                ProjectileSelfPropellingAcceleration,
+                ProjectileMass);
         }
     }
 
     public struct ParticleState2D
     {
         public Vector2 Position, Velocity, ConstantAcceleration;
-        public float LinearDrag, SelfPropellingAcceleration;
+        public float LinearDrag, SelfPropellingAcceleration, Mass;
 
         public ParticleState2D(Vector2 position,
                            Vector2 velocity,
                            Vector2 constantAcceleration,
                            float linearDrag,
-                           float selfPropellingAcceleration)
+                           float selfPropellingAcceleration,
+                           float mass)
         {
             Position = position;
             Velocity = velocity;
             ConstantAcceleration = constantAcceleration;
             LinearDrag = linearDrag;
             SelfPropellingAcceleration = selfPropellingAcceleration;
+            Mass = mass;
         }
         
         public readonly Vector2 ComputePosition(float t)
@@ -65,10 +70,12 @@ namespace Zenitka.Scripts._2D
             if (LinearDrag == 0f) 
                 return ConstantAcceleration * t * t / 2f + Velocity * t;
 
+            float dragCoef = LinearDrag / Mass;
+
             return Position
-                + ConstantAcceleration * t / LinearDrag
-                - (ConstantAcceleration - LinearDrag * Velocity) / (LinearDrag * LinearDrag)
-                + (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t) / (LinearDrag * LinearDrag);
+                + ConstantAcceleration * t /dragCoef
+                - (ConstantAcceleration - dragCoef * Velocity) / (dragCoef * dragCoef)
+                + (ConstantAcceleration - dragCoef * Velocity) * Mathf.Exp(-dragCoef * t) / (dragCoef * dragCoef);
         }
 
         public readonly Vector2 ComputeVelocity(float t)
@@ -76,12 +83,14 @@ namespace Zenitka.Scripts._2D
             if (LinearDrag == 0f) 
                 return ConstantAcceleration * t + Velocity;
 
+            float dragCoef = LinearDrag / Mass;
+
             return (ConstantAcceleration
-                - (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t)) / LinearDrag;
+                - (ConstantAcceleration - dragCoef * Velocity) * Mathf.Exp(-dragCoef * t)) / dragCoef;
         }
 
         public readonly Vector2 ComputeAcceleration(in Vector2 curVelocity) {
-            var a = ConstantAcceleration - LinearDrag * curVelocity;
+            var a = ConstantAcceleration - LinearDrag / Mass * curVelocity;
 
             if (curVelocity != Vector2.Zero)
                 a += curVelocity.Normalized() * SelfPropellingAcceleration;
@@ -90,10 +99,7 @@ namespace Zenitka.Scripts._2D
         }
 
         public readonly void Integrate(ref Vector2 curPosition, ref Vector2 curVelocity, float dt) {
-            var acceleration = ConstantAcceleration - LinearDrag * curVelocity;
-
-            if (curVelocity != Vector2.Zero)
-                acceleration += curVelocity.Normalized() * SelfPropellingAcceleration;
+            var acceleration = ComputeAcceleration(curVelocity);
 
             curVelocity += acceleration * dt;
             curPosition += curVelocity * dt;
