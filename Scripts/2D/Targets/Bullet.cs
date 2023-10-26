@@ -11,6 +11,8 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private CollisionShape2D _bulletCollision;
 		private CollisionShape2D _explosionCollision;
+
+		private bool _scoreUpdated = false;
 		
 		private Label _destroyedLabel;
 		public float SelfDestructionTime
@@ -43,7 +45,11 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			(body as Target).Destroy();
 			_on_suicide_timer_timeout();
-			_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
+			
+			if (!_scoreUpdated) {
+				_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
+				_scoreUpdated = true;
+			}
 		}
 
 		private void _on_suicide_timer_timeout()
