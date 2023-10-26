@@ -101,7 +101,8 @@ namespace Zenitka.Scripts._2D
 					Settings.Settings2D.DefaultGun.AngularVelocity,
 					Settings.Settings2D.DefaultGun.BulletSpeed,
 					0f,
-					Settings.Settings2D.DefaultGun.AirResistance / Settings.Settings2D.DefaultGun.BulletMass),
+					Settings.Settings2D.DefaultGun.AirResistance,
+					Settings.Settings2D.DefaultGun.BulletMass),
 				targetState,
 				new Vector2(0f, Settings.Settings2D.Gravity)
 			).Aim();
@@ -131,7 +132,7 @@ namespace Zenitka.Scripts._2D
 
 			vel *= Settings.Settings2D.DefaultTarget.Velocity;
 
-			return new ParticleState2D(pos, vel, Vector2.Zero, Settings.Settings2D.DefaultTarget.AirResistance / Settings.Settings2D.DefaultTarget.Mass);
+			return new ParticleState2D(pos, vel, Vector2.Zero, Settings.Settings2D.DefaultTarget.AirResistance, Settings.Settings2D.DefaultTarget.Mass);
 		}
 
 		private void SettingsButton()

@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Serialization.Formatters;
 using Godot;
 
 namespace Zenitka.Scripts._2D
@@ -6,6 +8,7 @@ namespace Zenitka.Scripts._2D
     {
         public Vector2 Position;
         public float BarrelLength, CurAngle, AngularRotSpeed, ProjectileSpeed, ProjectileAcceleration, ProjectileLinearDrag;
+        public float ProjectileSelfPropellingAcceleration;
 
         public CannonState2D(Vector2 position,
                              float barrelLength,
@@ -13,7 +16,8 @@ namespace Zenitka.Scripts._2D
                              float angularRotSpeed,
                              float projectileSpeed,
                              float projectileAcceleration,
-                             float projectileLinearDrag)
+                             float projectileLinearDrag,
+                             float projectileSelfPropellingAcceleration)
         {
             Position = position;
             BarrelLength = barrelLength;
@@ -22,9 +26,10 @@ namespace Zenitka.Scripts._2D
             ProjectileSpeed = projectileSpeed;
             ProjectileAcceleration = projectileAcceleration;
             ProjectileLinearDrag = projectileLinearDrag;
+            ProjectileSelfPropellingAcceleration = projectileSelfPropellingAcceleration;
         }
 
-        public ParticleState2D CreateProjectile(float angle, Vector2 gravity) {
+        public readonly ParticleState2D CreateProjectile(float angle, Vector2 gravity) {
             var d = Vector2.FromAngle(angle);
             d.Y = -d.Y;
 
@@ -32,27 +37,30 @@ namespace Zenitka.Scripts._2D
                 Position + BarrelLength * d,
                 ProjectileSpeed * d,
                 gravity + d * ProjectileAcceleration,
-                ProjectileLinearDrag);
+                ProjectileLinearDrag,
+                ProjectileSelfPropellingAcceleration);
         }
     }
 
     public struct ParticleState2D
     {
         public Vector2 Position, Velocity, ConstantAcceleration;
-        public float LinearDrag;
+        public float LinearDrag, SelfPropellingAcceleration;
 
         public ParticleState2D(Vector2 position,
                            Vector2 velocity,
                            Vector2 constantAcceleration,
-                           float linearDrag)
+                           float linearDrag,
+                           float selfPropellingAcceleration)
         {
             Position = position;
             Velocity = velocity;
             ConstantAcceleration = constantAcceleration;
             LinearDrag = linearDrag;
+            SelfPropellingAcceleration = selfPropellingAcceleration;
         }
         
-        public Vector2 ComputePosition(float t)
+        public readonly Vector2 ComputePosition(float t)
         {
             if (LinearDrag == 0f) 
                 return ConstantAcceleration * t * t / 2f + Velocity * t;
@@ -63,13 +71,32 @@ namespace Zenitka.Scripts._2D
                 + (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t) / (LinearDrag * LinearDrag);
         }
 
-        public Vector2 ComputeVelocity(float t)
+        public readonly Vector2 ComputeVelocity(float t)
         {
             if (LinearDrag == 0f) 
                 return ConstantAcceleration * t + Velocity;
 
             return (ConstantAcceleration
                 - (ConstantAcceleration - LinearDrag * Velocity) * Mathf.Exp(-LinearDrag * t)) / LinearDrag;
+        }
+
+        public readonly Vector2 ComputeAcceleration(in Vector2 curVelocity) {
+            var a = ConstantAcceleration - LinearDrag * curVelocity;
+
+            if (curVelocity != Vector2.Zero)
+                a += curVelocity.Normalized() * SelfPropellingAcceleration;
+
+            return a;
+        }
+
+        public readonly void Integrate(ref Vector2 curPosition, ref Vector2 curVelocity, float dt) {
+            var acceleration = ConstantAcceleration - LinearDrag * curVelocity;
+
+            if (curVelocity != Vector2.Zero)
+                acceleration += curVelocity.Normalized() * SelfPropellingAcceleration;
+
+            curVelocity += acceleration * dt;
+            curPosition += curVelocity * dt;
         }
     }
 
@@ -129,19 +156,28 @@ namespace Zenitka.Scripts._2D
         }
 
         // (distance, time)
-        private (float, float) ComputeClosestDistance(float angle) {
+        private (float, float) ComputeClosestDistance(float angle, bool useNumericalIntegration = true) {
             var projectile = _cannon.CreateProjectile(angle, _gravity);
 
             var bestT = 0f;
             var bestDistance = 9999f;
 
+            var offT = Mathf.Abs(angle - _cannon.CurAngle) / _cannon.AngularRotSpeed;
+
+            Vector2 p1 = projectile.Position, p2 = _target.Position, v1 = projectile.Velocity, v2 = _target.Velocity;
+
             for (int i = 0; i < ITERATIONS; ++i) {
                 var t = TIME_STEP * i;
 
-                var p1 = projectile.ComputePosition(t);
-                var p2 = _target.ComputePosition(t + Mathf.Abs(angle - _cannon.CurAngle) / _cannon.AngularRotSpeed);
-                
-                //GD.Print(p1, " ", p2, " ", (p1 - p2).Length());
+                if (useNumericalIntegration) {
+                    if (t >= offT) 
+                        projectile.Integrate(ref p1, ref v1, TIME_STEP);
+
+                    _target.Integrate(ref p2, ref v2, TIME_STEP);
+                } else {
+                    p1 = projectile.ComputePosition(t);
+                    p2 = _target.ComputePosition(t + offT);
+                }
 
                 var distance = (p1 - p2).Length();
 
