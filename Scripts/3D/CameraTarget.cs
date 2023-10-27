@@ -40,14 +40,14 @@ public partial class CameraTarget : Camera3D
 			{
 				_zoom += ZOOM_SPEED;
 			}
-			if (_timeBeforeStart == 5)
+			if (_timeBeforeStart == 0)
 			{
 				_targetLinearVelocityNormalized = _target.LinearVelocity.Normalized();
 				Basis = _target.Basis;
 				Position = _target.Position;
 				if (_targetLinearVelocityNormalized != new Vector3(0, 0, 0))
 				{
-					Translate(new Vector3(-_targetLinearVelocityNormalized.X * 5 * _zoom, 10 * _zoom, -_targetLinearVelocityNormalized.Z * 5 * _zoom));
+					Translate(new Vector3(0f, 10 * _zoom, 10 * _zoom));
 				}
 				else
 				{ Translate(new Vector3(-5 * _zoom, 10 * _zoom, -5 * _zoom)); }
