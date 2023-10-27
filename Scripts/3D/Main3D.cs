@@ -13,6 +13,7 @@ namespace Zenitka.Scripts._3D
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
+		//private PackedScene _explosionScene;
 		
 		private Label _ammoLabel;
 		private Label _detectedLabel;
@@ -33,6 +34,7 @@ namespace Zenitka.Scripts._3D
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/3D/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
+			//_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
 		}
 
 		private void OnCannonAimed(ParticleState3D projectile1, ParticleState3D projectile2, float collisionTime)
@@ -72,6 +74,11 @@ namespace Zenitka.Scripts._3D
 				{
 					GD.Print("Hit");
 					target.QueueFree();
+
+					// var explosion = _explosionScene.Instantiate() as Explosion;
+					// explosion.GlobalPosition = target.GlobalPosition;
+
+					// AddChild(explosion);
 				}
 				else
 				{
@@ -143,7 +150,7 @@ namespace Zenitka.Scripts._3D
 
 			return TARGET_SPAWN_RADIUS * new Vector3(x, y, z).Normalized();
 		}
-		
+
 		private void SettingsButton()
 		{
 			var settingsButtonAnimation = GetNode<AnimationPlayer>("Button2/AnimationPlayer");

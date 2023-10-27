@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://blw4whxj4r0u4"]
+
+[ext_resource type="Script" path="res://Scripts/3D/Explosion.cs" id="1_8a3ak"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f1ysl"]
+spread = 40.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 82.71
+initial_velocity_max = 82.71
+color = Color(0.741176, 0.533333, 0.0823529, 1)
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgot7"]
+albedo_color = Color(0.992157, 0.482353, 0.113725, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ao5v6"]
+material = SubResource("StandardMaterial3D_lgot7")
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 8
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_8a3ak")
+
+[node name="Particles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 2000
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_f1ysl")
+draw_pass_1 = SubResource("SphereMesh_ao5v6")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
