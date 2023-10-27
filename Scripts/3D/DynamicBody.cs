@@ -30,24 +30,13 @@ namespace Zenitka.Scripts._3D
 			base._IntegrateForces(physicsState);
 
 			physicsState.LinearVelocity = State.ComputeVelocity(_time);
-			physicsState.Transform = physicsState.Transform.LookingAt(physicsState.LinearVelocity, Vector3.Up);
+			physicsState.Transform = physicsState.Transform.LookingAt(GlobalPosition + physicsState.LinearVelocity, Vector3.Up);
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
 			base._PhysicsProcess(delta);
 			_time += (float) delta;
-
-			GD.Print("-z: ", Transform.Basis.Z);
-
-			//GD.Print((-Transform.LookingAt(-LinearVelocity, Vector3.Up).Basis.Z).AngleTo(-LinearVelocity));
-
-			//GlobalRotation = new Vector3(0f, 0.2f, 0f);
-
-			//GD.Print(LinearVelocity.Cross(Transform.Basis.Z).Length());
-
-			//Transform = Transform.LookingAt(Vector3.Up, Vector3.Forward);
-			//GD.Print(LinearVelocity);
 		}
 
 		private void Reset()
