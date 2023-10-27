@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b654r1mknj116"]
+[gd_scene load_steps=18 format=3 uid="uid://b654r1mknj116"]
 
 [ext_resource type="PackedScene" uid="uid://85lv0slp0cd2" path="res://Prefabs/Cannon.tscn" id="1_un41y"]
 [ext_resource type="Script" path="res://Scripts/2D/Main2D.cs" id="1_vkw7f"]
@@ -69,6 +69,9 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_1pwct"]
 font_size = 24
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1wpf"]
+size = Vector2(20000, 20)
 
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
@@ -249,7 +252,12 @@ scale = Vector2(4, 4)
 position = Vector2(46, -368)
 scale = Vector2(4, 4)
 
+[node name="Ground" type="StaticBody2D" parent="."]
+constant_linear_velocity = Vector2(0, -20)
+
+[node name="HitBox" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_k1wpf")
+
 [connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
-[connection signal="GunReady" from="Cannon" to="." method="OnCannonGunReady"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
 [connection signal="timeout" from="TargetSpawnTimer" to="Camera2DTarget" method="_on_target_spawn_timer_timeout"]

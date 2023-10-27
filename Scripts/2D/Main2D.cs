@@ -40,18 +40,15 @@ namespace Zenitka.Scripts._2D
 
 			_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/Rocket2.tscn");
 			_rocketCannon = GetNode<Marker2D>("RocketMarker");
+
+			_cannon.OnCannonAimed += OnCannonGunReady;
 		}
 
-		private void OnCannonGunReady(float angleRad, Vector2 headPosition, float timeOfCollision)
+		private void OnCannonGunReady(float angleRad, float timeOfCollision, Vector2 headPosition, Target target)
 		{
-
 			var bullet = _bulletScene.Instantiate() as Bullet;
 
 			bullet.SelfDestructionTime = timeOfCollision - 0.07f;
-
-			// bullet.GlobalPosition = Vector2.Zero;
-			// bullet.GravityScale = 0f;
-			// bullet.StartAngle = angleRad;
 
 			var dir = Vector2.FromAngle(angleRad);
 			dir.Y = -dir.Y;
@@ -64,27 +61,39 @@ namespace Zenitka.Scripts._2D
 
 			if (++_firedBurstBulletCount < Settings.Settings2D.DefaultGun.SalvoSize)
 			{
-				ToSignal(GetTree().CreateTimer(0.1f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
-				{
-					_cannon.RotateToAndSignal(angleRad + BURST_STEP, timeOfCollision);
-				});
+				// ToSignal(GetTree().CreateTimer(0.1f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
+				// {
+				// 	_cannon.RotateToAndSignal(angleRad + BURST_STEP, timeOfCollision, target);
+				// });
+
+				var (angle1, timeOfCollision1) = new Solver2D(
+					new CannonState2D(
+						Vector2.Zero,
+						0f,
+						_cannon.GetAngle(),
+						Settings.Settings2D.DefaultGun.AngularVelocity,
+						Settings.Settings2D.DefaultGun.BulletSpeed,
+						0f,
+						Settings.Settings2D.DefaultGun.AirResistance,
+						0f,
+						Settings.Settings2D.DefaultGun.BulletMass),
+					target.State,
+					new Vector2(0f, Settings.Settings2D.Gravity)
+				).Aim();
+
+				_cannon.RotateToAndSignal(angle1 - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision1, target);
 			}
 		}
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var scene = Settings.Settings2D.IsNotDefaultTarget ? _rocketTargetScene : _targetScene;
-			//var scene = _rocketTargetScene;
-			var target = scene.Instantiate() as Target;
 			_firedBurstBulletCount = 0;
 
+			var scene = Settings.Settings2D.IsNotDefaultTarget ? _rocketTargetScene : _targetScene;
+			var target = scene.Instantiate() as Target;
+
 			var targetState = CreateTarget();
-
-			//target.GlobalPosition = targetState.Position;
 			target.State = targetState;
-
-			// target.StartVelocity = targetState.Velocity.Length();
-			// target.StartAngle = -targetState.Velocity.Angle();
 
 			AddChild(target);
 
@@ -119,7 +128,7 @@ namespace Zenitka.Scripts._2D
 				new Vector2(0f, Settings.Settings2D.Gravity)
 			).Aim();
 
-			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision);
+			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision, target);
 		}
 
 		private ParticleState2D CreateTarget()

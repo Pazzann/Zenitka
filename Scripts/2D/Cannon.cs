@@ -4,11 +4,15 @@ using Godot;
 
 namespace Zenitka.Scripts._2D
 {
+	public delegate void CannonAimedEventHandler(float angleRad, float timeOfCollision, Vector2 headPosition, Target target);
+
 	public partial class Cannon : Node2D
 	{
 
 		private Sprite2D _gun;
 		private Node2D _head;
+
+		public event CannonAimedEventHandler OnCannonAimed;
 
 		public override void _Ready()
 		{
@@ -26,15 +30,15 @@ namespace Zenitka.Scripts._2D
 			return 0.5f * Mathf.Pi - _gun.Rotation;
 		}
 
-		public void RotateToAndSignal(float targetAngle, float timeOfCollision)
+		public void RotateToAndSignal(float targetAngle, float timeOfCollision, Target target)
 		{
 			targetAngle = 0.5f * Mathf.Pi - Mathf.PosMod(targetAngle, 2f * Mathf.Pi);
-			// var curRot = Mathf.PosMod(_gun.Rotation, 2f * Mathf.Pi);
+
 			var curRot = _gun.Rotation;
 			var diff = Mathf.Abs(curRot - targetAngle);
 
 			if (Mathf.IsEqualApprox(Rotation, targetAngle, 0.001f))
-				Signal(timeOfCollision);
+				Signal(timeOfCollision, target);
 			else
 			{
 				var tween = CreateTween();
@@ -42,17 +46,14 @@ namespace Zenitka.Scripts._2D
 				tween.TweenProperty(_gun, "rotation", targetAngle, diff / Settings.Settings2D.DefaultGun.AngularVelocity)
 					.SetTrans(Tween.TransitionType.Linear);
 
-				tween.TweenCallback(Callable.From(() => Signal(timeOfCollision)));
+				tween.TweenCallback(Callable.From(() => Signal(timeOfCollision, target)));
 			}
 		}
 
-		private void Signal(float timeOfCollision)
+		private void Signal(float timeOfCollision, Target target)
 		{
-			EmitSignal(SignalName.GunReady, 0.5f * Mathf.Pi - _gun.Rotation, GetHeadPosition(), timeOfCollision);
+			OnCannonAimed?.Invoke(0.5f * Mathf.Pi - _gun.Rotation, timeOfCollision, GetHeadPosition(), target);
 		}
-
-		[Signal]
-		public delegate void GunReadyEventHandler(float angleRad, Vector2 headPosition);
 	}
 
 }
