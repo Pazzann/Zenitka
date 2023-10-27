@@ -29,7 +29,7 @@ public partial class CameraTarget2 : Camera3D
 				Position = _target.Position;
 				if (_targetLinearVelocityNormalized != new Vector3(0, 0, 0))
 				{
-					Translate(new Vector3(-_targetLinearVelocityNormalized.X * 5, 10, -_targetLinearVelocityNormalized.Z * 5));
+					Translate(new Vector3(0f, 10 * _zoom, 10 * _zoom));
 				}
 				else
 				{ Translate(new Vector3(-5, 10, -5)); }
