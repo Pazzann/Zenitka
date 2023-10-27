@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://l5aldnajwrmi"]
+[gd_scene load_steps=16 format=3 uid="uid://l5aldnajwrmi"]
 
 [ext_resource type="Script" path="res://Scripts/2D/Targets/Rocket1.cs" id="1_ibmgh"]
 [ext_resource type="Texture2D" uid="uid://cijsda3jvg8ur" path="res://Assets/Sprites/RocketExplosion/RocketExplosion1.png" id="2_t81mn"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b0lshr2nocrv6" path="res://Assets/Sprites/Rocket/Rocket1.png" id="10_ctnug"]
 [ext_resource type="Texture2D" uid="uid://hmy3weempph" path="res://Assets/Sprites/Rocket/Rocket2.png" id="11_gqrpx"]
 [ext_resource type="Texture2D" uid="uid://balh0ik147yma" path="res://Assets/Sprites/Rocket/Rocket3.png" id="12_ah5ta"]
+[ext_resource type="Theme" uid="uid://hxpqxviknukd" path="res://Assets/Styles/base.tres" id="13_v064u"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1t060"]
 animations = [{
@@ -83,3 +84,14 @@ rotation = 1.5708
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_3cdij")
 debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -174.0
+offset_top = -64.0
+offset_right = 201.0
+offset_bottom = 67.0
+theme = ExtResource("13_v064u")
+text = "Косплей москви"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

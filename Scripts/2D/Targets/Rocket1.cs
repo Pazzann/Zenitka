@@ -47,6 +47,10 @@ namespace Zenitka.Scripts._2D.Targets
 
 			_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
+		private void _on_button_pressed()
+		{
+			Destroy();
+		}
 
 		public override void Destroy()
 		{
@@ -58,5 +62,7 @@ namespace Zenitka.Scripts._2D.Targets
 		}
 	}
 }
+
+
 
 
