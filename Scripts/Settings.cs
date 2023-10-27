@@ -21,7 +21,7 @@ namespace Zenitka
 				IsNotDefaultGun = false;
 				IsNotDefaultTarget = false;
 				Gravity = 9.8f;
-				Random = 10;
+				Random = 0;
 			}
 
 			public static class DefaultGun

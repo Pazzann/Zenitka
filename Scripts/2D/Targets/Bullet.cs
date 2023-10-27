@@ -40,7 +40,7 @@ namespace Zenitka.Scripts._2D.Targets
 			_state.SelfPropellingAcceleration = 0f;
 			_state.Mass = Settings.Settings2D.DefaultGun.BulletMass;
 
-			UseNumericalIntegration = false;
+			UseNumericalIntegration = true;
 
 			Reset();
 		}

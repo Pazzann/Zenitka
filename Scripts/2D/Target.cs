@@ -14,6 +14,7 @@ namespace Zenitka.Scripts._2D
 		protected float _simulationTime;
 
 		private Vector2 _currentVelocity;
+		private Vector2 _currentPosition;
 
 		public bool UseNumericalIntegration { get; set; } = true;
 
@@ -48,20 +49,21 @@ namespace Zenitka.Scripts._2D
 			base._IntegrateForces(physicsState);
 
 			physicsState.LinearVelocity = _currentVelocity;
-			Rotation = LinearVelocity.Angle();
+			Rotation = _currentVelocity.Angle();
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
-			_simulationTime += (float)delta;
+			_simulationTime += (float) delta;
 
 			if (UseNumericalIntegration)
 			{
 				var pos = GlobalPosition;
 				var vel = _currentVelocity;
 
-				State.Integrate(ref pos, ref vel, (float)delta);
+				State.Integrate(ref pos, ref vel, (float) delta);
 
+				_currentPosition = pos;
 				_currentVelocity = vel;
 			}
 			else
@@ -121,6 +123,7 @@ namespace Zenitka.Scripts._2D
 			LinearVelocity = State.Velocity;
 			GravityScale = 0f;
 
+			_currentPosition = State.Position;
 			_currentVelocity = State.Velocity;
 			_simulationTime = 0f;
 		}
