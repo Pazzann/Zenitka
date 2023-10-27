@@ -23,15 +23,8 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
-			StartPosition = new Vector2(Position.X, Position.Y);
-			ConstantAcceleration = 0;
-			
-			
-			Weight = Settings.Settings2D.DefaultGun.BulletMass;
-			DragCoefficient = Settings.Settings2D.DefaultGun.AirResistance;
-			StartVelocity = Settings.Settings2D.DefaultGun.BulletSpeed;
 			_animation = GetChild(0) as AnimatedSprite2D;
-			_timer = (GetChild(2) as Timer);
+			_timer = GetChild(2) as Timer;
 			_bulletCollision = GetChild(1) as CollisionShape2D;
 			_explosionCollision = GetChild(3) as CollisionShape2D;
 			_timer.WaitTime = ((double)SelfDestructionTime);
@@ -39,6 +32,17 @@ namespace Zenitka.Scripts._2D.Targets
 			_animation.Play("fly2");
 			
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
+
+			_state.Position = GlobalPosition;
+			_state.Velocity = _state.Velocity.Normalized() * Settings.Settings2D.DefaultGun.BulletSpeed;
+			_state.ConstantAcceleration = Vector2.Down * Settings.Settings2D.Gravity;
+			_state.LinearDrag = Settings.Settings2D.DefaultGun.AirResistance;
+			_state.SelfPropellingAcceleration = 0f;
+			_state.Mass = Settings.Settings2D.DefaultGun.BulletMass;
+
+			UseNumericalIntegration = false;
+
+			Reset();
 		}
 
 		private void OnBodyEntered(Node body)
@@ -62,8 +66,6 @@ namespace Zenitka.Scripts._2D.Targets
 			IsExploded = true;
 		}
 		
-		
-
 		public override void Destroy()
 		{
 			QueueFree();

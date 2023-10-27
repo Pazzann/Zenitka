@@ -11,22 +11,27 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
-			ConstantAcceleration = Settings.Settings2D.RocketTarget.RocketAcceleration;
-			StartPosition = new Vector2(Position.X, Position.Y);
-			
-			
-			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 			_currentFuel = Settings.Settings2D.RocketTarget.FuelMass;
-			DragCoefficient = Settings.Settings2D.RocketTarget.AirResistance;
-			StartVelocity = Settings.Settings2D.RocketTarget.StartVelocity;
+
 			_animation = GetChild(0) as AnimatedSprite2D;
 			_rocketCollision = GetChild(1) as CollisionShape2D;
 			_animation.Play("fly");
+
+			_state.Velocity = _state.Velocity.Normalized() * Settings.Settings2D.RocketTarget.StartVelocity;
+			_state.ConstantAcceleration = Vector2.Down * Settings.Settings2D.Gravity;
+			_state.LinearDrag = Settings.Settings2D.RocketTarget.AirResistance;
+			_state.SelfPropellingAcceleration = Settings.Settings2D.RocketTarget.RocketAcceleration;
+			_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
+
+			UseNumericalIntegration = true;
+
+			Reset();
 		}
 		
 		public override void _PhysicsProcess(double delta)
 		{
-			CurrentTime += (float)delta;
+			base._PhysicsProcess(delta);
+
 			if (_currentFuel > 0)
 			{
 				_currentFuel -= Settings.Settings2D.RocketTarget.FuelCost * (float)delta;
@@ -36,12 +41,11 @@ namespace Zenitka.Scripts._2D.Targets
 				if(IsExploded)
 					return;
 				_currentFuel = 0;
-				ConstantAcceleration = 0;
+				_state.SelfPropellingAcceleration = 0f;
 				Destroy();
 			}
 			
-			
-			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
+			_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
 		
 		public override void Destroy()

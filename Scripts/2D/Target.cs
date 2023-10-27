@@ -9,44 +9,58 @@ namespace Zenitka.Scripts._2D
 		private bool _isOffscreen = false;
 		private bool _isWithinRange = false;
 
-		public float Weight { get; set; }
-		public float DragCoefficient { get; set; }
-		public float StartVelocity { get; set; }
-		public Vector2 StartPosition { get; set; }
-		public float ConstantAcceleration { get; set; }
+		protected ParticleState2D _state;
+		protected float _simulationTime;
 
-		
-		public float CurrentTime = 0.0f;
-		public float StartAngle = 0.0f;
+		private Vector2 _currentVelocity;
 
-		public bool IsExploded;
+		public bool UseNumericalIntegration { get; set; } = true;
+
+		public ParticleState2D State {
+			get => _state;
+			set {
+				_state = value;
+				
+				if (GetParent<Node>() != null)
+					Reset();
+			}
+		}
+
+		public bool IsExploded = false;
+		private bool _firstFrameAfterExplosion = true;
 
 		public override void _Ready()
 		{
-			StartPosition = new Vector2(Position.X, Position.Y);
+			Reset();
 		}
 		
 		public void ScheduleSelfDestroyWhenOffscreen() {
 			_isOffscreen = GetViewportRect().HasPoint(Position);
 		}
 
-		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+		public override void _IntegrateForces(PhysicsDirectBodyState2D physicsState)
 		{
 			
-			base._IntegrateForces(state);
-			
-			Rotation = state.LinearVelocity.Normalized().Angle();
-			
-			var velX = Math2D.XVelocityFromT(this, CurrentTime);
-			var velY = Math2D.YVelocityFromT(this, CurrentTime, Settings.Settings2D.Gravity);
-			
-				
-			if (IsExploded)
-			{
-				base._IntegrateForces(state);
-				state.LinearVelocity = new Vector2(velX, velY) / 3.0f;
-				return;
-			}
+			base._IntegrateForces(physicsState);
+
+			physicsState.LinearVelocity = _currentVelocity;
+			Rotation = LinearVelocity.Angle();
+		}
+		
+		public override void _PhysicsProcess(double delta)
+		{
+			_simulationTime += (float) delta;
+
+			if (UseNumericalIntegration) {
+				var pos = GlobalPosition;
+				var vel = _currentVelocity;
+
+				State.Integrate(ref pos, ref vel, (float) delta);
+
+				_currentVelocity = vel;
+			} else	
+				_currentVelocity = State.ComputeVelocity(_simulationTime);
+
 			var rand = new Random();
 			
 			bool kindX = rand.Next(2) == 1;
@@ -57,16 +71,13 @@ namespace Zenitka.Scripts._2D
 			int randCoefY = rand.Next(Settings.Settings2D.Random);
 			float randEnvY = (kindY)? 1 - randCoefY * 0.001f : 1 + randCoefY * 0.001f;
 			
-			velX *= randEnvX;
-			velY *= randEnvY;
-			
-			state.LinearVelocity = new Vector2(velX, velY);
-			
-		}
-		
-		public override void _PhysicsProcess(double delta)
-		{
-			CurrentTime += (float)delta;
+			_currentVelocity.X *= randEnvX;
+			_currentVelocity.Y *= randEnvY;
+
+			if (IsExploded && _firstFrameAfterExplosion) {
+				_currentVelocity /= 5f;
+				_firstFrameAfterExplosion = false;
+			}
 		}
 
 		[Signal]
@@ -94,6 +105,15 @@ namespace Zenitka.Scripts._2D
 			/*if (!_isOffscreen) {
 				QueueFree();
 			}*/
+		}
+
+		protected void Reset() {
+			GlobalPosition = State.Position;
+			LinearVelocity = State.Velocity;
+			GravityScale = 0f;
+
+			_currentVelocity = State.Velocity;
+			_simulationTime = 0f;
 		}
 	}
 }

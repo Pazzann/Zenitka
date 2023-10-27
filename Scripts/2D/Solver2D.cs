@@ -98,6 +98,15 @@ namespace Zenitka.Scripts._2D
             return a;
         }
 
+        public readonly Vector2 ComputeAccelerationDerivative(in Vector2 curVelocity, in Vector2 acceleration) {
+            var a = -LinearDrag / Mass * Vector2.One;
+
+            if (curVelocity != Vector2.Zero)
+                a += curVelocity.Normalized() * SelfPropellingAcceleration;
+
+            return a;
+        }
+
         public readonly void Integrate(ref Vector2 curPosition, ref Vector2 curVelocity, float dt) {
             var acceleration = ComputeAcceleration(curVelocity);
 
@@ -109,12 +118,10 @@ namespace Zenitka.Scripts._2D
     public class Solver2D
     {
         private const int SECTORS = 600;
-        private const int ITERATIONS = 400;
+        private const int ITERATIONS = 600;
 
         private const float SECTOR_ARC = Mathf.Pi / SECTORS;
-        private const float TIME_STEP = 0.02f; 
-
-        private const float SCALE = 1f;
+        private const float TIME_STEP = 1f / 60f; 
 
         private CannonState2D _cannon;
         private ParticleState2D _target;
@@ -124,18 +131,6 @@ namespace Zenitka.Scripts._2D
             _cannon = cannon;
             _target = target;
             _gravity = gravity;
-
-            _target.ConstantAcceleration += _gravity;
-
-            _cannon.BarrelLength /= SCALE;
-            _cannon.Position /= SCALE;
-            _cannon.ProjectileSpeed /= SCALE;
-
-            _target.Position /= SCALE;
-            _target.Velocity /= SCALE;
-            _target.ConstantAcceleration /= SCALE;
-
-            _gravity /= SCALE;
         }
 
         public (float, float) Aim() {
@@ -156,7 +151,7 @@ namespace Zenitka.Scripts._2D
 
             //GD.Print("Best angle: ", bestAngle);
             //GD.Print("Best time: ", bestTimeOfCollision);
-            //GD.Print("Best distance: ", bestDistance);
+            GD.Print("Best distance: ", bestDistance);
 
             return (bestAngle, bestTimeOfCollision);
         }

@@ -48,9 +48,15 @@ namespace Zenitka.Scripts._2D
 			var bullet = _bulletScene.Instantiate() as Bullet;
 
 			bullet.SelfDestructionTime = timeOfCollision - 0.07f;
-			bullet.GlobalPosition = Vector2.Zero;
-			bullet.GravityScale = 0f;
-			bullet.StartAngle = angleRad;
+
+			// bullet.GlobalPosition = Vector2.Zero;
+			// bullet.GravityScale = 0f;
+			// bullet.StartAngle = angleRad;
+
+			var dir = Vector2.FromAngle(angleRad);
+			dir.Y = -dir.Y;
+
+			bullet.State = new ParticleState2D(Vector2.Zero, dir, Vector2.Zero, 0f, 0f, 0f);
 
 			AddChild(bullet);
 
@@ -67,17 +73,22 @@ namespace Zenitka.Scripts._2D
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var scene = (Settings.Settings2D.IsNotDefaultTarget) ? _rocketTargetScene : _targetScene;
+			var scene = Settings.Settings2D.IsNotDefaultTarget ? _rocketTargetScene : _targetScene;
+			//var scene = _rocketTargetScene;
 			var target = scene.Instantiate() as Target;
 			_firedBurstBulletCount = 0;
 
 			var targetState = CreateTarget();
 
-			target.GlobalPosition = targetState.Position;
-			target.StartVelocity = targetState.Velocity.Length();
-			target.StartAngle = -targetState.Velocity.Angle();
+			//target.GlobalPosition = targetState.Position;
+			target.State = targetState;
+
+			// target.StartVelocity = targetState.Velocity.Length();
+			// target.StartAngle = -targetState.Velocity.Angle();
 
 			AddChild(target);
+
+			targetState = target.State;
 
 			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
 			
@@ -131,9 +142,8 @@ namespace Zenitka.Scripts._2D
 				vel = Vector2.FromAngle(Mathf.Pi - angle);
 			}
 
-			vel *= Settings.Settings2D.DefaultTarget.Velocity;
 
-			return new ParticleState2D(pos, vel, Vector2.Zero, Settings.Settings2D.DefaultTarget.AirResistance, 0f, Settings.Settings2D.DefaultTarget.Mass);
+			return new ParticleState2D(pos, vel, Vector2.Zero, 0f, 0f, 0f);
 		}
 
 		private void SettingsButton()
