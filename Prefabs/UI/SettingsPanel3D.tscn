@@ -229,6 +229,7 @@ text = "коефіцієнт опору повітря"
 layout_mode = 2
 
 [node name="HBoxContainer7" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -353,6 +354,7 @@ text = "коефіцієнт опору повітря"
 layout_mode = 2
 
 [node name="HBoxContainer9" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/3DRocket"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
