@@ -32,7 +32,7 @@ namespace Zenitka.Scripts._2D
 			// var curRot = Mathf.PosMod(_gun.Rotation, 2f * Mathf.Pi);
 			var curRot = _gun.Rotation;
 			var diff = Mathf.Abs(curRot - targetAngle);
-			
+
 			if (Mathf.IsEqualApprox(Rotation, targetAngle, 0.001f))
 				Signal(timeOfCollision);
 			else

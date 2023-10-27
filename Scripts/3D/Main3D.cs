@@ -27,7 +27,7 @@ namespace Zenitka.Scripts._3D
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/3D/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
 		}
-		
+
 		private void OnCannonAimed(ParticleState3D projectile1, ParticleState3D projectile2, float collisionTime)
 		{
 			//GD.Print("aimed");
@@ -37,12 +37,16 @@ namespace Zenitka.Scripts._3D
 
 			bullet.State = projectile1;
 			bullet.Lifespan = 10f;
-			
-			bullet.OnExploded += (target) => {
-				if (target != null) {
+
+			bullet.OnExploded += (target) =>
+			{
+				if (target != null)
+				{
 					GD.Print("Hit");
 					target.QueueFree();
-				} else {
+				}
+				else
+				{
 					GD.Print("Missed.");
 				}
 			};
@@ -52,17 +56,21 @@ namespace Zenitka.Scripts._3D
 
 			bullet1.State = projectile2;
 			bullet1.Lifespan = 10f;
-			
-			bullet1.OnExploded += (target) => {
-				if (target != null) {
+
+			bullet1.OnExploded += (target) =>
+			{
+				if (target != null)
+				{
 					GD.Print("Hit");
 					target.QueueFree();
-				} else {
+				}
+				else
+				{
 					GD.Print("Missed.");
 				}
 			};
 		}
-		
+
 		private void OnTargetSpawnTimerTimeout()
 		{
 			var kind = _rng.Next(2) == 0;
@@ -85,8 +93,10 @@ namespace Zenitka.Scripts._3D
 			target.CannonPosition = _cannon.GlobalPosition;
 			target.CannnonRange = 100f;
 
-			target.OnCannonVisiblityChanged = (visible) => {
-				if (visible) {
+			target.OnCannonVisiblityChanged = (visible) =>
+			{
+				if (visible)
+				{
 					var (dir, timeOfCollision, projectile) = new Solver3D(
 						new CannonState3D(
 							_cannon.Origin,
@@ -106,8 +116,9 @@ namespace Zenitka.Scripts._3D
 				}
 			};
 		}
-		
-		private static Vector3 GenerateTargetSpawnLocation(bool kind) {
+
+		private static Vector3 GenerateTargetSpawnLocation(bool kind)
+		{
 			var x = MathUtils.RandRange(0f, 1f);
 
 			if (kind)
@@ -118,7 +129,7 @@ namespace Zenitka.Scripts._3D
 
 			if (_rng.Next(2) == 0)
 				z = -z;
-			
+
 			return TARGET_SPAWN_RADIUS * new Vector3(x, y, z).Normalized();
 		}
 		private void SettingsButton()
@@ -144,7 +155,7 @@ namespace Zenitka.Scripts._3D
 
 		}
 	}
-	
+
 }
 
 

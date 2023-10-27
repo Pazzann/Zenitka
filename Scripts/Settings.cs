@@ -23,7 +23,7 @@ namespace Zenitka
 				Gravity = 9.8f;
 				Random = 10;
 			}
-			
+
 			public static class DefaultGun
 			{
 				public static float BulletSpeed { get; set; } // швидкість снаряда
@@ -47,13 +47,16 @@ namespace Zenitka
 			public static class RocketGun
 			{
 				public static Vector2
-					ZenithDetectionCoordinates { get; set; } // координати виявлення відносно зенітної установки //torad
+					ZenithDetectionCoordinates
+				{ get; set; } // координати виявлення відносно зенітної установки //torad
 
 				//public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
 				public static float
-					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
+					InitialVelocity
+				{ get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 				public static float
-					RocketForce { get; set; } // сила тяги, що надається ракетним двигуном (кг * м / с2)
+					RocketForce
+				{ get; set; } // сила тяги, що надається ракетним двигуном (кг * м / с2)
 
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 				public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
@@ -95,12 +98,14 @@ namespace Zenitka
 			public static class RocketTarget
 			{
 				public static float
-					RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
+					RocketAcceleration
+				{ get; set; } // прискорення, що надається ракетним двигуном (м/с2)
 
-				
+
 				//remove
 				public static float
-					MaxAngularVelocity { get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
+					MaxAngularVelocity
+				{ get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
 				public static float StartVelocity { get; set; } // Стартовая скорость
 				public static float FuelCost { get; set; } // Затрата топлива
 
@@ -155,11 +160,13 @@ namespace Zenitka
 			public static class RocketGun
 			{
 				public static Vector2
-					ZenithDetectionCoordinates { get; set; } // координати виявлення відносно зенітної установки //torad
+					ZenithDetectionCoordinates
+				{ get; set; } // координати виявлення відносно зенітної установки //torad
 
 				//public static Vector2 TargetEndCoordinates{ get; set; } // координати кінцевої точки польоту цілі
 				public static float
-					InitialVelocity { get; set; } // вектор початкової швидкості (напрям, величина у м/с)
+					InitialVelocity
+				{ get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 
 				//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 				public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
@@ -171,8 +178,8 @@ namespace Zenitka
 
 				static RocketGun()
 				{
-					
-					
+
+
 				}
 			}
 
@@ -197,10 +204,12 @@ namespace Zenitka
 			public static class RocketTarget
 			{
 				public static float
-					RocketAcceleration { get; set; } // прискорення, що надається ракетним двигуном (м/с2)
+					RocketAcceleration
+				{ get; set; } // прискорення, що надається ракетним двигуном (м/с2)
 
 				public static float
-					MaxAngularVelocity { get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
+					MaxAngularVelocity
+				{ get; set; } // максимальну кутову швидкість (швидкість повороту, 1/c)
 
 				public static float DetonationDistance { get; set; } // дистанція підриву (м)
 				public static float ShrapnelVelocity { get; set; } // швидкість розльоту осколків

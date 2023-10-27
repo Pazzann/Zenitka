@@ -5,20 +5,23 @@ using Godot;
 
 namespace Zenitka.Scripts
 {
-	public struct BodyState {
+	public struct BodyState
+	{
 		public Vector2 position;
 		public Vector2 velocity;
 		public Vector2 acceleration;
 		public Vector2 dragCoefs;
 
-		public BodyState(Vector2 position, Vector2 velocity, Vector2 acceleration, Vector2 dragCoefs) {
+		public BodyState(Vector2 position, Vector2 velocity, Vector2 acceleration, Vector2 dragCoefs)
+		{
 			this.position = position;
 			this.velocity = velocity;
 			this.acceleration = acceleration;
 			this.dragCoefs = dragCoefs;
 		}
 
-		public void update(float dt) {
+		public void update(float dt)
+		{
 			acceleration -= dt * velocity * dragCoefs.X;
 			acceleration -= dt * velocity * velocity.Length() * dragCoefs.Y;
 
@@ -27,14 +30,17 @@ namespace Zenitka.Scripts
 		}
 	}
 
-	public static class MathUtils {
+	public static class MathUtils
+	{
 		private static Random _rng = new Random();
 
-		public static float RandRange(float min, float max) {
+		public static float RandRange(float min, float max)
+		{
 			return _rng.NextSingle() * (max - min) + min;
 		}
 
-		public static Vector2 RandRange(in Vector2 min, in Vector2 max) {
+		public static Vector2 RandRange(in Vector2 min, in Vector2 max)
+		{
 			return new Vector2(
 				RandRange(min.X, max.X),
 				RandRange(min.Y, max.Y)
@@ -49,13 +55,15 @@ namespace Zenitka.Scripts
 			float projectileSpeed,
 			Vector2 projectileDrag,
 			BodyState target
-		) {
+		)
+		{
 			const int K = 100;
 			const float STEP = Mathf.Pi / K;
 
 			var oTarget = target;
 
-			for (int i = 0; i < K; ++i) {
+			for (int i = 0; i < K; ++i)
+			{
 				float a = STEP * i;
 				target = oTarget;
 
@@ -68,7 +76,8 @@ namespace Zenitka.Scripts
 
 				const float D_T = 1f / 60f;
 
-				for (int j = 0; j < 300; ++j) {
+				for (int j = 0; j < 300; ++j)
+				{
 					if ((target.position - projectile.position).LengthSquared() < 1000f)
 						return a;
 
@@ -90,7 +99,8 @@ namespace Zenitka.Scripts
 			float projectileSpeed,
 			in Vector2 targetPos,
 			in Vector2 targetVelocity
-		) {
+		)
+		{
 			float t = CalculateHitTime(barrelLength, projectileSpeed, targetPos, targetVelocity);
 
 			if (t == 0)
@@ -105,7 +115,8 @@ namespace Zenitka.Scripts
 			float projectileSpeed,
 			in Vector3 targetPos,
 			in Vector3 targetVelocity
-		) {
+		)
+		{
 			float t = CalculateHitTime3D(barrelLength, projectileSpeed, targetPos, targetVelocity);
 			GD.Print("t: ", t);
 
@@ -122,7 +133,8 @@ namespace Zenitka.Scripts
 			float projectileSpeed,
 			in Vector3 targetPos,
 			in Vector3 targetVelocity
-		) {
+		)
+		{
 			var a = targetVelocity.LengthSquared() - projectileSpeed * projectileSpeed;
 			var b = 2f * (targetPos.Dot(targetVelocity) - barrelLength * projectileSpeed);
 			var c = targetPos.LengthSquared() - barrelLength * barrelLength;
@@ -149,7 +161,8 @@ namespace Zenitka.Scripts
 			float muzzleSpeed,
 			in Vector2 targetPos,
 			in Vector2 targetVelocity
-		) {
+		)
+		{
 			var a = targetVelocity.LengthSquared() - muzzleSpeed * muzzleSpeed;
 			var b = 2f * (targetPos.Dot(targetVelocity) - barrelLength * muzzleSpeed);
 			var c = targetPos.LengthSquared() - barrelLength * barrelLength;
@@ -171,10 +184,11 @@ namespace Zenitka.Scripts
 				return 0;
 		}
 
-		private static (float, float) SolveQuadricWithDeterminant(float a, float b, float d) {
+		private static (float, float) SolveQuadricWithDeterminant(float a, float b, float d)
+		{
 			d = Mathf.Sqrt(d);
 			return ((-b - d) / (2f * a), (-b + d) / (2f * a));
 		}
 	}
-} 
+}
 

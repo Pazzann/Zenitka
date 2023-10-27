@@ -13,21 +13,21 @@ public partial class Camera3D : Godot.Camera3D
 
 	public override void _Process(double delta)
 	{
-		var deltaF = (float) delta;
+		var deltaF = (float)delta;
 		var angle = deltaF * ROTATION_SPEED;
 
 		if (Input.IsActionPressed("cam_right_3d"))
 			RotateAbsolute(Vector3.Up, angle);
-		
+
 		if (Input.IsActionPressed("cam_left_3d"))
 			RotateAbsolute(Vector3.Up, -angle);
-		
+
 		if (Input.IsActionPressed("cam_up_3d"))
 			RotateRelative(Vector3.Right, deltaF);
-		
+
 		if (Input.IsActionPressed("cam_down_3d"))
 			RotateRelative(Vector3.Right, -deltaF);
-		
+
 		if (Input.IsActionPressed("cam_zoom_in_3d") && Position.LengthSquared() > 2f)
 			Transform = Transform.Translated(-Position.Normalized() * deltaF * ZOOM_SPEED);
 
@@ -46,11 +46,13 @@ public partial class Camera3D : Godot.Camera3D
 		}
 	}
 
-	private void RotateRelative(in Vector3 axis, float angle) {
+	private void RotateRelative(in Vector3 axis, float angle)
+	{
 		Transform = Transform.RotatedLocal(axis, angle);
 	}
 
-	private void RotateAbsolute(in Vector3 axis, float angle) {
+	private void RotateAbsolute(in Vector3 axis, float angle)
+	{
 		Transform = Transform.Rotated(axis, angle);
 	}
 }

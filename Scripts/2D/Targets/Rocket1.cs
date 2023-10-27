@@ -27,7 +27,7 @@ namespace Zenitka.Scripts._2D.Targets
 
 			Reset();
 		}
-		
+
 		public override void _PhysicsProcess(double delta)
 		{
 			base._PhysicsProcess(delta);
@@ -38,20 +38,20 @@ namespace Zenitka.Scripts._2D.Targets
 			}
 			else
 			{
-				if(IsExploded)
+				if (IsExploded)
 					return;
 				_currentFuel = 0;
 				_state.SelfPropellingAcceleration = 0f;
 				Destroy();
 			}
-			
+
 			_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
-		
+
 		public override void Destroy()
 		{
 			_animation.Play("explode");
-			
+
 			_animation.Connect("animation_looped", Callable.From(QueueFree));
 			_rocketCollision.Disabled = true;
 			IsExploded = true;

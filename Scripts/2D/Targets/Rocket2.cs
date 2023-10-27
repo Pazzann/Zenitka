@@ -14,7 +14,7 @@ namespace Zenitka.Scripts._2D.Targets
 		private float _currentFuel;
 
 		public Node2D FollowTarget { get; set; }
-		
+
 		private Label _destroyedLabel;
 		public float Weight { get; set; }
 		public float DragCoefficient { get; set; }
@@ -22,7 +22,7 @@ namespace Zenitka.Scripts._2D.Targets
 		public Vector2 StartPosition { get; set; }
 		public float ConstantAcceleration { get; set; }
 
-		
+
 		public float CurrentTime = 0.0f;
 		public float StartAngle = Mathf.Pi;
 
@@ -36,34 +36,34 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			_engineForce = Settings.Settings2D.RocketGun.RocketForce;
 			StartPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y);
-			
+
 			Weight = Settings.Settings2D.RocketGun.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 			_currentFuel = Settings.Settings2D.RocketGun.FuelMass;
 			DragCoefficient = Settings.Settings2D.RocketGun.AirResistance;
 			StartVelocity = Settings.Settings2D.RocketGun.InitialVelocity;
 			_animation = GetChild(0) as AnimatedSprite2D;
 			_rocketCollision = GetChild(1) as CollisionShape2D;
-			
+
 			_animation.Play("fly");
-			
+
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
-		
-			
+
+
 		}
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 		{
-			if(IsExploded)
-				state.LinearVelocity = new Vector2(0,0);
+			if (IsExploded)
+				state.LinearVelocity = new Vector2(0, 0);
 			base._IntegrateForces(state);
 
 			if (!IsExploded)
 				Rotation = state.LinearVelocity.Normalized().Angle();
-			
+
 			if (CurrentTime > ManeuveringEngineActivationDelaySec)
 				ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _engineForce / Weight;
 			else
-				ConstantForce = Mass * Vector2.Up * _engineForce / Weight; 
+				ConstantForce = Mass * Vector2.Up * _engineForce / Weight;
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -75,23 +75,23 @@ namespace Zenitka.Scripts._2D.Targets
 			}
 			else
 			{
-				if(IsExploded)
+				if (IsExploded)
 					return;
 				_currentFuel = 0;
 				_engineForce = 0;
 				Destroy();
 			}
-			
+
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
-		
+
 		public void Destroy()
 		{
 			_animation.Play("explode");
-			
+
 			_animation.Connect("animation_looped", Callable.From(QueueFree));
 			_rocketCollision.Disabled = true;
-			
+
 			IsExploded = true;
 		}
 
@@ -100,8 +100,9 @@ namespace Zenitka.Scripts._2D.Targets
 			(body as Target).Destroy();
 			Destroy();
 
-			if (!_scoreUpdated) {
-				_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
+			if (!_scoreUpdated)
+			{
+				_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
 				_scoreUpdated = true;
 			}
 		}
@@ -110,7 +111,8 @@ namespace Zenitka.Scripts._2D.Targets
 			Destroy();
 		}
 
-		private Vector2 PredictFutureTargetPosition(float t) {
+		private Vector2 PredictFutureTargetPosition(float t)
+		{
 			return FollowTarget.GlobalPosition + (FollowTarget as RigidBody2D).LinearVelocity;
 		}
 

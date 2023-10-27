@@ -13,7 +13,7 @@ namespace Zenitka.Scripts._2D.Targets
 		private CollisionShape2D _explosionCollision;
 
 		private bool _scoreUpdated = false;
-		
+
 		private Label _destroyedLabel;
 		public float SelfDestructionTime
 		{
@@ -30,7 +30,7 @@ namespace Zenitka.Scripts._2D.Targets
 			_timer.WaitTime = ((double)SelfDestructionTime);
 			_timer.Start();
 			_animation.Play("fly2");
-			
+
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 
 			_state.Position = GlobalPosition;
@@ -49,9 +49,10 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			(body as Target).Destroy();
 			_on_suicide_timer_timeout();
-			
-			if (!_scoreUpdated) {
-				_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text)  + 1).ToString();
+
+			if (!_scoreUpdated)
+			{
+				_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
 				_scoreUpdated = true;
 			}
 		}
@@ -59,13 +60,13 @@ namespace Zenitka.Scripts._2D.Targets
 		private void _on_suicide_timer_timeout()
 		{
 			_animation.Play("explode");
-			
+
 			_animation.Connect("animation_looped", Callable.From(QueueFree));
 			_bulletCollision.Disabled = true;
 			_explosionCollision.Disabled = false;
 			IsExploded = true;
 		}
-		
+
 		public override void Destroy()
 		{
 			QueueFree();

@@ -22,14 +22,14 @@ public partial class Camera2DTarget : Camera2D
 			}
 		}
 		_target = GetNodeOrNull<Target>("/root/Main2D/Target");
-		if(_target == null)
+		if (_target == null)
 		{
-		 _target = GetNodeOrNull<Target>("/root/Main2D/Rocket1");
+			_target = GetNodeOrNull<Target>("/root/Main2D/Rocket1");
 		}
 		if (_target != null)
 		{
 			Position = _target.Position;
-						Position = _target.Position;
+			Position = _target.Position;
 			if (Input.IsActionJustPressed("cam_zoom_out_3d"))
 			{
 				Zoom = Zoom / 1.3f;
@@ -39,7 +39,7 @@ public partial class Camera2DTarget : Camera2D
 				Zoom = Zoom * 1.3f;
 			}
 		}
-			
+
 	}
 	private void _on_target_spawn_timer_timeout()
 	{

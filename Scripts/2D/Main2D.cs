@@ -37,7 +37,7 @@ namespace Zenitka.Scripts._2D
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
 			_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/Rocket1.tscn");
-			
+
 			_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/Rocket2.tscn");
 			_rocketCannon = GetNode<Marker2D>("RocketMarker");
 		}
@@ -91,16 +91,16 @@ namespace Zenitka.Scripts._2D
 			targetState = target.State;
 
 			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
-			
+
 			if (Settings.Settings2D.IsNotDefaultGun)
 			{
 				Rocket2 rocket = _rocketAmmoScene.Instantiate() as Rocket2;
 				rocket.GlobalPosition = _rocketCannon.Position;
 				rocket.FollowTarget = target;
-				
+
 				AddChild(rocket);
 				_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
-				
+
 				return;
 			}
 
@@ -163,10 +163,10 @@ namespace Zenitka.Scripts._2D
 				var animation = GetNode<AnimationPlayer>("CanvasLayer/SettingsPanel/Animation");
 				animation.Play("out");
 				settingsButtonAnimation.Play("out");
-				
+
 
 			}
-			
+
 
 		}
 

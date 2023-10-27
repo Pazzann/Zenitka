@@ -2,13 +2,15 @@ using Godot;
 
 namespace Zenitka.Scripts._3D
 {
-	public partial class DynamicBody : RigidBody3D {
+	public partial class DynamicBody : RigidBody3D
+	{
 		private ParticleState3D _state = new ParticleState3D();
 
-		public ParticleState3D State 
+		public ParticleState3D State
 		{
 			get { return _state; }
-			set { 
+			set
+			{
 				_state = value;
 				Reset();
 			}
@@ -16,7 +18,8 @@ namespace Zenitka.Scripts._3D
 
 		private float _time = 0f;
 
-		public override void _Ready() {
+		public override void _Ready()
+		{
 			Reset();
 		}
 
@@ -29,14 +32,15 @@ namespace Zenitka.Scripts._3D
 		public override void _PhysicsProcess(double delta)
 		{
 			base._PhysicsProcess(delta);
-			_time += (float) delta;
+			_time += (float)delta;
 
 			//Transform = Transform.LookingAt(Vector3.Up, Vector3.Forward);
 			//GD.Print(LinearVelocity);
 			//Transform = Transform.LookingAt(-LinearVelocity, Vector3.Up);
 		}
 
-		private void Reset() {
+		private void Reset()
+		{
 			GlobalPosition = State.Position;
 			LinearVelocity = Vector3.Zero;
 			ConstantForce = Vector3.Zero;
