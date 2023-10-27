@@ -13,6 +13,9 @@ namespace Zenitka.Scripts._3D
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
+		
+		private Label _ammoLabel;
+		private Label _detectedLabel;
 
 		private Cannon _cannon;
 
@@ -23,6 +26,10 @@ namespace Zenitka.Scripts._3D
 		{
 			_cannon = GetNode<Cannon>("Cannon");
 			_cannon.OnAimed += OnCannonAimed;
+			
+			_ammoLabel = GetNode<Label>("Statistics/ColorRect/UsedAmmo");
+			_detectedLabel = GetNode<Label>("Statistics/ColorRect/DetectedTargets");
+			
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/3D/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
@@ -53,6 +60,8 @@ namespace Zenitka.Scripts._3D
 
 			var bullet1 = _bulletScene.Instantiate() as Bullet;
 			AddChild(bullet1);
+			
+			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
 
 			bullet1.State = projectile2;
 			bullet1.Lifespan = 10f;
@@ -87,8 +96,12 @@ namespace Zenitka.Scripts._3D
 
 			var target = _targetScene.Instantiate() as Target;
 			AddChild(target);
+			
+			
 
 			target.State = targetState;
+			
+			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
 
 			target.CannonPosition = _cannon.GlobalPosition;
 			target.CannnonRange = 100f;

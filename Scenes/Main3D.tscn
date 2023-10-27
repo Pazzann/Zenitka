@@ -92,6 +92,7 @@ mesh = SubResource("CylinderMesh_161b6")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.183013, 0.683013, 0, 0.965926, 0.258819, -0.707107, -0.183013, 0.683013, 15.9726, 8.52938, 14.5587)
+current = true
 script = ExtResource("3_2pk56")
 
 [node name="ScreenTarget" type="Sprite3D" parent="Camera3D"]
@@ -110,6 +111,7 @@ script = ExtResource("4_0nnjc")
 
 [node name="CameraTarget2" type="Camera3D" parent="SubViewport"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 16, 11, 14.5)
+current = true
 script = ExtResource("5_3s1li")
 
 [node name="SettingsPanel3D" parent="." instance=ExtResource("6_o0hwh")]
