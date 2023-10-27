@@ -102,8 +102,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 3804.0
-offset_bottom = 2220.0
+offset_right = 4822.0
+offset_bottom = 2806.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0941176, 0.0901961, 0.0705882, 1)
@@ -172,6 +172,7 @@ layout_mode = 2
 theme = ExtResource("1_4ge5k")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -188,19 +189,19 @@ theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer3"]
 layout_mode = 2
-text = "кутова швидкість змінення напрямку ствола (1/с) у вертикалі"
+text = "кутова швидкість змінення напрямку ствола (1/с)"
 
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer3"]
 layout_mode = 2
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer4"]
 layout_mode = 2
-text = "кутова швидкість змінення напрямку ствола (1/с) у горизонталі
-"
+text = "кутова швидкість змінення напрямку ствола (1/с)"
 
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer4"]
 layout_mode = 2
@@ -323,12 +324,13 @@ theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/3DRocket/HBoxContainer3"]
 layout_mode = 2
-text = "кутова швидкість (1/с) (швидкість повороту) у вертикалі"
+text = "кутова швидкість (1/с) (швидкість повороту)"
 
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/3DRocket/HBoxContainer3"]
 layout_mode = 2
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/3DRocket"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
