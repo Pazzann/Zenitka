@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://bny3kp3eng8nh" path="res://Assets/Rocket.blend" id="2_xrrwy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_856tk"]
-size = Vector3(1.10006, 1.44751, 13.568)
+size = Vector3(3, 3, 15)
 
 [node name="Target" type="RigidBody3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_h5mlg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.588, 0, 0, 0, 2.475, 0, 0, 0, 1, -0.00932705, 0, -4.26949)
 shape = SubResource("BoxShape3D_856tk")
 
 [node name="Rocket" parent="." instance=ExtResource("2_xrrwy")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 5)

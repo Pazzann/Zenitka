@@ -9,7 +9,7 @@ namespace Zenitka.Scripts._3D
 		// private static float TARGET_SPEED = 10f;
 		private const float TARGET_SPAWN_RADIUS = 80f;
 
-		private static readonly Vector3 GRAVITY = new Vector3(0f, 0f, 0f);
+		// private static readonly Vector3 GRAVITY = new Vector3(0f, 0f, 0f);
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
@@ -90,15 +90,13 @@ namespace Zenitka.Scripts._3D
 			var targetState = new ParticleState3D(
 				startPos,
 				Settings.Settings3D.DefaultTarget.Velocity * (endPos - startPos).Normalized(),
-				GRAVITY,
+				Vector3.Down * Settings.Settings3D.Gravity,
 				Settings.Settings3D.DefaultTarget.AirResistance / Settings.Settings3D.DefaultTarget.Mass
 			);
 
 			var target = _targetScene.Instantiate() as Target;
 			AddChild(target);
 			
-			
-
 			target.State = targetState;
 			
 			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
@@ -121,7 +119,7 @@ namespace Zenitka.Scripts._3D
 							Settings.Settings3D.DefaultGun.AirResistance / Settings.Settings3D.DefaultGun.BulletMass
 						),
 						targetState,
-						GRAVITY
+						Vector3.Down * Settings.Settings3D.Gravity
 					).Aim();
 
 					if (dir.LengthSquared() > 0.001f)
@@ -145,6 +143,7 @@ namespace Zenitka.Scripts._3D
 
 			return TARGET_SPAWN_RADIUS * new Vector3(x, y, z).Normalized();
 		}
+		
 		private void SettingsButton()
 		{
 			var settingsButtonAnimation = GetNode<AnimationPlayer>("Button2/AnimationPlayer");

@@ -29,7 +29,7 @@ public partial class CameraTarget : Camera3D
 		{
 			if (_target.LinearVelocity != new Vector3(0, 0, 0))
 			{
-				_rocket.Transform = _rocket.Transform.LookingAt(-_target.LinearVelocity * 3, Vector3.Up);
+				//_rocket.Transform = _rocket.Transform.LookingAt(-_target.LinearVelocity * 3, Vector3.Up);
 			}
 			if (Input.IsActionPressed("cam_zoom_in_3d") && _zoom - ZOOM_SPEED > 0.3f)
 			{
