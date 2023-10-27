@@ -45,8 +45,15 @@ namespace Zenitka.Scripts.UI
 				Pause();
 			}
 		}
+
+		private void ExitButton()
+		{
+			GetTree().Quit();
+		}
 	}
 }
+
+
 
 
 

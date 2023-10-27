@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3n6wbgd7i0ox"]
+[gd_scene load_steps=18 format=3 uid="uid://3n6wbgd7i0ox"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Main3D.cs" id="1_2igm4"]
 [ext_resource type="PackedScene" uid="uid://bt7u2b3j8v318" path="res://Prefabs/3D/Cannon.tscn" id="1_4hkxh"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bw5dxfeemcro7" path="res://Prefabs/UI/SettingsPanel3D.tscn" id="6_o0hwh"]
 [ext_resource type="Texture2D" uid="uid://dhxeffueupvbi" path="res://Assets/Styles/icons-settings.svg" id="7_n1efw"]
 [ext_resource type="PackedScene" uid="uid://cm0kjp16exuaa" path="res://Prefabs/UI/Menu.tscn" id="8_ld3at"]
+[ext_resource type="Script" path="res://Scripts/UI/Statistics.cs" id="9_4lumx"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_161b6"]
 top_radius = 10.0
@@ -72,6 +73,9 @@ _data = {
 "in": SubResource("Animation_mpyv6"),
 "out": SubResource("Animation_y1vbf")
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_40q82"]
+font_size = 24
 
 [node name="Main3D" type="Node3D"]
 script = ExtResource("1_2igm4")
@@ -141,6 +145,107 @@ offset_top = 444.0
 offset_right = -379.1
 offset_bottom = -1174.98
 scale = Vector2(1.68592, 1.59534)
+
+[node name="Statistics" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1670.0
+offset_top = 960.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("9_4lumx")
+
+[node name="ColorRect" type="ColorRect" parent="Statistics"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 120.0
+color = Color(0.0941176, 0.0901961, 0.0705882, 1)
+
+[node name="Label" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 23.0
+offset_right = 204.0
+offset_bottom = 71.0
+scale = Vector2(0.65487, 0.66093)
+text = "Витрачено боєприпасів"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="Label2" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 45.0
+offset_right = 246.0
+offset_bottom = 93.0
+scale = Vector2(0.65487, 0.66093)
+text = "Цілей виявлено"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="Label3" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 69.0
+offset_right = 197.0
+offset_bottom = 117.0
+scale = Vector2(0.65487, 0.66093)
+text = "Збито цілей"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="Label4" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = -1.0
+offset_right = 252.0
+offset_bottom = 47.0
+scale = Vector2(0.65487, 0.66093)
+text = "Статистика"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="UsedAmmo" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 206.0
+offset_top = 25.0
+offset_right = 393.0
+offset_bottom = 73.0
+scale = Vector2(0.65487, 0.66093)
+text = "0"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="DetectedTargets" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 49.0
+offset_right = 394.0
+offset_bottom = 97.0
+scale = Vector2(0.65487, 0.66093)
+text = "0"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="DestroyedTargets" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 70.0
+offset_right = 394.0
+offset_bottom = 118.0
+scale = Vector2(0.65487, 0.66093)
+text = "0"
+label_settings = SubResource("LabelSettings_40q82")
+
+[node name="Label5" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 92.0
+offset_right = 97.0
+offset_bottom = 118.0
+text = "Швидкість"
+
+[node name="speed" type="Label" parent="Statistics/ColorRect"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 95.0
+offset_right = 248.0
+offset_bottom = 121.0
+text = "1"
 
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
 [connection signal="pressed" from="Button2" to="." method="SettingsButton"]
