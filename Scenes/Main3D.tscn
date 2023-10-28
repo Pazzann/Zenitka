@@ -96,7 +96,7 @@ current = true
 script = ExtResource("3_2pk56")
 
 [node name="ScreenTarget" type="Sprite3D" parent="Camera3D"]
-transform = Transform3D(0.295743, 0, -0.0503611, -0.0130344, 0.289778, -0.076544, 0.0486451, 0.0776458, 0.285666, 2.00145, -0.483346, -3.1294)
+transform = Transform3D(0.0987656, -7.90253e-09, -0.0156642, -0.0040542, 0.0965926, -0.0255624, 0.0151305, 0.0258819, 0.0954002, 0.66962, -0.406531, -1.04937)
 texture = SubResource("ViewportTexture_4lwcm")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
