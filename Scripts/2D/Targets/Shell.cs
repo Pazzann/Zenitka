@@ -3,7 +3,7 @@ using Godot;
 
 namespace Zenitka.Scripts._2D.Targets
 {
-	public partial class Shell : Target
+	public partial class Shell : BallisticBody
 	{
 		private AnimatedSprite2D _animation;
 		private CollisionShape2D _rocketCollision;

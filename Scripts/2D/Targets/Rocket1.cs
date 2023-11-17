@@ -3,7 +3,7 @@ using System;
 
 namespace Zenitka.Scripts._2D.Targets
 {
-	public partial class Rocket1 : Target
+	public partial class Rocket1 : BallisticBody
 	{
 		private AnimatedSprite2D _animation;
 		private CollisionShape2D _rocketCollision;

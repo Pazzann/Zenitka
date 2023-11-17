@@ -5,12 +5,14 @@ using Zenitka.Scripts.Math;
 
 namespace Zenitka.Scripts._2D
 {
-	public partial class Target : RigidBody2D
+	public partial class BallisticBody : RigidBody2D
 	{
+		private static Random _rng = new Random();
+
 		private bool _isOffscreen = false;
 		private bool _isWithinRange = false;
 
-		protected ParticleState2D _state;
+		protected BodyState2D _state;
 		protected float _simulationTime;
 
 		private Vector2 _currentVelocity;
@@ -18,7 +20,7 @@ namespace Zenitka.Scripts._2D
 
 		public bool UseNumericalIntegration { get; set; } = true;
 
-		public ParticleState2D State
+		public BodyState2D State
 		{
 			get => _state;
 			set
@@ -40,7 +42,8 @@ namespace Zenitka.Scripts._2D
 
 		public void ScheduleSelfDestroyWhenOffscreen()
 		{
-			_isOffscreen = GetViewportRect().HasPoint(Position);
+			// TODO: use explicit view rect set by parent
+			_isOffscreen = GetViewportRect().HasPoint(GlobalPosition);
 		}
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D physicsState)
@@ -54,14 +57,15 @@ namespace Zenitka.Scripts._2D
 
 		public override void _PhysicsProcess(double delta)
 		{
-			_simulationTime += (float) delta;
+			var deltaF = (float) delta;
+			_simulationTime += deltaF;
 
 			if (UseNumericalIntegration)
 			{
 				var pos = GlobalPosition;
 				var vel = _currentVelocity;
 
-				State.Integrate(ref pos, ref vel, (float) delta);
+				State.Integrate(ref pos, ref vel, deltaF);
 
 				_currentPosition = pos;
 				_currentVelocity = vel;
@@ -69,18 +73,7 @@ namespace Zenitka.Scripts._2D
 			else
 				_currentVelocity = State.ComputeVelocity(_simulationTime);
 
-			var rand = new Random();
-
-			bool kindX = rand.Next(2) == 1;
-			int randCoefX = rand.Next(Settings.Settings2D.Random);
-			float randEnvX = kindX ? 1 - randCoefX * 0.001f : 1 + randCoefX * 0.001f;
-
-			bool kindY = rand.Next(2) == 1;
-			int randCoefY = rand.Next(Settings.Settings2D.Random);
-			float randEnvY = kindY ? 1 - randCoefY * 0.001f : 1 + randCoefY * 0.001f;
-
-			_currentVelocity.X *= randEnvX;
-			_currentVelocity.Y *= randEnvY;
+			ApplyRandomness(ref _currentVelocity);
 
 			if (IsExploded && _firstFrameAfterExplosion)
 			{
@@ -126,6 +119,19 @@ namespace Zenitka.Scripts._2D
 			_currentPosition = State.Position;
 			_currentVelocity = State.Velocity;
 			_simulationTime = 0f;
+		}
+
+		private void ApplyRandomness(ref Vector2 vel) {
+			bool kindX = _rng.Next(2) == 1;
+			int randCoefX = _rng.Next(Settings.Settings2D.Random);
+			float randEnvX = kindX ? 1 - randCoefX * 0.001f : 1 + randCoefX * 0.001f;
+
+			bool kindY = _rng.Next(2) == 1;
+			int randCoefY = _rng.Next(Settings.Settings2D.Random);
+			float randEnvY = kindY ? 1 - randCoefY * 0.001f : 1 + randCoefY * 0.001f;
+
+			vel.X *= randEnvX;
+			vel.Y *= randEnvY;
 		}
 	}
 }

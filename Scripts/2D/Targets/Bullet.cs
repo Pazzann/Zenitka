@@ -3,7 +3,7 @@ using System;
 
 namespace Zenitka.Scripts._2D.Targets
 {
-	public partial class Bullet : Target
+	public partial class Bullet : BallisticBody
 	{
 		private AnimatedSprite2D _animation;
 		private Timer _timer;
@@ -47,7 +47,7 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private void OnBodyEntered(Node body)
 		{
-			(body as Target).Destroy();
+			(body as BallisticBody).Destroy();
 			_on_suicide_timer_timeout();
 
 			if (!_scoreUpdated)

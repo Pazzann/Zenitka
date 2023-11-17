@@ -4,7 +4,7 @@ using Godot;
 
 namespace Zenitka.Scripts._2D
 {
-	public delegate void CannonAimedEventHandler(float angleRad, float timeOfCollision, Vector2 headPosition, Target target);
+	public delegate void CannonAimedEventHandler(float angleRad, float timeOfCollision, Vector2 headPosition, BallisticBody target);
 
 	public partial class Cannon : Node2D
 	{
@@ -30,7 +30,7 @@ namespace Zenitka.Scripts._2D
 			return 0.5f * Mathf.Pi - _gun.Rotation;
 		}
 
-		public void RotateToAndSignal(float targetAngle, float timeOfCollision, Target target)
+		public void RotateToAndSignal(float targetAngle, float timeOfCollision, BallisticBody target)
 		{
 			targetAngle = 0.5f * Mathf.Pi - Mathf.PosMod(targetAngle, 2f * Mathf.Pi);
 
@@ -50,7 +50,7 @@ namespace Zenitka.Scripts._2D
 			}
 		}
 
-		private void Signal(float timeOfCollision, Target target)
+		private void Signal(float timeOfCollision, BallisticBody target)
 		{
 			OnCannonAimed?.Invoke(0.5f * Mathf.Pi - _gun.Rotation, timeOfCollision, GetHeadPosition(), target);
 		}

@@ -97,7 +97,7 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private void _on_body_entered(Node body)
 		{
-			(body as Target).Destroy();
+			(body as BallisticBody).Destroy();
 			Destroy();
 
 			if (!_scoreUpdated)

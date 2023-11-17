@@ -4,7 +4,7 @@ using Zenitka.Scripts._2D;
 
 public partial class Camera2DTarget : Camera2D
 {
-	private Target _target;
+	private BallisticBody _target;
 	private Vector2 _targetStartingPosition;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -21,10 +21,10 @@ public partial class Camera2DTarget : Camera2D
 				MakeCurrent();
 			}
 		}
-		_target = GetNodeOrNull<Target>("/root/Main2D/Target");
+		_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Target");
 		if (_target == null)
 		{
-			_target = GetNodeOrNull<Target>("/root/Main2D/Rocket1");
+			_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Rocket1");
 		}
 		if (_target != null)
 		{
@@ -45,9 +45,9 @@ public partial class Camera2DTarget : Camera2D
 	{
 		if (_target == null)
 		{
-			_target = GetNodeOrNull<Target>("/root/Main2D/Rocket1");
+			_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Rocket1");
 		}
-		_target = GetNode<Target>("/root/Main2D/Target");
+		_target = GetNode<BallisticBody>("/root/Main2D/Target");
 		_targetStartingPosition = _target.Position;
 	}
 }

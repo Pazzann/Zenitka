@@ -44,7 +44,7 @@ namespace Zenitka.Scripts._2D
 			_cannon.OnCannonAimed += OnCannonGunReady;
 		}
 
-		private void OnCannonGunReady(float angleRad, float timeOfCollision, Vector2 headPosition, Target target)
+		private void OnCannonGunReady(float angleRad, float timeOfCollision, Vector2 headPosition, BallisticBody target)
 		{
 			var bullet = _bulletScene.Instantiate() as Bullet;
 
@@ -53,7 +53,7 @@ namespace Zenitka.Scripts._2D
 			var dir = Vector2.FromAngle(angleRad);
 			dir.Y = -dir.Y;
 
-			bullet.State = new ParticleState2D(Vector2.Zero, dir, Vector2.Zero, 0f, 0f, 0f);
+			bullet.State = new BodyState2D(Vector2.Zero, dir, Vector2.Zero, 0f, 0f, 0f);
 
 			AddChild(bullet);
 
@@ -90,7 +90,7 @@ namespace Zenitka.Scripts._2D
 			_firedBurstBulletCount = 0;
 
 			var scene = Settings.Settings2D.IsNotDefaultTarget ? _rocketTargetScene : _targetScene;
-			var target = scene.Instantiate() as Target;
+			var target = scene.Instantiate() as BallisticBody;
 
 			var targetState = CreateTarget();
 			target.State = targetState;
@@ -131,7 +131,7 @@ namespace Zenitka.Scripts._2D
 			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision, target);
 		}
 
-		private ParticleState2D CreateTarget()
+		private BodyState2D CreateTarget()
 		{
 			Random rand = new Random();
 
@@ -152,7 +152,7 @@ namespace Zenitka.Scripts._2D
 			}
 
 
-			return new ParticleState2D(pos, vel, Vector2.Zero, 0f, 0f, 0f);
+			return new BodyState2D(pos, vel, Vector2.Zero, 0f, 0f, 0f);
 		}
 
 		private void SettingsButton()
