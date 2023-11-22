@@ -1,6 +1,8 @@
+using System.Linq.Expressions;
 using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization.Formatters;
+using System.Xml.Linq;
 using Godot;
 using Microsoft.VisualBasic;
 
@@ -125,11 +127,8 @@ namespace Zenitka.Scripts._2D
     {
         private const float INF = 9999f;
 
-        private const int SECTORS = 600;
-        private const int ITERATIONS = 400;
-
-        private const float SECTOR_ARC = Mathf.Pi / SECTORS;
-        private const float TIME_STEP = 1f / 60f;
+        private const int SIMULATION_STEPS = 400;
+        private const float SIMULATION_TIME_STEP = 1f / 60f;
 
         private CannonState2D _cannon;
         private BodyState2D _target;
@@ -142,72 +141,9 @@ namespace Zenitka.Scripts._2D
             _gravity = gravity;
         }
 
-        public (float, float) Aim()
-        {
-            var bestAngle = 0f;
-            var bestTimeOfCollision = INF;
-            var bestDistance = float.MaxValue;
-
-            for (int i = 0; i < SECTORS; ++i)
-            {
-                float angle = i * SECTOR_ARC + SECTOR_ARC / 2f;
-                var (distance, time) = ComputeClosestDistance(angle);
-
-                if (distance < bestDistance)
-                {
-                    bestAngle = angle;
-                    bestTimeOfCollision = time;
-                    bestDistance = distance;
-                }
-            }
-
-            return (bestAngle, bestTimeOfCollision);
-        }
-
-        /// Returns: (distance, time)
-        private (float, float) ComputeClosestDistance(float angle, bool useNumericalIntegration = true)
-        {
-            var projectile = _cannon.CreateProjectile(angle, _gravity);
-
-            var bestT = 0f;
-            var bestDistance = INF;
-
-            var offT = Mathf.Abs(angle - _cannon.CurAngle) / _cannon.AngularRotSpeed;
-
-            Vector2 p1 = projectile.Position, p2 = _target.Position, v1 = projectile.Velocity, v2 = _target.Velocity;
-
-            for (int i = 0; i < ITERATIONS; ++i)
-            {
-                var t = TIME_STEP * i;
-
-                if (useNumericalIntegration)
-                {
-                    if (t >= offT)
-                        projectile.Integrate(ref p1, ref v1, TIME_STEP);
-
-                    _target.Integrate(ref p2, ref v2, TIME_STEP);
-                }
-                else
-                {
-                    p1 = projectile.ComputePosition(t);
-                    p2 = _target.ComputePosition(t + offT);
-                }
-
-                var distance = (p1 - p2).Length();
-
-                if (distance < bestDistance)
-                {
-                    bestT = t;
-                    bestDistance = distance;
-                }
-            }
-
-            return (bestDistance, bestT);
-        }
-
-        public (float, float) AimExperimental(float eps = 1e-4F) {
-            var (angle1, result1) = AimExperimentalFirstQ(eps);
-            var (angle2, result2) = AimExperimentalSecondQ(eps);
+        public (float, float) Aim(float eps = 1e-4F) {
+            var (angle1, result1) = Aim(0.1f, Mathf.Pi / 2f, false, eps);
+            var (angle2, result2) = Aim(Mathf.Pi / 2f, Mathf.Pi - 0.1f, true, eps);
 
             if (result1.ClosestDistance < result2.ClosestDistance)
                 return (angle1, result1.ClosestDistanceTime);
@@ -215,49 +151,24 @@ namespace Zenitka.Scripts._2D
                 return (angle2, result2.ClosestDistanceTime);
         }
 
-        private (float, SimulationResult) AimExperimentalFirstQ(float eps)
+        private (float, SimulationResult) Aim(float minAngle, float maxAngle, bool mirrored, float eps)
         {
-            var minAngle = 0.1f;
-            var maxAngle = Mathf.Pi / 2f;
+            const int MAX_ITER = 100;
+
+            var simulationOptions = new SimulationOptions(SIMULATION_STEPS, SIMULATION_TIME_STEP);
 
             var angle = 0f;
             var result = new SimulationResult();
 
-            while (maxAngle - minAngle > eps)
+            for (int i = 0; i < MAX_ITER && maxAngle - minAngle > eps; ++i)
             {
-                var mid = (minAngle + maxAngle) / 2f;
+                angle = (minAngle + maxAngle) / 2f;
+                result = Simulate(angle, simulationOptions);
 
-                result = Simulate(mid);
-                angle = mid;
-
-                if (result.ClosestDistanceDeltaPos.Y < 0)
-                    maxAngle = mid;
-                else if (result.ClosestDistanceDeltaPos.Y > 0)
-                    minAngle = mid;
-            }
-
-            return (angle, result);
-        }
-
-        private (float, SimulationResult) AimExperimentalSecondQ(float eps)
-        {
-            var minAngle = Mathf.Pi / 2f;
-            var maxAngle = Mathf.Pi - 0.1f;
-
-            var angle = 0f;
-            var result = new SimulationResult();
-
-            while (maxAngle - minAngle > eps)
-            {
-                var mid = (minAngle + maxAngle) / 2f;
-
-                result = Simulate(mid, true);
-                angle = mid;
-
-                if (result.ClosestDistanceDeltaPos.Y < 0)
-                    minAngle = mid;
-                else if (result.ClosestDistanceDeltaPos.Y > 0)
-                    maxAngle = mid;
+                if ((result.ClosestDistanceDeltaPos.Y < 0) ^ mirrored)
+                    maxAngle = angle;
+                else if ((result.ClosestDistanceDeltaPos.Y > 0) ^ mirrored)
+                    minAngle = angle;
             }
 
             return (angle, result);
@@ -273,7 +184,19 @@ namespace Zenitka.Scripts._2D
             {}
         }
 
-        private SimulationResult Simulate(float angle, bool useNumericalIntegration = true)
+        private readonly struct SimulationOptions {
+            public readonly bool UseNumericalIntegration;
+            public readonly int Steps;
+            public readonly float TimeStep;
+
+            public SimulationOptions(int steps, float timeStep) {
+                UseNumericalIntegration = false;
+                Steps = steps;
+                TimeStep = timeStep;
+            }
+        }
+
+        private SimulationResult Simulate(float angle, in SimulationOptions options)
         {
             var projectile = _cannon.CreateProjectile(angle, _gravity);
             var result = new SimulationResult();
@@ -282,16 +205,16 @@ namespace Zenitka.Scripts._2D
 
             Vector2 p1 = projectile.Position, p2 = _target.Position, v1 = projectile.Velocity, v2 = _target.Velocity;
 
-            for (int i = 0; i < ITERATIONS; ++i)
+            for (int i = 0; i < options.Steps; ++i)
             {
-                var t = TIME_STEP * i;
+                var t = options.TimeStep * i;
 
-                if (useNumericalIntegration)
+                if (options.UseNumericalIntegration)
                 {
                     if (t >= offT)
-                        projectile.Integrate(ref p1, ref v1, TIME_STEP);
+                        projectile.Integrate(ref p1, ref v1, options.TimeStep);
 
-                    _target.Integrate(ref p2, ref v2, TIME_STEP);
+                    _target.Integrate(ref p2, ref v2, options.TimeStep);
                 }
                 else
                 {

@@ -3,7 +3,7 @@ using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public delegate void CannonAimed(ParticleState3D projectile0, ParticleState3D projectile1, float collisionTime);
+	public delegate void CannonAimed(BodyState3D projectile0, BodyState3D projectile1, float collisionTime);
 
 	public partial class Cannon : CharacterBody3D
 	{
@@ -39,7 +39,7 @@ namespace Zenitka.Scripts._3D
 			BarrelSize = (BulletSpawnPosition - Origin).Length();
 		}
 
-		public void RotateToAndSignal(Vector3 targetDirection, ParticleState3D projectile, float collisionTime)
+		public void RotateToAndSignal(Vector3 targetDirection, BodyState3D projectile, float collisionTime)
 		{
 			var targetDirectionProj = targetDirection - Vector3.Up * targetDirection.Dot(Vector3.Up);
 			var aimDirectionProj = AimDirection - Vector3.Up * AimDirection.Dot(Vector3.Up);

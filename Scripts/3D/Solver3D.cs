@@ -5,9 +5,9 @@ using Microsoft.VisualBasic;
 
 namespace Zenitka.Scripts._3D
 {
-    public struct ParticleState3D
+    public struct BodyState3D
     {
-        public ParticleState3D()
+        public BodyState3D()
         {
             Position = Vector3.Zero;
             Velocity = Vector3.Zero;
@@ -15,7 +15,7 @@ namespace Zenitka.Scripts._3D
             LinearDrag = 0f;
         }
 
-        public ParticleState3D(Vector3 position, Vector3 velocity, Vector3 constantAcceleration, float linearDrag)
+        public BodyState3D(Vector3 position, Vector3 velocity, Vector3 constantAcceleration, float linearDrag)
         {
             Position = position;
             Velocity = velocity;
@@ -66,9 +66,9 @@ namespace Zenitka.Scripts._3D
         }
 
         // direction vector must be normalized
-        public ParticleState3D CreateProjectile(in Vector3 direction, in Vector3 gravity)
+        public BodyState3D CreateProjectile(in Vector3 direction, in Vector3 gravity)
         {
-            return new ParticleState3D(
+            return new BodyState3D(
                 Position + direction * BarrelLength,
                 ProjectileSpeed * direction,
                 ProjectileAcceleration * direction + gravity,
@@ -87,7 +87,11 @@ namespace Zenitka.Scripts._3D
         private const float DELTA_ANGLE = Mathf.Pi / ANGLES;
         private const float DELTA_TIME = 0.05f;
 
-        public Solver3D(CannonState3D cannon, ParticleState3D target, Vector3 gravity)
+        private CannonState3D _cannon;
+        private BodyState3D _target;
+        private Vector3 _gravity;
+
+        public Solver3D(CannonState3D cannon, BodyState3D target, Vector3 gravity)
         {
             _cannon = cannon;
             _target = target;
@@ -95,12 +99,12 @@ namespace Zenitka.Scripts._3D
         }
 
         // (direction, timeOfCollision)
-        public (Vector3, float, ParticleState3D) Aim()
+        public (Vector3, float, BodyState3D) Aim()
         {
             var bestDir = Vector3.Zero;
             var bestTimeOfCollision = 9999f;
             var bestDistance = 9999f;
-            var bestProjectile = new ParticleState3D(Vector3.Zero, Vector3.Zero, Vector3.Zero, 0f);
+            var bestProjectile = new BodyState3D(Vector3.Zero, Vector3.Zero, Vector3.Zero, 0f);
 
             for (int i = 0; i < ANGLES; ++i)
             {
@@ -128,7 +132,7 @@ namespace Zenitka.Scripts._3D
         }
 
         // (distance, timeOfCollision)
-        private (float, float, ParticleState3D) FindClosestPointsOnTrajectory(Vector3 direction)
+        private (float, float, BodyState3D) FindClosestPointsOnTrajectory(Vector3 direction)
         {
             var projectile = _cannon.CreateProjectile(direction, _gravity);
 
@@ -158,9 +162,5 @@ namespace Zenitka.Scripts._3D
 
             return (bestT, bestDistance, projectile);
         }
-
-        private CannonState3D _cannon;
-        private ParticleState3D _target;
-        private Vector3 _gravity;
     }
 }

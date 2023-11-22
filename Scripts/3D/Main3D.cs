@@ -37,7 +37,7 @@ namespace Zenitka.Scripts._3D
 			//_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
 		}
 
-		private void OnCannonAimed(ParticleState3D projectile1, ParticleState3D projectile2, float collisionTime)
+		private void OnCannonAimed(BodyState3D projectile1, BodyState3D projectile2, float collisionTime)
 		{
 			//GD.Print("aimed");
 
@@ -94,7 +94,7 @@ namespace Zenitka.Scripts._3D
 			var startPos = GenerateTargetSpawnLocation(kind);
 			var endPos = GenerateTargetSpawnLocation(!kind);
 
-			var targetState = new ParticleState3D(
+			var targetState = new BodyState3D(
 				startPos,
 				Settings.Settings3D.DefaultTarget.Velocity * (endPos - startPos).Normalized(),
 				Vector3.Down * Settings.Settings3D.Gravity,

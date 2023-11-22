@@ -81,7 +81,7 @@ namespace Zenitka.Scripts._2D
 							Settings.Settings2D.DefaultGun.BulletMass),
 						target.State,
 						new Vector2(0f, Settings.Settings2D.Gravity)
-					).AimExperimental();
+					).Aim();
 
 					_cannon.RotateToAndSignal(angle1, timeOfCollision1, target);
 				});
@@ -129,7 +129,7 @@ namespace Zenitka.Scripts._2D
 					Settings.Settings2D.DefaultGun.BulletMass),
 				targetState,
 				new Vector2(0f, Settings.Settings2D.Gravity)
-			).AimExperimental();
+			).Aim();
 
 			_cannon.RotateToAndSignal(angle, timeOfCollision, target);
 		}

@@ -4,10 +4,10 @@ namespace Zenitka.Scripts._3D
 {
 	public partial class DynamicBody : RigidBody3D
 	{
-		private ParticleState3D _state = new ParticleState3D();
+		private BodyState3D _state = new BodyState3D();
 		private Transform3D _initialTransform;
 
-		public ParticleState3D State
+		public BodyState3D State
 		{
 			get { return _state; }
 			set
