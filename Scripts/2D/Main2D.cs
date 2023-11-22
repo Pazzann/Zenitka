@@ -66,22 +66,25 @@ namespace Zenitka.Scripts._2D
 				// 	_cannon.RotateToAndSignal(angleRad + BURST_STEP, timeOfCollision, target);
 				// });
 
-				var (angle1, timeOfCollision1) = new Solver2D(
-					new CannonState2D(
-						Vector2.Zero,
-						0f,
-						_cannon.GetAngle(),
-						Settings.Settings2D.DefaultGun.AngularVelocity,
-						Settings.Settings2D.DefaultGun.BulletSpeed,
-						0f,
-						Settings.Settings2D.DefaultGun.AirResistance,
-						0f,
-						Settings.Settings2D.DefaultGun.BulletMass),
-					target.State,
-					new Vector2(0f, Settings.Settings2D.Gravity)
-				).Aim();
+				ToSignal(GetTree().CreateTimer(0.05f), SceneTreeTimer.SignalName.Timeout).OnCompleted(() =>
+				{
+					var (angle1, timeOfCollision1) = new Solver2D(
+						new CannonState2D(
+							Vector2.Zero,
+							0f,
+							_cannon.GetAngle(),
+							Settings.Settings2D.DefaultGun.AngularVelocity,
+							Settings.Settings2D.DefaultGun.BulletSpeed,
+							0f,
+							Settings.Settings2D.DefaultGun.AirResistance,
+							0f,
+							Settings.Settings2D.DefaultGun.BulletMass),
+						target.State,
+						new Vector2(0f, Settings.Settings2D.Gravity)
+					).AimExperimental();
 
-				_cannon.RotateToAndSignal(angle1 - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision1, target);
+					_cannon.RotateToAndSignal(angle1, timeOfCollision1, target);
+				});
 			}
 		}
 
@@ -128,7 +131,7 @@ namespace Zenitka.Scripts._2D
 				new Vector2(0f, Settings.Settings2D.Gravity)
 			).AimExperimental();
 
-			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision, target);
+			_cannon.RotateToAndSignal(angle, timeOfCollision, target);
 		}
 
 		private BodyState2D CreateTarget()
