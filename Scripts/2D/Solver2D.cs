@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization.Formatters;
 using Godot;
@@ -204,9 +205,9 @@ namespace Zenitka.Scripts._2D
             return (bestDistance, bestT);
         }
 
-        public (float, float) AimExperimental() {
-            var (angle1, result1) = AimExperimentalFirstQ();
-            var (angle2, result2) = AimExperimentalSecondQ();
+        public (float, float) AimExperimental(float eps = 1e-4F) {
+            var (angle1, result1) = AimExperimentalFirstQ(eps);
+            var (angle2, result2) = AimExperimentalSecondQ(eps);
 
             if (result1.ClosestDistance < result2.ClosestDistance)
                 return (angle1, result1.ClosestDistanceTime);
@@ -214,75 +215,52 @@ namespace Zenitka.Scripts._2D
                 return (angle2, result2.ClosestDistanceTime);
         }
 
-        private (float, SimulationResult) AimExperimentalFirstQ()
+        private (float, SimulationResult) AimExperimentalFirstQ(float eps)
         {
-            const float eps = 1e-4F;
-
-            var minAngle = 0f;
+            var minAngle = 0.1f;
             var maxAngle = Mathf.Pi / 2f;
 
-            var mid = _cannon.CurAngle < maxAngle ? _cannon.CurAngle : Mathf.Pi / 4;
-
-            var lastAngle = 0f;
-            var lastResult = new SimulationResult();
+            var angle = 0f;
+            var result = new SimulationResult();
 
             while (maxAngle - minAngle > eps)
             {
-                var result = Simulate(mid, true);
+                var mid = (minAngle + maxAngle) / 2f;
 
-                lastAngle = mid;
-                lastResult = result;
+                result = Simulate(mid);
+                angle = mid;
 
-                if (result.ProjectileAlwaysAboveTarget && !result.ProjectileAlwaysBelowTarget)
-                    maxAngle = mid;
-                else if (result.ProjectileAlwaysBelowTarget && !result.ProjectileAlwaysAboveTarget)
-                    minAngle = mid;
-                else
-                // else if (result.ClosestDistanceDeltaPos.Y > 0)
-                //     maxAngle = mid;
-                // else if (result.ClosestDistanceDeltaPos.Y < 0)
-                //     minAngle = mid;
-
-                mid = (minAngle + maxAngle) / 2f;
-            }
-
-            GD.Print(lastAngle);
-
-            return (lastAngle, lastResult);
-        }
-
-        private (float, SimulationResult) AimExperimentalSecondQ()
-        {
-            const float eps = 1e-4F;
-
-            var minAngle = Mathf.Pi / 2f;
-            var maxAngle = Mathf.Pi;
-
-            var mid = _cannon.CurAngle > minAngle ? _cannon.CurAngle : 3f * Mathf.Pi / 4f;
-
-            var lastAngle = 0f;
-            var lastResult = new SimulationResult();
-
-            while (maxAngle - minAngle > eps)
-            {
-                var result = Simulate(mid, true);
-
-                lastAngle = mid;
-                lastResult = result;
-
-                if (result.ProjectileAlwaysAboveTarget && !result.ProjectileAlwaysBelowTarget)
-                    minAngle = mid;
-                else if (result.ProjectileAlwaysBelowTarget && !result.ProjectileAlwaysAboveTarget)
+                if (result.ClosestDistanceDeltaPos.Y < 0)
                     maxAngle = mid;
                 else if (result.ClosestDistanceDeltaPos.Y > 0)
                     minAngle = mid;
-                else if (result.ClosestDistanceDeltaPos.Y < 0)
-                    maxAngle = mid;
-
-                mid = (minAngle + maxAngle) / 2f;
             }
 
-            return (lastAngle, lastResult);
+            return (angle, result);
+        }
+
+        private (float, SimulationResult) AimExperimentalSecondQ(float eps)
+        {
+            var minAngle = Mathf.Pi / 2f;
+            var maxAngle = Mathf.Pi - 0.1f;
+
+            var angle = 0f;
+            var result = new SimulationResult();
+
+            while (maxAngle - minAngle > eps)
+            {
+                var mid = (minAngle + maxAngle) / 2f;
+
+                result = Simulate(mid, true);
+                angle = mid;
+
+                if (result.ClosestDistanceDeltaPos.Y < 0)
+                    minAngle = mid;
+                else if (result.ClosestDistanceDeltaPos.Y > 0)
+                    maxAngle = mid;
+            }
+
+            return (angle, result);
         }
 
         private struct SimulationResult
@@ -290,8 +268,6 @@ namespace Zenitka.Scripts._2D
             public float ClosestDistance = INF;
             public float ClosestDistanceTime = 0;
             public Vector2 ClosestDistanceDeltaPos = Vector2.Zero;
-            public bool ProjectileAlwaysAboveTarget = true;
-            public bool ProjectileAlwaysBelowTarget = true;
 
             public SimulationResult()
             {}
@@ -331,11 +307,6 @@ namespace Zenitka.Scripts._2D
                     result.ClosestDistance = distance;
                     result.ClosestDistanceDeltaPos = p1 - p2;
                 }
-
-                if (p1.Y > p2.Y)
-                    result.ProjectileAlwaysBelowTarget = false;
-                else if (p1.Y < p2.Y)
-                    result.ProjectileAlwaysAboveTarget = false;
             }
 
             return result;

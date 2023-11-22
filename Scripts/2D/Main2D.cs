@@ -126,7 +126,7 @@ namespace Zenitka.Scripts._2D
 					Settings.Settings2D.DefaultGun.BulletMass),
 				targetState,
 				new Vector2(0f, Settings.Settings2D.Gravity)
-			).Aim();
+			).AimExperimental();
 
 			_cannon.RotateToAndSignal(angle - BURST_STEP * (Settings.Settings2D.DefaultGun.SalvoSize - 1) / 2f, timeOfCollision, target);
 		}
