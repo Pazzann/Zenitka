@@ -134,6 +134,28 @@ namespace Zenitka.Scripts._2D
         private BodyState2D _target;
         private Vector2 _gravity;
 
+        private struct SimulationResult
+        {
+            public float ClosestDistance = INF;
+            public float ClosestDistanceTime = 0;
+            public Vector2 ClosestDistanceDeltaPos = Vector2.Zero;
+
+            public SimulationResult()
+            {}
+        }
+
+        private readonly struct SimulationOptions {
+            public readonly bool UseNumericalIntegration;
+            public readonly int Steps;
+            public readonly float TimeStep;
+
+            public SimulationOptions(int steps, float timeStep) {
+                UseNumericalIntegration = true;
+                Steps = steps;
+                TimeStep = timeStep;
+            }
+        }
+
         public Solver2D(CannonState2D cannon, BodyState2D target, Vector2 gravity)
         {
             _cannon = cannon;
@@ -172,28 +194,6 @@ namespace Zenitka.Scripts._2D
             }
 
             return (angle, result);
-        }
-
-        private struct SimulationResult
-        {
-            public float ClosestDistance = INF;
-            public float ClosestDistanceTime = 0;
-            public Vector2 ClosestDistanceDeltaPos = Vector2.Zero;
-
-            public SimulationResult()
-            {}
-        }
-
-        private readonly struct SimulationOptions {
-            public readonly bool UseNumericalIntegration;
-            public readonly int Steps;
-            public readonly float TimeStep;
-
-            public SimulationOptions(int steps, float timeStep) {
-                UseNumericalIntegration = false;
-                Steps = steps;
-                TimeStep = timeStep;
-            }
         }
 
         private SimulationResult Simulate(float angle, in SimulationOptions options)
