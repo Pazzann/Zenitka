@@ -29,6 +29,7 @@ namespace Zenitka.Scripts.UI
 			if (!Visible)
 			{
 				GetTree().Paused = true;
+				Input.MouseMode = Input.MouseModeEnum.Visible;
 				Show();
 			}
 			else
@@ -38,6 +39,7 @@ namespace Zenitka.Scripts.UI
 			}
 
 		}
+
 		public override void _Process(double delta)
 		{
 			if (Input.IsActionJustPressed("pause"))

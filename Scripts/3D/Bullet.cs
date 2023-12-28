@@ -7,9 +7,7 @@ namespace Zenitka.Scripts._3D
 	{
 		private Timer _timer;
 
-		private float _lifespan = 10f;
-		
-		private Label _destroyedLabel;
+		private float _lifespan = 7f;
 
 		public float Lifespan
 		{
@@ -29,8 +27,6 @@ namespace Zenitka.Scripts._3D
 		{
 			_timer = GetNode<Timer>("SuicideTimer");
 			_timer.Start(Lifespan);
-			
-			_destroyedLabel = GetNode<Label>("../Statistics/ColorRect/DestroyedTargets");
 		}
 
 		private void OnSuicideTimerTimeout()
@@ -41,7 +37,6 @@ namespace Zenitka.Scripts._3D
 
 		private void OnBodyEntered(Node body)
 		{
-			_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
 			OnExploded?.Invoke(body as Node3D);
 			QueueFree();
 		}

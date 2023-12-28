@@ -28,3 +28,4 @@ skeleton = NodePath("")
 transform = Transform3D(0.3, 0, 0, 0, -0.3, 4.52987e-08, 0, -4.52987e-08, -0.3, 0, 0, 0)
 
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="timeout" from="SuicideTimer" to="." method="OnSuicideTimerTimeout"]

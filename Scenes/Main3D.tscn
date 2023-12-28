@@ -83,7 +83,7 @@ script = ExtResource("1_2igm4")
 [node name="Cannon" parent="." instance=ExtResource("1_4hkxh")]
 
 [node name="TargetSpawnTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 7.0
 autostart = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -91,7 +91,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("CylinderMesh_161b6")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, -0.183013, 0.683013, 0, 0.965926, 0.258819, -0.707107, -0.183013, 0.683013, 15.9726, 8.52938, 14.5587)
+transform = Transform3D(0.874035, 0, 0.485863, -0.0878159, 0.983531, 0.157975, -0.477861, -0.180742, 0.85964, 15.9726, 8.52938, 14.5587)
 current = true
 script = ExtResource("3_2pk56")
 

@@ -26,7 +26,7 @@ namespace Zenitka.Scripts._3D
 				WithinCannonRange = true;
 				OnCannonVisiblityChanged?.Invoke(true);
 			}
-			else if (distance > CannnonRange && WithinCannonRange)
+			else if (distance > 3f * CannnonRange && WithinCannonRange)
 			{
 				WithinCannonRange = false;
 				OnCannonVisiblityChanged?.Invoke(false);

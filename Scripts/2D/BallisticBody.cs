@@ -42,7 +42,7 @@ namespace Zenitka.Scripts._2D
 
 		public void ScheduleSelfDestroyWhenOffscreen()
 		{
-			// TODO: use explicit view rect set by parent
+			// TODO: use the view rect set by the parent
 			_isOffscreen = GetViewportRect().HasPoint(GlobalPosition);
 		}
 

@@ -5,16 +5,13 @@ namespace Zenitka.Scripts._3D
 {
 	public partial class Main3D : Node3D
 	{
-		// private static float BULLET_SPEED = 10f;
-		// private static float TARGET_SPEED = 10f;
-		private const float TARGET_SPAWN_RADIUS = 80f;
-
-		// private static readonly Vector3 GRAVITY = new Vector3(0f, 0f, 0f);
+		private const float TARGET_SPAWN_RADIUS = 100f;
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
+		private Label _destroyedLabel;
 		//private PackedScene _explosionScene;
-		
+
 		private Label _ammoLabel;
 		private Label _detectedLabel;
 
@@ -22,19 +19,65 @@ namespace Zenitka.Scripts._3D
 
 		private static Random _rng = new Random();
 
+		private CannonState3D _cannonState;
+
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
 			_cannon = GetNode<Cannon>("Cannon");
 			_cannon.OnAimed += OnCannonAimed;
-			
+
 			_ammoLabel = GetNode<Label>("Statistics/ColorRect/UsedAmmo");
 			_detectedLabel = GetNode<Label>("Statistics/ColorRect/DetectedTargets");
-			
+			_destroyedLabel = GetNode<Label>("Statistics/ColorRect/DestroyedTargets");
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/3D/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
 			//_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
+
+			_cannonState = new CannonState3D(
+				_cannon.VOrigin,
+				_cannon.HOrigin,
+				_cannon.BulletSpawnPosition0,
+				_cannon.HAngle,
+				_cannon.VAngle,
+				_cannon.BarrelSize,
+				_cannon.HRotSpeed,
+				_cannon.VRotSpeed,
+				new ProjectileConfig3D(
+					Settings.Settings3D.DefaultGun.BulletSpeed,
+					0f,
+					0f,
+					Settings.Settings3D.DefaultGun.AirResistance,
+					Settings.Settings3D.DefaultGun.BulletMass
+				)
+			);
+		}
+
+		public override void _EnterTree()
+		{
+			base._EnterTree();
+			Input.MouseMode = Input.MouseModeEnum.Visible;
+		}
+
+		public override void _ExitTree()
+		{
+			base._ExitTree();
+			Input.MouseMode = Input.MouseModeEnum.Visible;
+		}
+
+		public override void _UnhandledInput(InputEvent @event)
+		{
+			base._UnhandledInput(@event);
+
+			if (@event is InputEventMouseButton && !GetTree().Paused) {
+				var mouseEvent = @event as InputEventMouseButton;
+
+				if (mouseEvent.ButtonIndex == MouseButton.Left)
+					Input.MouseMode = Input.MouseModeEnum.Captured;
+				else
+					Input.MouseMode = Input.MouseModeEnum.Visible;
+			}
 		}
 
 		private void OnCannonAimed(BodyState3D projectile1, BodyState3D projectile2, float collisionTime)
@@ -45,46 +88,42 @@ namespace Zenitka.Scripts._3D
 			AddChild(bullet);
 
 			bullet.State = projectile1;
-			bullet.Lifespan = 10f;
 
-			bullet.OnExploded += (target) =>
-			{
-				if (target != null)
-				{
+			// var tmp = bullet.State;
+			// tmp.Position = _cannon.BulletSpawnPosition0;
+			// bullet.State = tmp;
+
+			GD.Print("diff: ", (bullet.State.Position - _cannon.BulletSpawnPosition0).Length());
+
+			bullet.OnExploded += (target) => {
+				if (target != null && !target.IsQueuedForDeletion()) {
 					GD.Print("Hit");
+					_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
 					target.QueueFree();
-				}
-				else
-				{
+				} else if (target == null)
 					GD.Print("Missed.");
-				}
 			};
 
 			var bullet1 = _bulletScene.Instantiate() as Bullet;
+
 			AddChild(bullet1);
-			
-			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
 
 			bullet1.State = projectile2;
-			bullet1.Lifespan = 10f;
 
-			bullet1.OnExploded += (target) =>
-			{
-				if (target != null)
-				{
+			// tmp = bullet1.State;
+			// tmp.Position = _cannon.BulletSpawnPosition1;
+			// bullet1.State = tmp;
+
+			bullet1.OnExploded += (target) => {
+				if (target != null && !target.IsQueuedForDeletion()) {
 					GD.Print("Hit");
+					_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
 					target.QueueFree();
-
-					// var explosion = _explosionScene.Instantiate() as Explosion;
-					// explosion.GlobalPosition = target.GlobalPosition;
-
-					// AddChild(explosion);
-				}
-				else
-				{
+				} else if (target == null)
 					GD.Print("Missed.");
-				}
 			};
+
+			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 2).ToString();
 		}
 
 		private void OnTargetSpawnTimerTimeout()
@@ -98,14 +137,16 @@ namespace Zenitka.Scripts._3D
 				startPos,
 				Settings.Settings3D.DefaultTarget.Velocity * (endPos - startPos).Normalized(),
 				Vector3.Down * Settings.Settings3D.Gravity,
-				Settings.Settings3D.DefaultTarget.AirResistance / Settings.Settings3D.DefaultTarget.Mass
+				Settings.Settings3D.DefaultTarget.AirResistance,
+				0f,
+				Settings.Settings3D.DefaultTarget.Mass
 			);
 
 			var target = _targetScene.Instantiate() as Target;
 			AddChild(target);
-			
+
 			target.State = targetState;
-			
+
 			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
 
 			target.CannonPosition = _cannon.GlobalPosition;
@@ -113,24 +154,17 @@ namespace Zenitka.Scripts._3D
 
 			target.OnCannonVisiblityChanged = (visible) =>
 			{
-				if (visible)
-				{
-					var (dir, timeOfCollision, projectile) = new Solver3D(
-						new CannonState3D(
-							_cannon.Origin,
-							_cannon.AimDirection,
-							_cannon.BarrelSize,
-							_cannon.AngularRotationSpeed,
-							Settings.Settings3D.DefaultGun.BulletSpeed,
-							0f,
-							Settings.Settings3D.DefaultGun.AirResistance / Settings.Settings3D.DefaultGun.BulletMass
-						),
+				if (visible) {
+					_cannonState.VAngle = _cannon.VAngle;
+					_cannonState.HAngle = _cannon.HAngle;
+
+					var (hAngle, vAngle, timeOfCollision, projectile) = new Solver3D(
+						_cannonState,
 						targetState,
 						Vector3.Down * Settings.Settings3D.Gravity
-					).Aim();
+					).Aim2();
 
-					if (dir.LengthSquared() > 0.001f)
-						_cannon.RotateToAndSignal(dir.Normalized(), projectile, timeOfCollision);
+					_cannon.Fire(hAngle, vAngle, projectile, timeOfCollision);
 				}
 			};
 		}
