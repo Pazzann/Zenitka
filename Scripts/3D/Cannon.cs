@@ -1,9 +1,68 @@
 using Godot;
-using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public delegate void CannonAimed(BodyState3D projectile0, BodyState3D projectile1, float collisionTime);
+	public readonly struct ProjectileConfig
+	{
+		public readonly float Speed, Acceleration, SelfPropellingAcceleration, LinearDrag, Mass;
+
+		public ProjectileConfig(float velocity,
+								float acceleration,
+								float selfPropellingAcceleration,
+								float linearDrag,
+								float mass)
+		{
+			Speed = velocity;
+			Acceleration = acceleration;
+			SelfPropellingAcceleration = selfPropellingAcceleration;
+			LinearDrag = linearDrag;
+			Mass = mass;
+		}
+	}
+
+	public class CannonState
+	{
+		public Vector3 VOrigin, HOrigin;
+		public Vector3[] BulletPos;
+
+		public float HRotSpeed, VRotSpeed, HAngle, VAngle;
+		public ProjectileConfig Projectile;
+
+		public CannonState(
+			Vector3 vOrigin,
+			Vector3 hOrigin,
+			Vector3[] bulletPos,
+			float hAngle,
+			float vAngle,
+			float hRotSpeed,
+			float vRotSpeed,
+			ProjectileConfig projectile)
+		{
+			VOrigin = vOrigin;
+			HOrigin = hOrigin;
+			BulletPos = bulletPos;
+			HAngle = hAngle;
+			VAngle = vAngle;
+			HRotSpeed = hRotSpeed;
+			VRotSpeed = vRotSpeed;
+			Projectile = projectile;
+		}
+
+		public BodyState CreateProjectile(int id, float hAngle, float vAngle, in Vector3 gravity)
+		{
+			var transform = MathUtils.Rotated(HOrigin, Vector3.Up, -hAngle) * MathUtils.Rotated(VOrigin, Vector3.Back, vAngle);
+
+			return new BodyState(
+				transform * BulletPos[id],
+				transform * (Projectile.Speed * Vector3.Right),
+				transform * (Projectile.Acceleration * Vector3.Right) + gravity,
+				Projectile.LinearDrag,
+				Projectile.SelfPropellingAcceleration,
+				Projectile.Mass);
+		}
+	}
+
+	public delegate void CannonAimed(float collisionTime, BodyState[] projectiles);
 
 	public partial class Cannon : CharacterBody3D
 	{
@@ -12,22 +71,13 @@ namespace Zenitka.Scripts._3D
 		private Node3D _bulletSpawnLocation0;
 		private Node3D _bulletSpawnLocation1;
 
-		public Vector3 BulletSpawnPosition0 => _bulletSpawnLocation0.GlobalPosition;
-		public Vector3 BulletSpawnPosition1 => _bulletSpawnLocation1.GlobalPosition;
+		public Vector3 BulletPos0 => _bulletSpawnLocation0.GlobalPosition;
+		public Vector3 BulletPos1 => _bulletSpawnLocation1.GlobalPosition;
 
-		public Vector3 BulletSpawnPosition => (BulletSpawnPosition0 + BulletSpawnPosition1) / 2f;
+		private CannonState _state;
+		public CannonState State => _state;
 
-		public Vector3 VOrigin => _baseCannonPart.GlobalPosition;
-		public Vector3 HOrigin => _centralConstruction.GlobalPosition;
-
-		public float HAngle { get; set; } = 0f;
-		public float VAngle { get; set; } = 0f;
-
-		public float HRotSpeed { get; set; } = 3f;
-		public float VRotSpeed { get; set; } = 3f;
-
-		public Vector3 Origin => _baseCannonPart.GlobalPosition;
-		public float BarrelSize = 0f;
+		private Vector3 _gravity => Vector3.Down * Settings.Settings3D.Gravity;
 
 		public event CannonAimed OnAimed;
 
@@ -38,32 +88,52 @@ namespace Zenitka.Scripts._3D
 			_bulletSpawnLocation0 = GetNode<Node3D>("AntiAir/Central Constuction/Base canon part/BulletSpawn1");
 			_bulletSpawnLocation1 = GetNode<Node3D>("AntiAir/Central Constuction/Base canon part/BulletSpawn2");
 
-			BarrelSize = (BulletSpawnPosition - Origin).Length();
-
-			HAngle = -_centralConstruction.Rotation.Y;
-			VAngle = _baseCannonPart.Rotation.Z + Mathf.Pi / 2f;
+			_state = new CannonState(
+				_baseCannonPart.GlobalPosition,
+				_centralConstruction.GlobalPosition,
+				new Vector3[] { BulletPos0, BulletPos1 },
+				0f,
+				0f,
+				Settings.Settings3D.DefaultGun.HRotSpeed,
+				Settings.Settings3D.DefaultGun.VRotSpeed,
+				new ProjectileConfig(
+					Settings.Settings3D.DefaultGun.BulletSpeed,
+					0f,
+					0f,
+					Settings.Settings3D.DefaultGun.AirResistance,
+					Settings.Settings3D.DefaultGun.BulletMass
+				)
+			);
 		}
 
-		public void Fire(float hAngle, float vAngle, BodyState3D projectile, float collisionTime)
+		public void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime)
 		{
+			var projectile = _state.CreateProjectile(refBulletId, hAngle, vAngle, _gravity);
+
+			var projectile1 = projectile;
+			projectile.Position += BulletPos1 - BulletPos0;
+
 			var hTween = _centralConstruction.CreateTween();
 			var targetQuartenion = new Quaternion(Vector3.Up, -hAngle);
 
-			hTween.TweenProperty(_centralConstruction, "quaternion", targetQuartenion, MathUtils.AngleDiff(hAngle, HAngle) / HRotSpeed);
+			float duration = MathUtils.AngleDiff(hAngle, _state.HAngle) / _state.HRotSpeed;
+			hTween.TweenProperty(_centralConstruction, "quaternion", targetQuartenion, duration);
 
 			var vTween = hTween.Chain();
 			targetQuartenion = new Quaternion(Vector3.Forward, Mathf.Pi / 2f - vAngle);
 
-			vTween.TweenProperty(_baseCannonPart, "quaternion", targetQuartenion, MathUtils.AngleDiff(vAngle, VAngle) / VRotSpeed);
+			duration = MathUtils.AngleDiff(vAngle, _state.VAngle) / _state.VRotSpeed;
+			vTween.TweenProperty(_baseCannonPart, "quaternion", targetQuartenion, duration);
 
-			var projectile1 = projectile;
-			projectile1.Position += BulletSpawnPosition1 - BulletSpawnPosition0;
+			vTween.TweenCallback(Callable.From(() =>
+			{
+				_state.HAngle = hAngle;
+				_state.VAngle = vAngle;
 
-			vTween.TweenCallback(Callable.From(() => {
-				HAngle = hAngle;
-				VAngle = vAngle;
+				projectile.Position = BulletPos0;
+				projectile1.Position = BulletPos1;
 
-				OnAimed?.Invoke(projectile, projectile1, collisionTime);
+				OnAimed?.Invoke(collisionTime, new BodyState[] { projectile, projectile1 });
 			}));
 		}
 	}

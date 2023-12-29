@@ -19,8 +19,6 @@ namespace Zenitka.Scripts._3D
 
 		private static Random _rng = new Random();
 
-		private CannonState3D _cannonState;
-
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
@@ -34,24 +32,6 @@ namespace Zenitka.Scripts._3D
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/3D/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
 			//_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
-
-			_cannonState = new CannonState3D(
-				_cannon.VOrigin,
-				_cannon.HOrigin,
-				_cannon.BulletSpawnPosition0,
-				_cannon.HAngle,
-				_cannon.VAngle,
-				_cannon.BarrelSize,
-				_cannon.HRotSpeed,
-				_cannon.VRotSpeed,
-				new ProjectileConfig3D(
-					Settings.Settings3D.DefaultGun.BulletSpeed,
-					0f,
-					0f,
-					Settings.Settings3D.DefaultGun.AirResistance,
-					Settings.Settings3D.DefaultGun.BulletMass
-				)
-			);
 		}
 
 		public override void _EnterTree()
@@ -80,50 +60,28 @@ namespace Zenitka.Scripts._3D
 			}
 		}
 
-		private void OnCannonAimed(BodyState3D projectile1, BodyState3D projectile2, float collisionTime)
+		private void OnCannonAimed(float collisionTime, BodyState[] projectiles)
 		{
-			//GD.Print("aimed");
+			bool hit = false;
 
-			var bullet = _bulletScene.Instantiate() as Bullet;
-			AddChild(bullet);
+			foreach (var projectile in projectiles) {
+				var bullet = _bulletScene.Instantiate() as Bullet;
+				AddChild(bullet);
 
-			bullet.State = projectile1;
+				bullet.State = projectile;
 
-			// var tmp = bullet.State;
-			// tmp.Position = _cannon.BulletSpawnPosition0;
-			// bullet.State = tmp;
+				bullet.OnExploded += (target) => {
+					if (target != null && !hit && !target.IsQueuedForDeletion()) {
+						GD.Print("Hit");
+						_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + 1).ToString();
+						target.QueueFree();
+						hit = true;
+					} else if (target == null && !hit)
+						GD.Print("Missed.");
+				};
+			}
 
-			GD.Print("diff: ", (bullet.State.Position - _cannon.BulletSpawnPosition0).Length());
-
-			bullet.OnExploded += (target) => {
-				if (target != null && !target.IsQueuedForDeletion()) {
-					GD.Print("Hit");
-					_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
-					target.QueueFree();
-				} else if (target == null)
-					GD.Print("Missed.");
-			};
-
-			var bullet1 = _bulletScene.Instantiate() as Bullet;
-
-			AddChild(bullet1);
-
-			bullet1.State = projectile2;
-
-			// tmp = bullet1.State;
-			// tmp.Position = _cannon.BulletSpawnPosition1;
-			// bullet1.State = tmp;
-
-			bullet1.OnExploded += (target) => {
-				if (target != null && !target.IsQueuedForDeletion()) {
-					GD.Print("Hit");
-					_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
-					target.QueueFree();
-				} else if (target == null)
-					GD.Print("Missed.");
-			};
-
-			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 2).ToString();
+			_ammoLabel.Text = (int.Parse(_ammoLabel.Text) + projectiles.Length).ToString();
 		}
 
 		private void OnTargetSpawnTimerTimeout()
@@ -133,7 +91,7 @@ namespace Zenitka.Scripts._3D
 			var startPos = GenerateTargetSpawnLocation(kind);
 			var endPos = GenerateTargetSpawnLocation(!kind);
 
-			var targetState = new BodyState3D(
+			var targetState = new BodyState(
 				startPos,
 				Settings.Settings3D.DefaultTarget.Velocity * (endPos - startPos).Normalized(),
 				Vector3.Down * Settings.Settings3D.Gravity,
@@ -147,7 +105,7 @@ namespace Zenitka.Scripts._3D
 
 			target.State = targetState;
 
-			_detectedLabel.Text = (Int32.Parse(_detectedLabel.Text) + 1).ToString();
+			_detectedLabel.Text = (int.Parse(_detectedLabel.Text) + 1).ToString();
 
 			target.CannonPosition = _cannon.GlobalPosition;
 			target.CannnonRange = 100f;
@@ -155,16 +113,15 @@ namespace Zenitka.Scripts._3D
 			target.OnCannonVisiblityChanged = (visible) =>
 			{
 				if (visible) {
-					_cannonState.VAngle = _cannon.VAngle;
-					_cannonState.HAngle = _cannon.HAngle;
-
-					var (hAngle, vAngle, timeOfCollision, projectile) = new Solver3D(
-						_cannonState,
+					var result = new Solver3D(
+						_cannon.State,
+						0,
 						targetState,
-						Vector3.Down * Settings.Settings3D.Gravity
-					).Aim2();
+						Vector3.Down * Settings.Settings3D.Gravity,
+						new SolverOptions()
+					).Aim();
 
-					_cannon.Fire(hAngle, vAngle, projectile, timeOfCollision);
+					_cannon.Fire(0, result.HAngle, result.VAngle, result.ColTime);
 				}
 			};
 		}
@@ -198,12 +155,9 @@ namespace Zenitka.Scripts._3D
 			}
 			else
 			{
-				// GD.Print("out");
 				var animation = GetNode<AnimationPlayer>("SettingsPanel3D/Animation");
 				animation.Play("out");
 				settingsButtonAnimation.Play("out");
-
-
 			}
 
 		}

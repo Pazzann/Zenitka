@@ -15,9 +15,9 @@ namespace Zenitka.Scripts.UI
 			var node2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer2/LineEdit");
 			node2.Text = Settings.Settings3D.DefaultGun.InitialElevationAngle.ToString();
 			var node3 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer3/LineEdit");
-			node3.Text = Settings.Settings3D.DefaultGun.AngularVelocityX.ToString();
+			node3.Text = Settings.Settings3D.DefaultGun.HRotSpeed.ToString();
 			var node311 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer4/LineEdit");
-			node311.Text = Settings.Settings3D.DefaultGun.AngularVelocityY.ToString();
+			node311.Text = Settings.Settings3D.DefaultGun.VRotSpeed.ToString();
 			var node33 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer5/LineEdit");
 			node33.Text = Settings.Settings3D.DefaultGun.BulletMass.ToString();
 			var node34 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer6/LineEdit");
@@ -100,9 +100,9 @@ namespace Zenitka.Scripts.UI
 			var node2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer2/LineEdit");
 			Settings.Settings3D.DefaultGun.InitialElevationAngle = node2.Text.ToFloat();
 			var node3 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer3/LineEdit");
-			Settings.Settings3D.DefaultGun.AngularVelocityX = node3.Text.ToFloat();
+			Settings.Settings3D.DefaultGun.HRotSpeed = node3.Text.ToFloat();
 			var node311 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer4/LineEdit");
-			Settings.Settings3D.DefaultGun.AngularVelocityY = node311.Text.ToFloat();
+			Settings.Settings3D.DefaultGun.VRotSpeed = node311.Text.ToFloat();
 			var node33 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer5/LineEdit");
 			Settings.Settings3D.DefaultGun.BulletMass = node33.Text.ToFloat();
 			var node34 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DDefault/HBoxContainer6/LineEdit");

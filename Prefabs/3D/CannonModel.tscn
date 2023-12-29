@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcglto054vbpi"]
+
+[ext_resource type="PackedScene" uid="uid://cqylwb3aelqw7" path="res://Assets/AntiAir.blend" id="1_5ms5t"]
+
+[node name="AntiAir" instance=ExtResource("1_5ms5t")]
+
+[node name="Base canon part" parent="Central Constuction" index="0"]
+transform = Transform3D(3.80602e-08, -0.553182, 0, 0.870715, 2.41803e-08, 0, 0, 0, -1.48772, 1.77593, 2.33212, -3.36639)

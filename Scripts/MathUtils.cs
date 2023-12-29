@@ -48,6 +48,10 @@ namespace Zenitka.Scripts
 				.Rotated(axisDirection, angle)
 				.Translated(axisPoint);
 		}
+
+		public static Vector3 ProjectOnPlane(Vector3 point, Vector3 normal) {
+			return normal - point.Project(normal);
+		}
 	}
 }
 
