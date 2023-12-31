@@ -11,6 +11,17 @@ namespace Zenitka.Scripts._3D
 		public Action<bool> OnCannonVisiblityChanged { get; set; }
 		public bool WithinCannonRange { get; set; } = false;
 
+		public override void _Process(double delta)
+		{
+			base._Process(delta);
+
+			if (GlobalPosition.Y < 0f && WithinCannonRange) {
+				WithinCannonRange = false;
+				OnCannonVisiblityChanged?.Invoke(false);
+				QueueFree();
+			}
+		}
+
 		public override void _PhysicsProcess(double delta)
 		{
 			base._PhysicsProcess(delta);

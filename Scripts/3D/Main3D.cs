@@ -10,7 +10,7 @@ namespace Zenitka.Scripts._3D
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
 		private Label _destroyedLabel;
-		//private PackedScene _explosionScene;
+		private PackedScene _explosionScene;
 
 		private Label _ammoLabel;
 		private Label _detectedLabel;
@@ -31,7 +31,7 @@ namespace Zenitka.Scripts._3D
 
 			_targetScene = GD.Load<PackedScene>("res://Prefabs/3D/Target.tscn");
 			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
-			//_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
+			_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
 		}
 
 		public override void _EnterTree()
@@ -62,6 +62,7 @@ namespace Zenitka.Scripts._3D
 
 		private void OnCannonAimed(float collisionTime, BodyState[] projectiles)
 		{
+			int missCount = 0;
 			bool hit = false;
 
 			foreach (var projectile in projectiles) {
@@ -76,8 +77,10 @@ namespace Zenitka.Scripts._3D
 						_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + 1).ToString();
 						target.QueueFree();
 						hit = true;
-					} else if (target == null && !hit)
+					} else if (target == null && !hit && missCount == projectiles.Length - 1)
 						GD.Print("Missed.");
+					else if (target == null && !hit)
+						++missCount;
 				};
 			}
 

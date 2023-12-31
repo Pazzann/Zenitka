@@ -29,6 +29,14 @@ namespace Zenitka.Scripts._3D
 			_timer.Start(Lifespan);
 		}
 
+		public override void _Process(double delta)
+		{
+			base._Process(delta);
+
+			if (GlobalPosition.Y < 0f)
+				OnSuicideTimerTimeout();
+		}
+
 		private void OnSuicideTimerTimeout()
 		{
 			OnExploded?.Invoke(null);
