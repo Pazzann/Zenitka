@@ -2,6 +2,8 @@ using Godot;
 
 namespace Zenitka.Scripts._3D
 {
+	using static MathUtils;
+
 	public partial class Player : CharacterBody3D
 	{
 		private const float MOVEMENT_SPEED = 10f;
@@ -17,27 +19,28 @@ namespace Zenitka.Scripts._3D
 		public override void _Process(double delta)
 		{
 			var deltaF = (float) delta;
+			float speed = MOVEMENT_SPEED * deltaF;
 
 			if (Input.MouseMode != Input.MouseModeEnum.Captured)
 				return;
 
 			if (Input.IsActionPressed("cam_right_3d"))
-				MoveAndCollide(Transform.Basis.X * MOVEMENT_SPEED * deltaF);
+				Move(Vector3.Right, speed);
 
 			if (Input.IsActionPressed("cam_left_3d"))
-				MoveAndCollide(-Transform.Basis.X * MOVEMENT_SPEED * deltaF);
+				Move(Vector3.Left, speed);
 
 			if (Input.IsActionPressed("cam_forward_3d"))
-				MoveAndCollide(-Transform.Basis.Z * MOVEMENT_SPEED * deltaF);
+				Move(Vector3.Forward, speed);
 
 			if (Input.IsActionPressed("cam_backward_3d"))
-				MoveAndCollide(Transform.Basis.Z * MOVEMENT_SPEED * deltaF);
+				Move(Vector3.Back, speed);
 
 			if (Input.IsActionPressed("cam_up_3d"))
-				MoveAndCollide(Vector3.Up * MOVEMENT_SPEED * deltaF);
+				Move(Vector3.Up, speed);
 
 			if (Input.IsActionPressed("cam_down_3d"))
-				MoveAndCollide(Vector3.Down * MOVEMENT_SPEED * deltaF);
+				Move(Vector3.Down, speed);
 		}
 
 		public override void _UnhandledInput(InputEvent @event)
@@ -52,6 +55,14 @@ namespace Zenitka.Scripts._3D
 
 				Rotation = new Vector3(newPitch, newYaw, 0f);
 			}
+		}
+
+		private void Move(Vector3 dir, float magnitude) {
+			var delta = SafeNormalize(Vector3.Up * dir.Y);
+			delta += SafeNormalize(ProjectOnPlane(Transform.Basis.X * dir.X, Vector3.Up));
+			delta += SafeNormalize(ProjectOnPlane(Transform.Basis.Z * dir.Z, Vector3.Up));
+
+			MoveAndCollide(delta * magnitude);
 		}
 	}
 }

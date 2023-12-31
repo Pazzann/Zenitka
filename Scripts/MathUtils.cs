@@ -1,6 +1,4 @@
-
 using System;
-using System.Diagnostics;
 using Godot;
 
 namespace Zenitka.Scripts
@@ -50,7 +48,11 @@ namespace Zenitka.Scripts
 		}
 
 		public static Vector3 ProjectOnPlane(Vector3 point, Vector3 normal) {
-			return normal - point.Project(normal);
+			return point - point.Project(normal);
+		}
+
+		public static Vector3 SafeNormalize(Vector3 v) {
+			return v != Vector3.Zero ? v.Normalized() : Vector3.Zero;
 		}
 	}
 }
