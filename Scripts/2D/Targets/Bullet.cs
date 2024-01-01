@@ -47,24 +47,34 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private void OnBodyEntered(Node body)
 		{
-			(body as BallisticBody).Destroy();
+			if (body == null)
+				return;
+			
+			if (body is BallisticBody) {
+				(body as BallisticBody).Destroy();
+				
+				if (!_scoreUpdated)
+				{
+					_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
+					_scoreUpdated = true;
+				}
+			}
+
 			_on_suicide_timer_timeout();
 
-			if (!_scoreUpdated)
-			{
-				_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
-				_scoreUpdated = true;
-			}
 		}
 
 		private void _on_suicide_timer_timeout()
 		{
 			_animation.Play("explode");
 
-			_animation.Connect("animation_looped", Callable.From(QueueFree));
-			_bulletCollision.Disabled = true;
-			_explosionCollision.Disabled = false;
-			IsExploded = true;
+			if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
+				_animation.AnimationLooped += QueueFree;
+
+			_bulletCollision.SetDeferred("disabled", true);
+			_explosionCollision.SetDeferred("disabled", false);
+
+			HasExploded = true;
 		}
 
 		public override void Destroy()

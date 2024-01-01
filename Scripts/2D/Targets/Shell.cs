@@ -23,17 +23,29 @@ namespace Zenitka.Scripts._2D.Targets
 
 			UseNumericalIntegration = true;
 
+
 			Reset();
 		}
 
 		public override void Destroy()
 		{
-			_rocketCollision.Disabled = true;
+			if (HasExploded)
+				return;
+			
+			_rocketCollision.SetDeferred("disabled", true);
+
 			_animation.Play("explode");
 
-			_animation.Connect("animation_looped", Callable.From(QueueFree));
+			if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
+				_animation.AnimationLooped += QueueFree;
 
-			IsExploded = true;
+			HasExploded = true;
+		}
+
+		private void OnBodyEntered(Node body)
+		{
+			if (body is StaticBody2D)
+				Destroy();
 		}
 	}
 }

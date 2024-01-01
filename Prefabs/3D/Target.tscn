@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b0unsnrxrapqr"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Target.cs" id="1_h5mlg"]
-[ext_resource type="PackedScene" uid="uid://bny3kp3eng8nh" path="res://Assets/Rocket.blend" id="2_xrrwy"]
+[ext_resource type="PackedScene" uid="uid://bny3kp3eng8nh" path="res://Assets/Models/Rocket.blend" id="2_xrrwy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_856tk"]
 size = Vector3(3, 3, 7.5)

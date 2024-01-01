@@ -1,8 +1,6 @@
 using Godot;
 using System;
 
-using Zenitka.Scripts.Math;
-
 namespace Zenitka.Scripts._2D
 {
 	public partial class BallisticBody : RigidBody2D
@@ -32,7 +30,7 @@ namespace Zenitka.Scripts._2D
 			}
 		}
 
-		public bool IsExploded = false;
+		public bool HasExploded = false;
 		private bool _firstFrameAfterExplosion = true;
 
 		public override void _Ready()
@@ -75,7 +73,7 @@ namespace Zenitka.Scripts._2D
 
 			ApplyRandomness(ref _currentVelocity);
 
-			if (IsExploded && _firstFrameAfterExplosion)
+			if (HasExploded && _firstFrameAfterExplosion)
 			{
 				_currentVelocity /= 5f;
 				_firstFrameAfterExplosion = false;
@@ -105,9 +103,9 @@ namespace Zenitka.Scripts._2D
 
 		private void OnVisibleOnScreenNotifier2dScreenExited()
 		{
-			/*if (!_isOffscreen) {
+			if (!_isOffscreen) {
 				QueueFree();
-			}*/
+			}
 		}
 
 		protected void Reset()

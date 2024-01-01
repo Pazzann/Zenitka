@@ -47,8 +47,6 @@ namespace Zenitka.Scripts._2D.Targets
 			_animation.Play("fly");
 
 			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
-
-
 		}
 
 		public override void _IntegrateForces(PhysicsDirectBodyState2D state)
@@ -89,8 +87,10 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			_animation.Play("explode");
 
-			_animation.Connect("animation_looped", Callable.From(QueueFree));
-			_rocketCollision.Disabled = true;
+			_rocketCollision.SetDeferred("disabled", true);
+
+			if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
+				_animation.AnimationLooped += QueueFree;
 
 			IsExploded = true;
 		}

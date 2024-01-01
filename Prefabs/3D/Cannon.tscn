@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bt7u2b3j8v318"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Cannon.cs" id="1_266eq"]
-[ext_resource type="PackedScene" uid="uid://cqylwb3aelqw7" path="res://Assets/AntiAir.blend" id="2_4xccs"]
+[ext_resource type="PackedScene" uid="uid://cqylwb3aelqw7" path="res://Assets/Models/AntiAir.blend" id="2_4xccs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c6tab"]
 

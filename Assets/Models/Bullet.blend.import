@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bny3kp3eng8nh"
-path="res://.godot/imported/Rocket.blend-5e86b600e01bff5c9a21a821530224b5.scn"
+uid="uid://bh5hrpqrk0r2e"
+path="res://.godot/imported/Bullet.blend-7ddb0a644a1aeac8aab15dba36215c8d.scn"
 
 [deps]
 
-source_file="res://Assets/Rocket.blend"
-dest_files=["res://.godot/imported/Rocket.blend-5e86b600e01bff5c9a21a821530224b5.scn"]
+source_file="res://Assets/Models/Bullet.blend"
+dest_files=["res://.godot/imported/Bullet.blend-7ddb0a644a1aeac8aab15dba36215c8d.scn"]
 
 [params]
 

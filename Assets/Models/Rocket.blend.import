@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cqylwb3aelqw7"
-path="res://.godot/imported/AntiAir.blend-01df9b81aee31c6a7e12f270a2fcfe9b.scn"
+uid="uid://bny3kp3eng8nh"
+path="res://.godot/imported/Rocket.blend-a207705ede5e07091618bb9d732f1dd2.scn"
 
 [deps]
 
-source_file="res://Assets/AntiAir.blend"
-dest_files=["res://.godot/imported/AntiAir.blend-01df9b81aee31c6a7e12f270a2fcfe9b.scn"]
+source_file="res://Assets/Models/Rocket.blend"
+dest_files=["res://.godot/imported/Rocket.blend-a207705ede5e07091618bb9d732f1dd2.scn"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bh5hrpqrk0r2e"
-path="res://.godot/imported/Bullet.blend-dd5f52199ef044523b8ace4752ae3881.scn"
+uid="uid://co8lev16p4o2v"
+path="res://.godot/imported/Patriot.blend-31a98976d24c62886984d72f73b26e27.scn"
 
 [deps]
 
-source_file="res://Assets/Bullet.blend"
-dest_files=["res://.godot/imported/Bullet.blend-dd5f52199ef044523b8ace4752ae3881.scn"]
+source_file="res://Assets/Models/Patriot.blend"
+dest_files=["res://.godot/imported/Patriot.blend-31a98976d24c62886984d72f73b26e27.scn"]
 
 [params]
 

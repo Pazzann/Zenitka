@@ -34,11 +34,11 @@ namespace Zenitka.Scripts._2D
 			_ammoLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/UsedAmmo");
 			_detectedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DetectedTargets");
 
-			_targetScene = GD.Load<PackedScene>("res://Prefabs/Target.tscn");
-			_bulletScene = GD.Load<PackedScene>("res://Prefabs/Bullet.tscn");
-			_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/Rocket1.tscn");
+			_targetScene = GD.Load<PackedScene>("res://Prefabs/2D/Target.tscn");
+			_bulletScene = GD.Load<PackedScene>("res://Prefabs/2D/Bullet.tscn");
+			_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/Rocket1.tscn");
 
-			_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/Rocket2.tscn");
+			_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/2D/Rocket2.tscn");
 			_rocketCannon = GetNode<Marker2D>("RocketMarker");
 
 			_cannon.OnCannonAimed += OnCannonGunReady;

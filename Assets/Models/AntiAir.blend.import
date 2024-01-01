@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dd7m1wvqkhrsm"
-path="res://.godot/imported/AntiAirUnScripted(1).blend-a7f79eeba8962855d7d9663d9299a190.scn"
+uid="uid://cqylwb3aelqw7"
+path="res://.godot/imported/AntiAir.blend-0223eb75b8b845679bdca1d6cc86fbb4.scn"
 
 [deps]
 
-source_file="res://Prefabs/3D/AntiAirUnScripted(1).blend"
-dest_files=["res://.godot/imported/AntiAirUnScripted(1).blend-a7f79eeba8962855d7d9663d9299a190.scn"]
+source_file="res://Assets/Models/AntiAir.blend"
+dest_files=["res://.godot/imported/AntiAir.blend-0223eb75b8b845679bdca1d6cc86fbb4.scn"]
 
 [params]
 

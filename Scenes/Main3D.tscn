@@ -72,6 +72,7 @@ font_size = 24
 [sub_resource type="Environment" id="Environment_f6hfx"]
 background_mode = 1
 background_color = Color(0.760784, 0.760784, 0.760784, 1)
+sdfgi_enabled = true
 glow_hdr_threshold = 0.58
 fog_light_color = Color(0.611765, 0.654902, 0.721569, 1)
 fog_density = 0.005
@@ -267,7 +268,6 @@ camera_attributes = SubResource("CameraAttributesPhysical_tygtd")
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.973, 8.529, 14.559)
 motion_mode = 1
-safe_margin = 1.0
 script = ExtResource("9_8ro4h")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]

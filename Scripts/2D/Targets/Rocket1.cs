@@ -38,7 +38,7 @@ namespace Zenitka.Scripts._2D.Targets
 			}
 			else
 			{
-				if (IsExploded)
+				if (HasExploded)
 					return;
 				_currentFuel = 0;
 				_state.SelfPropellingAcceleration = 0f;
@@ -56,9 +56,12 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			_animation.Play("explode");
 
-			_animation.Connect("animation_looped", Callable.From(QueueFree));
-			_rocketCollision.Disabled = true;
-			IsExploded = true;
+			if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
+				_animation.AnimationLooped += QueueFree;
+
+			_rocketCollision.SetDeferred("disabled", true);
+
+			HasExploded = true;
 		}
 	}
 }

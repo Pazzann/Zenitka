@@ -29,12 +29,12 @@ namespace Zenitka.Scripts
 		}
 
 		public static Vector2 ProjectOnXZ(Vector3 v) {
-            return new Vector2(v.X, v.Z);
-        }
+			return new Vector2(v.X, v.Z);
+		}
 
-        public static bool IsCCW(Vector2 a, Vector2 b) {
-            return a.Cross(b) > 0f;
-        }
+		public static bool IsCCW(Vector2 a, Vector2 b) {
+			return a.Cross(b) > 0f;
+		}
 
 		public static float AngleDiff(float a, float b) {
 			return Mathf.PosMod(Mathf.Abs(a - b), Mathf.Pi);

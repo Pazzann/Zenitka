@@ -1,25 +1,25 @@
 [gd_scene load_steps=12 format=3 uid="uid://oy8li7qf5km6"]
 
-[ext_resource type="Script" path="res://Scripts/2D/Targets/Bullet.cs" id="1_7pnd0"]
-[ext_resource type="Texture2D" uid="uid://cyca7it3n4so6" path="res://Assets/Sprites/Bullet/Bullet5.png" id="2_ws4o0"]
-[ext_resource type="Texture2D" uid="uid://bl8jmbiroltl1" path="res://Assets/Sprites/Bullet/Bullet7.png" id="3_pcqe0"]
-[ext_resource type="Texture2D" uid="uid://djrdjx570owom" path="res://Assets/Sprites/Bullet/Bullet6.png" id="4_5rhxt"]
-[ext_resource type="Texture2D" uid="uid://bdxcwyk4favr2" path="res://Assets/Sprites/Bullet/Bullet1.png" id="5_dipax"]
-[ext_resource type="Texture2D" uid="uid://c4i74r00uxtkb" path="res://Assets/Sprites/Bullet/Bullet2.png" id="6_qkoro"]
-[ext_resource type="Texture2D" uid="uid://dupiui74nfwx3" path="res://Assets/Sprites/Bullet/Bullet3.png" id="7_tcmr7"]
-[ext_resource type="Texture2D" uid="uid://drodqvcqs1p5d" path="res://Assets/Sprites/Bullet/Bullet4.png" id="8_f6ll2"]
+[ext_resource type="Script" path="res://Scripts/2D/Targets/Bullet.cs" id="1_my0ab"]
+[ext_resource type="Texture2D" uid="uid://cyca7it3n4so6" path="res://Assets/Sprites/Bullet/Bullet5.png" id="2_vc8ia"]
+[ext_resource type="Texture2D" uid="uid://bl8jmbiroltl1" path="res://Assets/Sprites/Bullet/Bullet7.png" id="3_2k7sb"]
+[ext_resource type="Texture2D" uid="uid://djrdjx570owom" path="res://Assets/Sprites/Bullet/Bullet6.png" id="4_r65gi"]
+[ext_resource type="Texture2D" uid="uid://bdxcwyk4favr2" path="res://Assets/Sprites/Bullet/Bullet1.png" id="5_h8ojt"]
+[ext_resource type="Texture2D" uid="uid://c4i74r00uxtkb" path="res://Assets/Sprites/Bullet/Bullet2.png" id="6_vocur"]
+[ext_resource type="Texture2D" uid="uid://dupiui74nfwx3" path="res://Assets/Sprites/Bullet/Bullet3.png" id="7_yq3pa"]
+[ext_resource type="Texture2D" uid="uid://drodqvcqs1p5d" path="res://Assets/Sprites/Bullet/Bullet4.png" id="8_no26i"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ka6gv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_ws4o0")
+"texture": ExtResource("2_vc8ia")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_pcqe0")
+"texture": ExtResource("3_2k7sb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_5rhxt")
+"texture": ExtResource("4_r65gi")
 }],
 "loop": true,
 "name": &"explode",
@@ -27,7 +27,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_dipax")
+"texture": ExtResource("5_h8ojt")
 }],
 "loop": true,
 "name": &"fly1",
@@ -35,13 +35,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_qkoro")
+"texture": ExtResource("6_vocur")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_tcmr7")
+"texture": ExtResource("7_yq3pa")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_f6ll2")
+"texture": ExtResource("8_no26i")
 }],
 "loop": true,
 "name": &"fly2",
@@ -61,7 +61,7 @@ max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
 freeze_mode = 1
-script = ExtResource("1_7pnd0")
+script = ExtResource("1_my0ab")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
