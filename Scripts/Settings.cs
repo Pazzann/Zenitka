@@ -144,9 +144,15 @@ namespace Zenitka
 
 		public static class Settings3D
 		{
+			public static bool Auto { get; set; }
 			public static bool IsNotDefaultGun { get; set; }
 			public static bool IsNotDefaultTarget { get; set; }
 			public static float Gravity { get; set; } // Гравітація
+
+			static Settings3D()
+			{
+				Auto = true;
+			}
 			public static class DefaultGun
 			{
 				public static float BulletSpeed { get; set; } // швидкість снаряда
@@ -205,12 +211,21 @@ namespace Zenitka
 
 				//public static float Altitude{ get; set; } // викривлення земної поверхні
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
+				
+				public static float FireRate { get; set; }
+
+				public static float CoordinateX { get; set; }
+				public static float CoordinateY { get; set; }
+				public static float CoordinateZ { get; set; }
+				public static float Angle1 { get; set; }
+				public static float Angle2 { get; set; }
 
 				static DefaultTarget()
 				{
 					Velocity = 10.0f;
 					Mass = 1f;
 					AirResistance = 0.05f;
+					FireRate = 3f;
 				}
 			}
 
