@@ -544,6 +544,48 @@ text = "Затрати палива"
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer10"]
 layout_mode = 2
 
+[node name="OptionButton3" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Авто"
+popup/item_0/id = 0
+popup/item_1/text = "Ручна"
+popup/item_1/id = 1
+
+[node name="Auto" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/Auto"]
+layout_mode = 2
+text = "Час між цілями"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/Auto"]
+layout_mode = 2
+
+[node name="NoAutoCoordinates" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+text = "Координати"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+
+[node name="NoAutoAngle" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoAngle"]
+layout_mode = 2
+text = "Угол"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoAngle"]
+layout_mode = 2
+
 [node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Застосувати"

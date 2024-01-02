@@ -88,6 +88,20 @@ namespace Zenitka.Scripts.UI
 			var node37 =
 				GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DRocketTarget/HBoxContainer8/LineEdit");
 			node37.Text = Settings.Settings3D.RocketTarget.AirResistance.ToString();
+			
+			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
+			nodeAuto.Text = Settings.Settings3D.DefaultTarget.FireRate.ToString();
+			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
+			nodeNoAutoCoordinateX.Text = Settings.Settings3D.DefaultTarget.CoordinateX.ToString();
+			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+			nodeNoAutoCoordinateY.Text = Settings.Settings3D.DefaultTarget.CoordinateY.ToString();
+			var nodeNoAutoCoordinateZ = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+			nodeNoAutoCoordinateY.Text = Settings.Settings3D.DefaultTarget.CoordinateZ.ToString();
+			
+			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
+			nodeNoAutoAngle1.Text =Settings.Settings3D.DefaultTarget.Angle1.ToString();
+			var nodeNoAutoAngle2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
+			nodeNoAutoAngle2.Text =Settings.Settings3D.DefaultTarget.Angle2.ToString();
 		}
 
 		public void SaveButton()
@@ -173,7 +187,19 @@ namespace Zenitka.Scripts.UI
 			var node37 =
 				GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/3DRocketTarget/HBoxContainer8/LineEdit");
 			Settings.Settings3D.RocketTarget.AirResistance = node37.Text.ToFloat();
-
+			
+			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
+			Settings.Settings3D.DefaultTarget.FireRate=nodeAuto.Text.ToFloat();
+			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
+			Settings.Settings3D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
+			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+			Settings.Settings3D.DefaultTarget.CoordinateY=nodeNoAutoCoordinateY.Text.ToFloat();
+			var nodeNoAutoCoordinateZ = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit3");
+			Settings.Settings3D.DefaultTarget.CoordinateZ=nodeNoAutoCoordinateZ.Text.ToFloat();
+			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
+			Settings.Settings3D.DefaultTarget.Angle1=nodeNoAutoAngle1.Text.ToFloat();
+			var nodeNoAutoAngle2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit2");
+			Settings.Settings3D.DefaultTarget.Angle2=nodeNoAutoAngle2.Text.ToFloat();
 
 		}
 
@@ -217,6 +243,23 @@ namespace Zenitka.Scripts.UI
 			{
 				defaultTarget2D.Hide();
 				rocketTarget2D.Show();
+			}
+			OptionButton optionButton3 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton3");
+			HBoxContainer auto = GetNode<HBoxContainer>("ColorRect/MarginContainer/VBoxContainer/Auto");
+			HBoxContainer noAutoCoordinates = GetNode<HBoxContainer>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates");
+			HBoxContainer noAutoAngle = GetNode<HBoxContainer>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle");
+			if (optionButton3.Selected == 0)
+			{
+				auto.Show();
+				noAutoCoordinates.Hide();
+				noAutoAngle.Hide();
+			}
+
+			if (optionButton3.Selected == 1)
+			{
+				auto.Hide();
+				noAutoCoordinates.Show();
+				noAutoAngle.Show();
 			}
 
 
