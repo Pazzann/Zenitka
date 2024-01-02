@@ -40,7 +40,9 @@ namespace Zenitka.Scripts
 			return Mathf.PosMod(Mathf.Abs(a - b), Mathf.Pi);
 		}
 
-		public static Transform3D Rotated(Vector3 axisPoint, Vector3 axisDirection, float angle) {
+		public static Transform3D Rotated(/*Vector3 point, */Vector3 axisPoint, Vector3 axisDirection, float angle) {
+			//axisPoint = axisPoint + point.Project(axisDirection);
+
 			return Transform3D.Identity
 				.Translated(-axisPoint)
 				.Rotated(axisDirection, angle)

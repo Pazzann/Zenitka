@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://boq0obpwbw72v"]
+[gd_scene load_steps=4 format=3 uid="uid://boq0obpwbw72v"]
 
-[node name="RocketLauncher" type="Node3D"]
+[ext_resource type="Script" path="res://Scripts/3D/RocketLauncher.cs" id="1_jtmco"]
+[ext_resource type="PackedScene" uid="uid://dd8wsubbsfw51" path="res://Assets/Models/Patriot.fbx" id="2_e4cbp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v2nbm"]
+size = Vector3(20, 15, 8)
+
+[node name="RocketLauncher" type="StaticBody3D"]
+script = ExtResource("1_jtmco")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.24684, 0.777611, -0.0856782)
+shape = SubResource("BoxShape3D_v2nbm")
+
+[node name="Patriot" parent="." instance=ExtResource("2_e4cbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.13706, 0, 1.82388)

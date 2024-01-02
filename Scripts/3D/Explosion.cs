@@ -1,5 +1,7 @@
 using Godot;
 
+namespace Zenitka.Scripts._3D;
+
 public partial class Explosion : Node3D
 {
 	// Called when the node enters the scene tree for the first time.

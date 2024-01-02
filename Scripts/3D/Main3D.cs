@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace Zenitka.Scripts._3D
 {
@@ -9,21 +10,24 @@ namespace Zenitka.Scripts._3D
 
 		private PackedScene _targetScene;
 		private PackedScene _bulletScene;
-		private Label _destroyedLabel;
 		private PackedScene _explosionScene;
+
+		private Label _destroyedLabel;
 
 		private Label _ammoLabel;
 		private Label _detectedLabel;
 
-		private Cannon _cannon;
+		private List<IWeapon> _weapons = new List<IWeapon>();
+		private List<Target> _targets = new List<Target>();
 
 		private static Random _rng = new Random();
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			_cannon = GetNode<Cannon>("Cannon");
-			_cannon.OnAimed += OnCannonAimed;
+			var cannon = GetNode<Cannon>("Cannon");
+			cannon.OnAimed += OnCannonAimed;
+			_weapons.Add(cannon);
 
 			_ammoLabel = GetNode<Label>("Statistics/ColorRect/UsedAmmo");
 			_detectedLabel = GetNode<Label>("Statistics/ColorRect/DetectedTargets");
@@ -113,24 +117,17 @@ namespace Zenitka.Scripts._3D
 
 			target.State = targetState;
 
+			_targets.Add(target);
+
 			_detectedLabel.Text = (int.Parse(_detectedLabel.Text) + 1).ToString();
 
-			target.CannonPosition = _cannon.GlobalPosition;
-			target.CannnonRange = 100f;
+			target.CannonPosition = Vector3.Zero;
+			target.CannnonRange = 300f;
 
 			target.OnCannonVisiblityChanged = (visible) =>
 			{
-				if (visible) {
-					var result = new Solver3D(
-						_cannon.State,
-						0,
-						targetState,
-						Vector3.Down * Settings.Settings3D.Gravity,
-						new SolverOptions()
-					).Aim();
-
-					_cannon.Fire(0, result.HAngle, result.VAngle, result.ColTime);
-				}
+				if (visible)
+					Fire(target);
 			};
 		}
 
@@ -148,6 +145,11 @@ namespace Zenitka.Scripts._3D
 				z = -z;
 
 			return TARGET_SPAWN_RADIUS * new Vector3(x, y, z).Normalized();
+		}
+
+		private void Fire(Target target) {
+			foreach (var weapon in _weapons)
+				weapon.Fire(target);
 		}
 
 		private void SettingsButton()

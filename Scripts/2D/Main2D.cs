@@ -2,7 +2,6 @@ using Godot;
 using System;
 using Zenitka.Scripts._2D.Targets;
 
-
 namespace Zenitka.Scripts._2D
 {
 	public partial class Main2D : Node2D
@@ -47,14 +46,12 @@ namespace Zenitka.Scripts._2D
 		private void OnCannonGunReady(float angleRad, float timeOfCollision, Vector2 headPosition, BallisticBody target)
 		{
 			var bullet = _bulletScene.Instantiate() as Bullet;
-
 			bullet.SelfDestructionTime = timeOfCollision - 0.07f;
 
 			var dir = Vector2.FromAngle(angleRad);
 			dir.Y = -dir.Y;
 
 			bullet.State = new BodyState2D(Vector2.Zero, dir, Vector2.Zero, 0f, 0f, 0f);
-
 			AddChild(bullet);
 
 			_ammoLabel.Text = (Int32.Parse(_ammoLabel.Text) + 1).ToString();
