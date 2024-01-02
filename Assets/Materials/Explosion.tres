@@ -1,0 +1,31 @@
+[gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://2j0csolqgpb1"]
+
+[ext_resource type="Shader" path="res://Assets/Shaders/Explosion.gdshader" id="1_xmhmw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_csxtk"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xp48w"]
+seamless = true
+noise = SubResource("FastNoiseLite_csxtk")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_30qao"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohf1y"]
+seamless = true
+noise = SubResource("FastNoiseLite_30qao")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ws2vr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_asprt"]
+seamless = true
+noise = SubResource("FastNoiseLite_ws2vr")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_xmhmw")
+shader_parameter/max_displacement = 0.3
+shader_parameter/emission_color = Color(1, 0.392157, 0.0117647, 1)
+shader_parameter/albedo_color = Color(0, 0, 0, 1)
+shader_parameter/displacement_map = SubResource("NoiseTexture2D_ohf1y")
+shader_parameter/alpha_map = SubResource("NoiseTexture2D_xp48w")
+shader_parameter/emission_map = SubResource("NoiseTexture2D_asprt")

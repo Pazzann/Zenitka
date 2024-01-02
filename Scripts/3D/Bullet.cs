@@ -6,6 +6,7 @@ namespace Zenitka.Scripts._3D
 	public partial class Bullet : DynamicBody
 	{
 		private Timer _timer;
+		private PackedScene _explosionScene;
 
 		private float _lifespan = 7f;
 
@@ -39,13 +40,16 @@ namespace Zenitka.Scripts._3D
 
 		private void OnSuicideTimerTimeout()
 		{
-			OnExploded?.Invoke(null);
-			QueueFree();
+			Explode(null);
 		}
 
 		private void OnBodyEntered(Node body)
 		{
-			OnExploded?.Invoke(body as Node3D);
+			Explode(body as Node3D);
+		}
+
+		private void Explode(Node3D target) {
+			OnExploded?.Invoke(target);
 			QueueFree();
 		}
 	}

@@ -75,8 +75,13 @@ namespace Zenitka.Scripts._3D
 					if (target != null && !hit && !target.IsQueuedForDeletion()) {
 						GD.Print("Hit");
 						_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + 1).ToString();
-						target.QueueFree();
 						hit = true;
+
+						if (target is Target)
+							(target as Target).Explode();
+						else
+							target.QueueFree();
+
 					} else if (target == null && !hit && missCount == projectiles.Length - 1)
 						GD.Print("Missed.");
 					else if (target == null && !hit)

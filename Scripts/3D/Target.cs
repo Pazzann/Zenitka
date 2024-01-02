@@ -5,11 +5,20 @@ namespace Zenitka.Scripts._3D
 {
 	public partial class Target : DynamicBody
 	{
+		private PackedScene _explosionScene;
+
 		public Vector3 CannonPosition { get; set; } = Vector3.Zero;
 		public float CannnonRange { get; set; } = 0f;
 
 		public Action<bool> OnCannonVisiblityChanged { get; set; }
 		public bool WithinCannonRange { get; set; } = false;
+
+		public override void _Ready()
+		{
+			base._Ready();
+
+			_explosionScene = GD.Load<PackedScene>("res://Prefabs/3D/Explosion.tscn");
+		}
 
 		public override void _Process(double delta)
 		{
@@ -18,7 +27,7 @@ namespace Zenitka.Scripts._3D
 			if (GlobalPosition.Y < 0f && WithinCannonRange) {
 				WithinCannonRange = false;
 				OnCannonVisiblityChanged?.Invoke(false);
-				QueueFree();
+				Explode();
 			}
 		}
 
@@ -26,6 +35,14 @@ namespace Zenitka.Scripts._3D
 		{
 			base._PhysicsProcess(delta);
 			UpdateVisibility();
+		}
+
+		public void Explode() {
+			var explosion = _explosionScene.Instantiate() as Explosion;
+			GetParent()?.AddChild(explosion);
+			explosion.GlobalPosition = GlobalPosition;
+
+			QueueFree();
 		}
 
 		private void UpdateVisibility()
@@ -41,7 +58,7 @@ namespace Zenitka.Scripts._3D
 			{
 				WithinCannonRange = false;
 				OnCannonVisiblityChanged?.Invoke(false);
-				QueueFree();
+				Explode();
 			}
 		}
 	}

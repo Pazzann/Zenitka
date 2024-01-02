@@ -1,40 +1,81 @@
-[gd_scene load_steps=5 format=3 uid="uid://blw4whxj4r0u4"]
+[gd_scene load_steps=10 format=3 uid="uid://blw4whxj4r0u4"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Explosion.cs" id="1_8a3ak"]
+[ext_resource type="Material" uid="uid://2j0csolqgpb1" path="res://Assets/Materials/Explosion.tres" id="2_m0om5"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f1ysl"]
-spread = 40.0
+[sub_resource type="Gradient" id="Gradient_4kwk7"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_23xyj"]
+gradient = SubResource("Gradient_4kwk7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ngl7m"]
+emission_shape = 1
+emission_sphere_radius = 2.0
+spread = 180.0
 flatness = 1.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 82.71
-initial_velocity_max = 82.71
-color = Color(0.741176, 0.533333, 0.0823529, 1)
-turbulence_enabled = true
+gravity = Vector3(0, 3, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+damping_min = 0.1
+damping_max = 0.1
+color_ramp = SubResource("GradientTexture1D_23xyj")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgot7"]
-albedo_color = Color(0.992157, 0.482353, 0.113725, 1)
+[sub_resource type="SphereMesh" id="SphereMesh_hm3ji"]
+material = ExtResource("2_m0om5")
+radius = 1.0
+height = 2.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_ao5v6"]
-material = SubResource("StandardMaterial3D_lgot7")
-radius = 0.05
-height = 0.1
-radial_segments = 8
-rings = 8
+[sub_resource type="Animation" id="Animation_eipci"]
+length = 0.001
+step = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_uhsfr"]
+resource_name = "explode"
+step = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gu5ch"]
+_data = {
+"RESET": SubResource("Animation_eipci"),
+"explode": SubResource("Animation_uhsfr")
+}
 
 [node name="Explosion" type="Node3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("1_8a3ak")
 
-[node name="Particles" type="GPUParticles3D" parent="."]
-emitting = false
-amount = 2000
-one_shot = true
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00217441, 0.0221882, -1.75908e-05)
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_f1ysl")
-draw_pass_1 = SubResource("SphereMesh_ao5v6")
+visibility_aabb = AABB(-5.06399, -4.30099, -3.422, 8.93205, 10.9924, 7.16393)
+process_material = SubResource("ParticleProcessMaterial_ngl7m")
+draw_pass_1 = SubResource("SphereMesh_hm3ji")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gu5ch")
+}
