@@ -21,12 +21,23 @@ public partial class CameraTarget : Camera3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		GD.Print("FPS: ", Engine.GetFramesPerSecond()); 
+				if (Input.IsActionJustPressed("switch"))
+		{
+			if (Current == true)
+			{
+				Current = false;
+			}
+			else
+			{
+				Current = true;
+			}
+		}
 		_target = GetNodeOrNull<Target>("/root/Main3D/Target");
 		_rocket = GetNodeOrNull<Node3D>("/root/Main3D/Target/Rocket");
-
-
 		if (_target != null)
 		{
+			
 			if (_target.LinearVelocity != new Vector3(0, 0, 0))
 			{
 				//_rocket.Transform = _rocket.Transform.LookingAt(-_target.LinearVelocity * 3, Vector3.Up);
