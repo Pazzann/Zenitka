@@ -200,6 +200,25 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings3D.DefaultTarget.Angle1=nodeNoAutoAngle1.Text.ToFloat();
 			var nodeNoAutoAngle2 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit2");
 			Settings.Settings3D.DefaultTarget.Angle2=nodeNoAutoAngle2.Text.ToFloat();
+			
+			var a = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/1/LineEdit");
+			var aa = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/1/LineEdit2");
+			Settings.Settings3D.DefaultGun.ZenitkiX[0]=a.Text.ToFloat();
+			Settings.Settings3D.DefaultGun.ZenitkiZ[0]=aa.Text.ToFloat();
+			var b = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/2/LineEdit");
+			var bb = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/2/LineEdit2");
+			Settings.Settings3D.DefaultGun.ZenitkiX[1]=b.Text.ToFloat();
+			Settings.Settings3D.DefaultGun.ZenitkiZ[1]=bb.Text.ToFloat();
+			var c = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/3/LineEdit");
+			var cc = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/3/LineEdit2");
+			Settings.Settings3D.DefaultGun.ZenitkiX[2]=c.Text.ToFloat();
+			Settings.Settings3D.DefaultGun.ZenitkiZ[2]=cc.Text.ToFloat();
+			OptionButton optionButtonA = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/1/OptionButton");
+			Settings.Settings3D.DefaultGun.ZenitkiState[0]=optionButtonA.Selected;
+			OptionButton optionButtonB = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/2/OptionButton");
+			Settings.Settings3D.DefaultGun.ZenitkiState[1]=optionButtonB.Selected;
+			OptionButton optionButtonC = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/3/OptionButton");
+			Settings.Settings3D.DefaultGun.ZenitkiState[2]=optionButtonC.Selected;
 
 		}
 
@@ -261,7 +280,14 @@ namespace Zenitka.Scripts.UI
 				noAutoCoordinates.Show();
 				noAutoAngle.Show();
 			}
-
+			OptionButton optionButton4 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton4");
+			VBoxContainer multi = GetNode<VBoxContainer>("ColorRect/MarginContainer/VBoxContainer/Multi");
+			if (optionButton4.Selected == 1)
+			{
+				multi.Show();
+			}
+			else
+			multi.Hide();
 
 		}
 
