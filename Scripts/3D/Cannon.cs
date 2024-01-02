@@ -54,8 +54,8 @@ namespace Zenitka.Scripts._3D
 
 			return new BodyState(
 				transform * BulletPos[id],
-				transform * (Projectile.Speed * Vector3.Right),
-				transform * (Projectile.Acceleration * Vector3.Right) + gravity,
+				transform * (BulletPos[id] + Projectile.Speed * Vector3.Right) - transform * BulletPos[id],
+				transform * (BulletPos[id] + Projectile.Acceleration * Vector3.Right) + gravity - transform * BulletPos[id],
 				Projectile.LinearDrag,
 				Projectile.SelfPropellingAcceleration,
 				Projectile.Mass);
@@ -64,7 +64,7 @@ namespace Zenitka.Scripts._3D
 
 	public delegate void CannonAimed(float collisionTime, BodyState[] projectiles);
 
-	public partial class Cannon : CharacterBody3D
+	public partial class Cannon : CharacterBody3D, IWeapon
 	{
 		private Node3D _centralConstruction;
 		private Node3D _baseCannonPart;
@@ -106,7 +106,12 @@ namespace Zenitka.Scripts._3D
 			);
 		}
 
-		public void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime)
+		public void Fire(DynamicBody target) {
+			var aimResult = new Solver3D(State, 0, target.State, _gravity, new SolverOptions()).Aim();
+			Fire(0, aimResult.HAngle, aimResult.VAngle, aimResult.ColTime);
+		}
+
+		private void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime)
 		{
 			var projectile = _state.CreateProjectile(refBulletId, hAngle, vAngle, _gravity);
 

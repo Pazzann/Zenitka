@@ -1,6 +1,4 @@
-using System;
 using Godot;
-
 
 namespace Zenitka.Scripts._2D
 {
@@ -42,10 +40,7 @@ namespace Zenitka.Scripts._2D
 			else
 			{
 				var tween = CreateTween();
-
-				tween.TweenProperty(_gun, "rotation", targetAngle, diff / Settings.Settings2D.DefaultGun.AngularVelocity)
-					.SetTrans(Tween.TransitionType.Linear);
-
+				tween.TweenProperty(_gun, "rotation", targetAngle, diff / Settings.Settings2D.DefaultGun.AngularVelocity);
 				tween.TweenCallback(Callable.From(() => Signal(timeOfCollision, target)));
 			}
 		}
