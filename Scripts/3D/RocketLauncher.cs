@@ -27,7 +27,7 @@ public partial class RocketLauncher : StaticBody3D, IWeapon
 
 	}
 
-	public void Fire(DynamicBody target) {
-		
+	public void OnTargetDetected(BallisticBody target, WeaponStatisticsCallback callback) {
+
 	}
 }

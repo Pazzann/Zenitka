@@ -12,8 +12,6 @@ namespace Zenitka.Scripts._3D
 		public override void _Ready()
 		{
 			base._Ready();
-
-			Transform = Transform.LookingAt(new Vector3(0f, 0f, 0.5f), Vector3.Up);
 		}
 
 		public override void _Process(double delta)

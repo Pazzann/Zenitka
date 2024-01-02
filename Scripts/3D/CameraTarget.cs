@@ -32,11 +32,12 @@ public partial class CameraTarget : Camera3D
 				Current = true;
 			}
 		}
+
 		_target = GetNodeOrNull<Target>("/root/Main3D/Target");
 		_rocket = GetNodeOrNull<Node3D>("/root/Main3D/Target/Rocket");
+		
 		if (_target != null)
 		{
-			
 			if (_target.LinearVelocity != new Vector3(0, 0, 0))
 			{
 				//_rocket.Transform = _rocket.Transform.LookingAt(-_target.LinearVelocity * 3, Vector3.Up);

@@ -56,6 +56,20 @@ namespace Zenitka.Scripts
 		public static Vector3 SafeNormalize(Vector3 v) {
 			return v != Vector3.Zero ? v.Normalized() : Vector3.Zero;
 		}
+
+		public static Vector3 RandSphere() {
+			var point = new Vector3(
+				_rng.NextSingle(),
+				_rng.NextSingle(),
+				_rng.NextSingle()
+			);
+
+			return point.Normalized();
+		}
+
+		public static Vector3 OrientPlane(Vector3 v, Vector3 normal) {
+			return v.Dot(normal) >= 0f ? v : -v;
+		}
 	}
 }
 

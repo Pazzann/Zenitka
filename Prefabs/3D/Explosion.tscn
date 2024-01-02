@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://blw4whxj4r0u4"]
+[gd_scene load_steps=11 format=3 uid="uid://blw4whxj4r0u4"]
 
 [ext_resource type="Script" path="res://Scripts/3D/Explosion.cs" id="1_8a3ak"]
 [ext_resource type="Material" uid="uid://2j0csolqgpb1" path="res://Assets/Materials/Explosion.tres" id="2_m0om5"]
@@ -64,14 +64,18 @@ _data = {
 "explode": SubResource("Animation_uhsfr")
 }
 
-[node name="Explosion" type="Node3D"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+[sub_resource type="BoxShape3D" id="BoxShape3D_n1bgk"]
+size = Vector3(2, 2, 2)
+
+[node name="Explosion" type="StaticBody3D"]
+collision_layer = 5
+collision_mask = 3
 script = ExtResource("1_8a3ak")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00217441, 0.0221882, -1.75908e-05)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00108721, 0.0110941, -8.7954e-06)
 explosiveness = 1.0
-visibility_aabb = AABB(-5.06399, -4.30099, -3.422, 8.93205, 10.9924, 7.16393)
+visibility_aabb = AABB(-3.83727, -3.43208, -4.18966, 7.93723, 9.98034, 8.13129)
 process_material = SubResource("ParticleProcessMaterial_ngl7m")
 draw_pass_1 = SubResource("SphereMesh_hm3ji")
 
@@ -79,3 +83,6 @@ draw_pass_1 = SubResource("SphereMesh_hm3ji")
 libraries = {
 "": SubResource("AnimationLibrary_gu5ch")
 }
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_n1bgk")

@@ -7,6 +7,10 @@
 size = Vector3(3, 3, 7.5)
 
 [node name="Target" type="RigidBody3D"]
+collision_layer = 5
+collision_mask = 3
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_h5mlg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -18,3 +22,5 @@ transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 
 [node name="Rocket2" parent="." instance=ExtResource("2_xrrwy")]
 transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, 0, -3.75)
 visible = false
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

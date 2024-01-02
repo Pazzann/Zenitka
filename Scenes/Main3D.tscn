@@ -110,7 +110,6 @@ radius = 1000.0
 script = ExtResource("1_2igm4")
 
 [node name="Cannon" parent="." instance=ExtResource("1_4hkxh")]
-motion_mode = 1
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Cannon"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.602422, 14.0129, 1.45954)
@@ -300,6 +299,8 @@ shape = SubResource("SphereShape3D_k7s5o")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 5
+collision_mask = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("CylinderMesh_161b6")

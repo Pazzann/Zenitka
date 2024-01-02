@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace Zenitka.Scripts._3D
@@ -62,10 +63,10 @@ namespace Zenitka.Scripts._3D
 		}
 	}
 
-	public delegate void CannonAimed(float collisionTime, BodyState[] projectiles);
-
-	public partial class Cannon : CharacterBody3D, IWeapon
+	public partial class Cannon : StaticBody3D, IWeapon
 	{
+		private PackedScene _bulletScene;
+
 		private Node3D _centralConstruction;
 		private Node3D _baseCannonPart;
 		private Node3D _bulletSpawnLocation0;
@@ -79,10 +80,10 @@ namespace Zenitka.Scripts._3D
 
 		private Vector3 _gravity => Vector3.Down * Settings.Settings3D.Gravity;
 
-		public event CannonAimed OnAimed;
-
 		public override void _Ready()
 		{
+			_bulletScene = GD.Load<PackedScene>("res://Prefabs/3D/Bullet.tscn");
+
 			_centralConstruction = GetNode<Node3D>("AntiAir/Central Constuction");
 			_baseCannonPart = GetNode<Node3D>("AntiAir/Central Constuction/Base canon part");
 			_bulletSpawnLocation0 = GetNode<Node3D>("AntiAir/Central Constuction/Base canon part/BulletSpawn1");
@@ -106,12 +107,12 @@ namespace Zenitka.Scripts._3D
 			);
 		}
 
-		public void Fire(DynamicBody target) {
+		public void OnTargetDetected(BallisticBody target, WeaponStatisticsCallback callback) {
 			var aimResult = new Solver3D(State, 0, target.State, _gravity, new SolverOptions()).Aim();
-			Fire(0, aimResult.HAngle, aimResult.VAngle, aimResult.ColTime);
+			Fire(0, aimResult.HAngle, aimResult.VAngle, aimResult.ColTime, callback);
 		}
 
-		private void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime)
+		private void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime, WeaponStatisticsCallback callback)
 		{
 			var projectile = _state.CreateProjectile(refBulletId, hAngle, vAngle, _gravity);
 
@@ -138,8 +139,33 @@ namespace Zenitka.Scripts._3D
 				projectile.Position = BulletPos0;
 				projectile1.Position = BulletPos1;
 
-				OnAimed?.Invoke(collisionTime, new BodyState[] { projectile, projectile1 });
+				Fire(collisionTime, new BodyState[] { projectile, projectile1 }, callback);
 			}));
+		}
+
+		private void Fire(float collisionTime, BodyState[] projectiles, WeaponStatisticsCallback callback)
+		{
+			bool hit = false;
+			int missed = 0;
+
+			foreach (var projectile in projectiles) {
+				var bullet = _bulletScene.Instantiate() as Bullet;
+				bullet.State = projectile;
+				bullet.Lifespan = collisionTime + 1f;
+				GetParent().AddChild(bullet);
+
+				bullet.OnExploded += (target) => {
+					if (target != null && !hit) {
+						callback.Invoke(projectiles.Length, 1);
+						hit = true;
+					} else if (target == null && !hit) {
+						if (missed >= projectiles.Length)
+							callback.Invoke(projectiles.Length, 0);
+						else
+							++missed;
+					}
+				};
+			}
 		}
 	}
 }

@@ -3,12 +3,12 @@ using System;
 
 namespace Zenitka.Scripts._3D
 {
-	public partial class Bullet : DynamicBody
+	public partial class Bullet : BallisticBody
 	{
 		private Timer _timer;
 		private PackedScene _explosionScene;
 
-		private float _lifespan = 7f;
+		private float _lifespan = 0f;
 
 		public float Lifespan
 		{
@@ -26,8 +26,12 @@ namespace Zenitka.Scripts._3D
 
 		public override void _Ready()
 		{
+			base._Ready();
+
 			_timer = GetNode<Timer>("SuicideTimer");
-			_timer.Start(Lifespan);
+
+			if (_lifespan != 0)
+				_timer.Start(_lifespan);
 		}
 
 		public override void _Process(double delta)

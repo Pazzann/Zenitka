@@ -7,7 +7,7 @@ namespace Zenitka.Scripts._3D
 	{
 		public int HIter = 12;
 		public int VIter = 12;
-		public int SimSteps = 400;
+		public int SimSteps = 600;
 		public float SimTimeStep = 1f / 60f;
 
 		public SolverOptions() { }
@@ -115,12 +115,14 @@ namespace Zenitka.Scripts._3D
 
 				if (result1.AbsError < best.AbsError)
 				{
+					best.ColTime = result1.ColTime;
 					best.AbsError = result1.AbsError;
 					best.VAngle = vAngle1;
 				}
 
 				if (result2.AbsError < best.AbsError)
 				{
+					best.ColTime = result2.ColTime;
 					best.AbsError = result2.AbsError;
 					best.VAngle = vAngle2;
 				}
@@ -149,8 +151,9 @@ namespace Zenitka.Scripts._3D
 
 				var absError = (p1 - p2).Length();
 
-				if (absError < result.AbsError)
+				if (absError < result.AbsError) {
 					result = new SimResult(t, absError);
+				}
 			}
 
 			return result;

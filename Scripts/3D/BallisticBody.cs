@@ -62,7 +62,7 @@ namespace Zenitka.Scripts._3D
 		}
 	}
 
-	public partial class DynamicBody : RigidBody3D
+	public partial class BallisticBody : RigidBody3D
 	{
 		private BodyState _state = new BodyState();
 		private Transform3D _initialTransform;
@@ -76,7 +76,9 @@ namespace Zenitka.Scripts._3D
 			set
 			{
 				_state = value;
-				Reset();
+
+				if (GetParent() != null)
+					Reset();
 			}
 		}
 
