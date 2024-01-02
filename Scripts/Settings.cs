@@ -15,6 +15,8 @@ namespace Zenitka
 			public static bool IsNotDefaultTarget { get; set; }
 			public static float Gravity { get; set; } // Гравітація
 			public static int Random { get; set; } // Коєфіціент випадковості
+
+
 			
 			public static bool Auto { get; set; }
 
@@ -35,7 +37,9 @@ namespace Zenitka
 				public static float BulletMass { get; set; } // Масса пули
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
 				public static int SalvoSize { get; set; } // Розмір залпа
-				
+				public static float[] Zenitki { get; set; }
+				public static int[] ZenitkiState { get; set; } // 0-відсутня 1-гармата 2-ракетниця
+
 				static DefaultGun()
 				{
 					BulletSpeed = 1000.0f;
@@ -44,6 +48,8 @@ namespace Zenitka
 					BulletMass = 1.0f;
 					AirResistance = 0.05f;
 					SalvoSize = 1;
+					Zenitki = new float[3];
+					ZenitkiState = new int[3];
 				}
 			}
 
@@ -165,6 +171,10 @@ namespace Zenitka
 				public static float AirResistance { get; set; } // Коєфіціент опору повітря
 				public static float Gravity { get; set; } // Гравітація
 
+				public static float[] ZenitkiX { get; set; }
+				public static float[] ZenitkiZ { get; set; }
+				public static float[] ZenitkiState { get; set; }
+
 				static DefaultGun()
 				{
 					BulletSpeed = 20.0f;
@@ -173,6 +183,9 @@ namespace Zenitka
 					VRotSpeed = 3f;
 					BulletMass = 1f;
 					AirResistance = 0.05f;
+					ZenitkiState = new float[3];
+					ZenitkiX = new float[3];
+					ZenitkiZ = new float[3];
 				}
 			}
 
