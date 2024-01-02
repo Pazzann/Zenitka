@@ -226,6 +226,23 @@ namespace Zenitka.Scripts.UI
 				defaultTarget2D.Hide();
 				rocketTarget2D.Show();
 			}
+			OptionButton optionButton3 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton3");
+			HBoxContainer auto = GetNode<HBoxContainer>("ColorRect/MarginContainer/VBoxContainer/Auto");
+			HBoxContainer noAutoCoordinates = GetNode<HBoxContainer>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates");
+			HBoxContainer noAutoAngle = GetNode<HBoxContainer>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle");
+			if (optionButton3.Selected == 0)
+			{
+				auto.Show();
+				noAutoCoordinates.Hide();
+				noAutoAngle.Hide();
+			}
+
+			if (optionButton3.Selected == 1)
+			{
+				auto.Hide();
+				noAutoCoordinates.Show();
+				noAutoAngle.Show();
+			}
 			
 
 		}
