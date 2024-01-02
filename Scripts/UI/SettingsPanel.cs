@@ -93,6 +93,15 @@ namespace Zenitka.Scripts.UI
 			var node40 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/2DRocketTarget/HBoxContainer10/LineEdit");
 			node40.Text = Settings.Settings2D.RocketTarget.FuelCost.ToString();
 			
+			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
+			nodeAuto.Text = Settings.Settings2D.DefaultTarget.FireRate.ToString();
+			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
+			nodeNoAutoCoordinateX.Text = Settings.Settings2D.DefaultTarget.CoordinateX.ToString();
+			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+			nodeNoAutoCoordinateY.Text = Settings.Settings2D.DefaultTarget.CoordinateY.ToString();
+			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
+			nodeNoAutoAngle1.Text =Settings.Settings2D.DefaultTarget.Angle.ToString();
+			
 		}
 		
 		public void SaveButton()
@@ -181,14 +190,19 @@ namespace Zenitka.Scripts.UI
 			
 			OptionButton optionButton = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton");
 			OptionButton optionButton2 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton2");
+			OptionButton optionButton3 = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/OptionButton3");
 			Settings.Settings2D.IsNotDefaultGun = Convert.ToBoolean(optionButton.Selected);
 			Settings.Settings2D.IsNotDefaultTarget = Convert.ToBoolean(optionButton2.Selected);
+			Settings.Settings2D.Auto=Convert.ToBoolean(optionButton3.Selected);
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
+			Settings.Settings2D.DefaultTarget.FireRate=nodeAuto.Text.ToFloat();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
+			Settings.Settings2D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+			Settings.Settings2D.DefaultTarget.CoordinateY=nodeNoAutoCoordinateY.Text.ToFloat();
 			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
-			
+			Settings.Settings2D.DefaultTarget.Angle=nodeNoAutoAngle1.Text.ToFloat();
 			
 
 		}
