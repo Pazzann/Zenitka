@@ -184,6 +184,11 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.IsNotDefaultGun = Convert.ToBoolean(optionButton.Selected);
 			Settings.Settings2D.IsNotDefaultTarget = Convert.ToBoolean(optionButton2.Selected);
 			
+			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
+			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
+			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
+			
 			
 
 		}

@@ -102,8 +102,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 5840.0
-offset_bottom = 3392.0
+offset_right = 9912.0
+offset_bottom = 5736.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0941176, 0.0901961, 0.0705882, 1)
@@ -523,6 +523,54 @@ layout_mode = 2
 text = "коефіцієнт опору повітря"
 
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/3DRocketTarget/HBoxContainer8"]
+layout_mode = 2
+
+[node name="OptionButton3" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Авто"
+popup/item_0/id = 0
+popup/item_1/text = "Ручна"
+popup/item_1/id = 1
+
+[node name="Auto" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/Auto"]
+layout_mode = 2
+text = "Час між цілями"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/Auto"]
+layout_mode = 2
+
+[node name="NoAutoCoordinates" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+text = "Координати"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+
+[node name="LineEdit3" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates"]
+layout_mode = 2
+
+[node name="NoAutoAngle" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoAngle"]
+layout_mode = 2
+text = "Угол"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoAngle"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/NoAutoAngle"]
 layout_mode = 2
 
 [node name="Button2" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
