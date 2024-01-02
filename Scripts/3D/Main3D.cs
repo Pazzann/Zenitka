@@ -25,8 +25,12 @@ namespace Zenitka.Scripts._3D
 			_destroyedLabel = GetNode<Label>("Statistics/ColorRect/DestroyedTargets");
 
 			var cannon = GetNode<Cannon>("Cannon");
+			var cannon2 = GetNode<Cannon>("Cannon2");
+			var rocketLauncher = GetNode<RocketLauncher>("RocketLauncher");
 
 			_weapons.Add(cannon);
+			_weapons.Add(cannon2);
+			_weapons.Add(rocketLauncher);
 		}
 
 		public override void _EnterTree()
@@ -57,7 +61,7 @@ namespace Zenitka.Scripts._3D
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var pos = 200f * MathUtils.OrientPlane(MathUtils.RandSphere(), Vector3.Up);
+			var pos = 100f * MathUtils.OrientPlane(MathUtils.RandSphere(), Vector3.Up);
 			var vel = Settings.Settings3D.DefaultTarget.Velocity * MathUtils.OrientPlane(MathUtils.RandSphere(), -pos);
 
 			var targetState = new BodyState(

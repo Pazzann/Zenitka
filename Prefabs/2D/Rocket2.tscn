@@ -65,6 +65,7 @@ size = Vector2(14, 67)
 
 [node name="Rocket2" type="RigidBody2D"]
 light_mask = 2
+rotation = -1.5708
 collision_mask = 2
 gravity_scale = 0.0
 max_contacts_reported = 1
@@ -76,7 +77,7 @@ script = ExtResource("1_omtpe")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_1t060")
-animation = &"explode"
+animation = &"fly"
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
 position = Vector2(6.5, -3.32801e-07)

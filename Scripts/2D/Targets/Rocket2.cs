@@ -9,7 +9,8 @@ namespace Zenitka.Scripts._2D.Targets
 
 		private CollisionShape2D _rocketCollision;
 
-		private float _engineForce;
+		private float _mainEngineForce;
+		private float _sideEngineForce;
 
 		private float _currentFuel;
 
@@ -34,7 +35,9 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
-			_engineForce = Settings.Settings2D.RocketGun.RocketForce;
+			_mainEngineForce = Settings.Settings2D.RocketGun.RocketForce;
+			_sideEngineForce = Settings.Settings2D.RocketGun.RocketForce;
+
 			StartPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y);
 
 			Weight = Settings.Settings2D.RocketGun.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
@@ -55,13 +58,20 @@ namespace Zenitka.Scripts._2D.Targets
 				state.LinearVelocity = new Vector2(0, 0);
 			base._IntegrateForces(state);
 
-			if (!IsExploded)
-				Rotation = state.LinearVelocity.Normalized().Angle();
+			// if (!IsExploded)
+			// 	Rotation = state.LinearVelocity.Normalized().Angle() + Mathf.Pi / 2f;
 
-			if (CurrentTime > ManeuveringEngineActivationDelaySec)
-				ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _engineForce / Weight;
-			else
-				ConstantForce = Mass * Vector2.Up * _engineForce / Weight;
+			var d = (FollowTarget.GlobalPosition - GlobalPosition).Normalized();
+
+			if (GlobalTransform.X.Normalized().Cross(d) > 0.1f)
+				ApplyForce(Mass * GlobalTransform.X * _mainEngineForce / Weight, new Vector2(-20f, 33f));
+			else if (GlobalTransform.X.Normalized().Cross(d) < -0.1f)
+				ApplyForce(Mass * GlobalTransform.X * _mainEngineForce / Weight, new Vector2(20f, 33f));
+
+			// if (CurrentTime > ManeuveringEngineActivationDelaySec) {
+			// 	ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _mainEngineForce / Weight;
+			// } else
+			// 	ConstantForce = Mass * Vector2.Up * _mainEngineForce / Weight;
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -76,11 +86,19 @@ namespace Zenitka.Scripts._2D.Targets
 				if (IsExploded)
 					return;
 				_currentFuel = 0;
-				_engineForce = 0;
+				_mainEngineForce = 0;
 				Destroy();
 			}
 
 			Weight = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
+		}
+
+		public override void _Process(double delta)
+		{
+			base._Process(delta);
+
+			if (!IsInstanceValid(FollowTarget))
+				QueueFree();
 		}
 
 		public void Destroy()
@@ -110,12 +128,6 @@ namespace Zenitka.Scripts._2D.Targets
 		{
 			Destroy();
 		}
-
-		private Vector2 PredictFutureTargetPosition(float t)
-		{
-			return FollowTarget.GlobalPosition + (FollowTarget as RigidBody2D).LinearVelocity;
-		}
-
 	}
 }
 
