@@ -109,5 +109,5 @@ cam_down_3d={
 
 textures/canvas_textures/default_texture_filter=3
 anti_aliasing/quality/msaa_2d=1
-anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/use_taa=true
 textures/use_physical_light_units=false
