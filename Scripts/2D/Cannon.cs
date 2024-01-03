@@ -20,6 +20,8 @@ public partial class Cannon : Node2D, IWeapon
 	private readonly Stack<(BallisticBody, WeaponCallback)> _targets = new();
 	private bool _isBusy;
 
+	public bool IsBusy => _isBusy;
+
 	public override void _Ready()
 	{
 		_bulletScene = GD.Load<PackedScene>("res://Prefabs/2D/Bullet.tscn");

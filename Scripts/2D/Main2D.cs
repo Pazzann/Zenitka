@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using Zenitka.Scripts._2D.Targets;
 
@@ -11,8 +12,6 @@ public partial class Main2D : Node2D
 	private PackedScene _rocketTargetScene;
 	private PackedScene _rocketAmmoScene;
 
-	private Cannon _cannon;
-
 	private Marker2D _rocketCannon;
 	private Node2D _anchor1;
 	private Node2D _anchor2;
@@ -24,6 +23,8 @@ public partial class Main2D : Node2D
 	private PBodyProps _normalTargetProps;
 	private PBodyProps _rocketTargetProps;
 
+	private List<IWeapon> _weapons = [];
+
 	public override void _Ready()
 	{
 		_targetScene = GD.Load<PackedScene>("res://Prefabs/2D/Target.tscn");
@@ -31,7 +32,8 @@ public partial class Main2D : Node2D
 		_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/Rocket1.tscn");
 		_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/2D/Rocket2.tscn");
 
-		_cannon = GetNode<Cannon>("Cannon");
+		_weapons = [GetNode<Cannon>("Cannon")!, GetNode<Cannon>("Cannon2")!, GetNode<Cannon>("Cannon3")!];
+
 		_anchor1 = GetNode<Node2D>("Anchor");
 		_anchor2 = GetNode<Node2D>("Anchor2");
 
@@ -62,12 +64,12 @@ public partial class Main2D : Node2D
 			MainEThrust = Settings.Settings2D.RocketTarget.MainEThrust
 		};
 	}
-	
+
 	public override void _Process(double delta)
 	{
 		var roc = GetNode<Node2D>("RocketCannon");
 		var def = GetNode<Node2D>("Cannon");
-		
+
 		if (Settings.Settings2D.IsNotDefaultGun && roc.Visible == false)
 		{
 			roc.Show();
@@ -110,11 +112,32 @@ public partial class Main2D : Node2D
 			return;
 		}
 
-		_cannon.OnTargetDetected(target, (ammoUsed, targetsHit) =>
+		OnTargetDetected(target);
+	}
+
+	private void OnTargetDetected(BallisticBody target)
+	{
+		WeaponCallback callback = (ammoUsed, targetsHit) =>
 		{
 			_ammoLabel.Text = (int.Parse(_ammoLabel.Text) + ammoUsed).ToString();
 			_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + targetsHit).ToString();
-		});
+		};
+
+		bool allBusy = true;
+		
+		foreach (var weapon in _weapons)
+		{
+			if (!weapon.IsBusy)
+			{
+				weapon.OnTargetDetected(target, callback);
+				allBusy = false;
+			}
+		}
+
+		if (allBusy && _weapons.Count > 0)
+		{
+			_weapons[Utils.Rng.Next(_weapons.Count - 1)].OnTargetDetected(target, callback);
+		}
 	}
 
 	private PBodyState CreateTargetState(float speed)

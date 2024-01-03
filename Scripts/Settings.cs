@@ -116,7 +116,7 @@ public partial class Settings : Node
 				Velocity = 1000.0f;
 				Mass = 1.0f;
 				QDrag = 0.05f;
-				FireRatePerMinute = 20f;
+				FireRatePerMinute = 40f;
 				CoordinateX = 0f;
 				CoordinateY = 0f;
 			}

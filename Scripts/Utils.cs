@@ -6,7 +6,7 @@ namespace Zenitka.Scripts
 {
     public static class Utils
     {
-        private static readonly Random Rng = new();
+        public static readonly Random Rng = new();
 
         public static float RandRange(float min, float max)
         {

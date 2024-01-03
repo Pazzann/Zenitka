@@ -222,7 +222,7 @@ offset_bottom = 121.0
 text = "1"
 
 [node name="Cannon" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(-1, -182)
+position = Vector2(1000, -182)
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(-1, -2699)
@@ -248,6 +248,7 @@ position = Vector2(-517, -391)
 scale = Vector2(4, 4)
 
 [node name="RocketCannon" parent="." instance=ExtResource("10_438pu")]
+visible = false
 position = Vector2(46, -368)
 scale = Vector2(4, 4)
 
@@ -257,6 +258,12 @@ constant_linear_velocity = Vector2(0, -20)
 
 [node name="HitBox" type="CollisionShape2D" parent="Ground"]
 shape = SubResource("RectangleShape2D_k1wpf")
+
+[node name="Cannon2" parent="." instance=ExtResource("1_un41y")]
+position = Vector2(-1000, -182)
+
+[node name="Cannon3" parent="." instance=ExtResource("1_un41y")]
+position = Vector2(0, -182)
 
 [connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]
