@@ -109,14 +109,14 @@ public partial class Settings : Node
 			public static float CoordinateY { get; set; }
 				
 			public static float Angle { get; set; }
-			public static float FireRate { get; set; }
+			public static float FireRatePerMinute { get; set; }
 
 			static DefaultTarget()
 			{
 				Velocity = 1000.0f;
 				Mass = 1.0f;
 				QDrag = 0.05f;
-				FireRate = 2f;
+				FireRatePerMinute = 20f;
 				CoordinateX = 0f;
 				CoordinateY = 0f;
 			}

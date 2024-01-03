@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Godot;
 using Zenitka.Scripts._2D.Targets;
 
@@ -14,6 +17,9 @@ public partial class Cannon : Node2D, IWeapon
 	private float _rotSpeed;
 	public WeaponProjectileProps ProjectileProps { get; private set; }
 
+	private readonly Stack<(BallisticBody, WeaponCallback)> _targets = new();
+	private bool _isBusy;
+
 	public override void _Ready()
 	{
 		_bulletScene = GD.Load<PackedScene>("res://Prefabs/2D/Bullet.tscn");
@@ -24,6 +30,17 @@ public partial class Cannon : Node2D, IWeapon
 
 		OnSettingsChanged();
 		Settings.Settings2D.OnSettingsChanged += OnSettingsChanged;
+	}
+
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+
+		if (!_isBusy && _targets.Count > 0)
+		{
+			var (target, callback) = _targets.Pop();
+			ShootTarget(target, callback);
+		}
 	}
 
 	private void OnSettingsChanged()
@@ -47,11 +64,29 @@ public partial class Cannon : Node2D, IWeapon
 
 	public void OnTargetDetected(BallisticBody target, WeaponCallback callback)
 	{
-		var result = new Solver(this, target, new SolverOptions()).Aim();
-		LoadAndFire(result.Angle, result.ColTime, callback);
+		_targets.Push((target, callback));
 	}
 
-	private void LoadAndFire(float angle, float colTime, WeaponCallback callback)
+	private async void ShootTarget(BallisticBody target, WeaponCallback callback)
+	{
+		_isBusy = true;
+
+		for (var i = 0; i < Settings.Settings2D.DefaultGun.SalvoSize; ++i)
+		{
+			if (!IsInstanceValid(target))
+			{
+				_isBusy = false;
+				break;
+			}
+
+			var result = new Solver(this, target, new SolverOptions()).Aim();
+			LoadAndFire(result.Angle, result.ColTime, callback);
+
+			await Task.Delay(TimeSpan.FromSeconds(60f / Settings.Settings2D.DefaultTarget.FireRatePerMinute));
+		}
+	}
+
+	private async void LoadAndFire(float angle, float colTime, WeaponCallback callback)
 	{
 		angle = 0.5f * Mathf.Pi - angle;
 
@@ -61,42 +96,42 @@ public partial class Cannon : Node2D, IWeapon
 		var tween = CreateTween();
 		tween.TweenProperty(_gun, "transform", targetTransform, duration);
 
-		tween.TweenCallback(Callable.From(() => Fire(colTime, callback)));
+		await Utils.AwaitTween(tween);
+		Fire(colTime, callback);
 	}
 
 	private void Fire(float colTime, WeaponCallback callback)
 	{
-		for (var i = 0; i < 1; ++i)
+		var bullets = new[]
 		{
-			var bullets = new[]
+			NewProjectile(_bulletPos1.GlobalPosition),
+			NewProjectile(_bulletPos2.GlobalPosition)
+		};
+
+		var missed = 0;
+		var hit = false;
+
+		foreach (var bullet in bullets)
+		{
+			bullet.MaxLifespan = colTime + 1f;
+
+			bullet.OnExploded += target =>
 			{
-				NewProjectile(_bulletPos1.GlobalPosition),
-				NewProjectile(_bulletPos2.GlobalPosition)
+				if (target != null && !hit)
+				{
+					hit = true;
+					callback.Invoke(bullets.Length, 1);
+				}
+				else if (target == null && missed == bullets.Length - 1)
+					callback.Invoke(bullets.Length, 0);
+				else if (target == null)
+					++missed;
 			};
 
-			var missed = 0;
-			var hit = false;
-
-			foreach (var bullet in bullets)
-			{
-				bullet.MaxLifespan = colTime + 1f;
-
-				bullet.OnExploded += target =>
-				{
-					if (target != null && !hit)
-					{
-						hit = true;
-						callback.Invoke(bullets.Length, 1);
-					}
-					else if (target == null && missed == bullets.Length - 1)
-						callback.Invoke(bullets.Length, 0);
-					else if (target == null)
-						++missed;
-				};
-
-				AddChild(bullet);
-			}
+			AddChild(bullet);
 		}
+
+		_isBusy = false;
 	}
 
 	public PBodyState NewProjectileState(float angle)

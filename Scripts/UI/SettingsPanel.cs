@@ -94,7 +94,7 @@ namespace Zenitka.Scripts.UI
 			node40.Text = Settings.Settings2D.RocketTarget.FuelCost.ToString();
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			nodeAuto.Text = Settings.Settings2D.DefaultTarget.FireRate.ToString();
+			nodeAuto.Text = Settings.Settings2D.DefaultTarget.FireRatePerMinute.ToString();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
 			nodeNoAutoCoordinateX.Text = Settings.Settings2D.DefaultTarget.CoordinateX.ToString();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
@@ -196,7 +196,7 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.Auto=Convert.ToBoolean(optionButton3.Selected);
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			Settings.Settings2D.DefaultTarget.FireRate=nodeAuto.Text.ToFloat();
+			Settings.Settings2D.DefaultTarget.FireRatePerMinute=nodeAuto.Text.ToFloat();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
 			Settings.Settings2D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
