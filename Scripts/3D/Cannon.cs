@@ -8,10 +8,10 @@ namespace Zenitka.Scripts._3D
 		public readonly float Speed, Acceleration, SelfPropellingAcceleration, LinearDrag, Mass;
 
 		public ProjectileConfig(float velocity,
-								float acceleration,
-								float selfPropellingAcceleration,
-								float linearDrag,
-								float mass)
+			float acceleration,
+			float selfPropellingAcceleration,
+			float linearDrag,
+			float mass)
 		{
 			Speed = velocity;
 			Acceleration = acceleration;
@@ -51,12 +51,14 @@ namespace Zenitka.Scripts._3D
 
 		public BodyState CreateProjectile(int id, float hAngle, float vAngle, in Vector3 gravity)
 		{
-			var transform = MathUtils.Rotated(HOrigin, Vector3.Up, -hAngle) * MathUtils.Rotated(VOrigin, Vector3.Back, vAngle);
+			var transform = Utils.Rotated(HOrigin, Vector3.Up, -hAngle) *
+							Utils.Rotated(VOrigin, Vector3.Back, vAngle);
 
 			return new BodyState(
 				transform * BulletPos[id],
 				transform * (BulletPos[id] + Projectile.Speed * Vector3.Right) - transform * BulletPos[id],
-				transform * (BulletPos[id] + Projectile.Acceleration * Vector3.Right) + gravity - transform * BulletPos[id],
+				transform * (BulletPos[id] + Projectile.Acceleration * Vector3.Right) + gravity -
+				transform * BulletPos[id],
 				Projectile.LinearDrag,
 				Projectile.SelfPropellingAcceleration,
 				Projectile.Mass);
@@ -107,12 +109,14 @@ namespace Zenitka.Scripts._3D
 			);
 		}
 
-		public void OnTargetDetected(BallisticBody target, WeaponStatisticsCallback callback) {
+		public void OnTargetDetected(BallisticBody target, WeaponStatisticsCallback callback)
+		{
 			var aimResult = new Solver3D(State, 0, target.State, _gravity, new SolverOptions()).Aim();
 			Fire(0, aimResult.HAngle, aimResult.VAngle, aimResult.ColTime, callback);
 		}
 
-		private void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime, WeaponStatisticsCallback callback)
+		private void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime,
+			WeaponStatisticsCallback callback)
 		{
 			var projectile = _state.CreateProjectile(refBulletId, hAngle, vAngle, _gravity);
 
@@ -120,16 +124,16 @@ namespace Zenitka.Scripts._3D
 			projectile.Position += BulletPos1 - BulletPos0;
 
 			var hTween = _centralConstruction.CreateTween();
-			var targetQuartenion = new Quaternion(Vector3.Up, -hAngle);
+			var targetQuaternion = new Quaternion(Vector3.Up, -hAngle);
 
-			float duration = MathUtils.AngleDiff(hAngle, _state.HAngle) / _state.HRotSpeed;
-			hTween.TweenProperty(_centralConstruction, "quaternion", targetQuartenion, duration);
+			var duration = Utils.AngleDiff(hAngle, _state.HAngle) / _state.HRotSpeed;
+			hTween.TweenProperty(_centralConstruction, "quaternion", targetQuaternion, duration);
 
 			var vTween = hTween.Chain();
-			targetQuartenion = new Quaternion(Vector3.Forward, Mathf.Pi / 2f - vAngle);
+			targetQuaternion = new Quaternion(Vector3.Forward, Mathf.Pi / 2f - vAngle);
 
-			duration = MathUtils.AngleDiff(vAngle, _state.VAngle) / _state.VRotSpeed;
-			vTween.TweenProperty(_baseCannonPart, "quaternion", targetQuartenion, duration);
+			duration = Utils.AngleDiff(vAngle, _state.VAngle) / _state.VRotSpeed;
+			vTween.TweenProperty(_baseCannonPart, "quaternion", targetQuaternion, duration);
 
 			vTween.TweenCallback(Callable.From(() =>
 			{
@@ -148,17 +152,22 @@ namespace Zenitka.Scripts._3D
 			bool hit = false;
 			int missed = 0;
 
-			foreach (var projectile in projectiles) {
+			foreach (var projectile in projectiles)
+			{
 				var bullet = _bulletScene.Instantiate() as Bullet;
 				bullet.State = projectile;
 				bullet.Lifespan = collisionTime + 1f;
 				GetParent().AddChild(bullet);
 
-				bullet.OnExploded += (target) => {
-					if (target != null && !hit) {
+				bullet.OnExploded += (target) =>
+				{
+					if (target != null && !hit)
+					{
 						callback.Invoke(projectiles.Length, 1);
 						hit = true;
-					} else if (target == null && !hit) {
+					}
+					else if (target == null && !hit)
+					{
 						if (missed >= projectiles.Length)
 							callback.Invoke(projectiles.Length, 0);
 						else

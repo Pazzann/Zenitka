@@ -70,11 +70,4 @@ scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_mbx65")
 animation = &"fly"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(5, -3.5)
-scale = Vector2(3.25, 0.975)
-rect = Rect2(-20, -20, 40, 40)
-
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="OnVisibleOnScreenNotifier2dScreenEntered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnVisibleOnScreenNotifier2dScreenExited"]

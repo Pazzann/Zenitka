@@ -1,5 +1,5 @@
 using Godot;
-using static Zenitka.Scripts.MathUtils;
+using static Zenitka.Scripts.Utils;
 
 namespace Zenitka.Scripts._3D
 {

@@ -41,6 +41,7 @@ public partial class CameraTarget2 : Camera3D
 		else
 			_timeBeforeStart = 0;
 	}
+	
 	private void _on_target_spawn_timer_timeout()
 	{
 		_target = GetNode<Target>("/root/Main3D/Target");

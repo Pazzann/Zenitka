@@ -74,7 +74,7 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_3cdij")
 debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
 
-[node name="SuicideTimer" type="Timer" parent="."]
+[node name="SelfDestructionTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="ExplosionBound" type="CollisionShape2D" parent="."]
@@ -83,4 +83,4 @@ disabled = true
 debug_color = Color(0.196078, 0.568627, 0.807843, 0.419608)
 
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]
-[connection signal="timeout" from="SuicideTimer" to="." method="_on_suicide_timer_timeout"]
+[connection signal="timeout" from="SelfDestructionTimer" to="." method="SelfDestroy"]

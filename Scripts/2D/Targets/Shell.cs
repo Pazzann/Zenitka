@@ -10,21 +10,12 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
-			_animation = GetChild(1) as AnimatedSprite2D;
-
+			_animation = (GetChild(1) as AnimatedSprite2D)!;
+			_rocketCollision = (GetChild(0) as CollisionShape2D)!;
+			
 			_animation.Play("fly");
-			_rocketCollision = GetChild(0) as CollisionShape2D;
 
-			_state.Velocity = _state.Velocity.Normalized() * Settings.Settings2D.DefaultTarget.Velocity;
-			_state.ConstantAcceleration = Vector2.Down * Settings.Settings2D.Gravity;
-			_state.LinearDrag = Settings.Settings2D.DefaultTarget.AirResistance;
-			_state.SelfPropellingAcceleration = 0f;
-			_state.Mass = Settings.Settings2D.DefaultTarget.Mass;
-
-			UseNumericalIntegration = true;
-
-
-			Reset();
+			base._Ready();
 		}
 
 		public override void Destroy()

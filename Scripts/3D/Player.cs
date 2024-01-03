@@ -2,7 +2,7 @@ using Godot;
 
 namespace Zenitka.Scripts._3D
 {
-	using static MathUtils;
+	using static Utils;
 
 	public partial class Player : CharacterBody3D
 	{

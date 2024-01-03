@@ -6,65 +6,56 @@ namespace Zenitka.Scripts._2D.Targets
 	public partial class Bullet : BallisticBody
 	{
 		private AnimatedSprite2D _animation;
+
 		private Timer _timer;
-		private float _selDestructionTime;
+		private float _maxLifespan;
 
 		private CollisionShape2D _bulletCollision;
 		private CollisionShape2D _explosionCollision;
 
-		private bool _scoreUpdated = false;
+		public event Action<BallisticBody> OnExploded;
 
-		private Label _destroyedLabel;
-		public float SelfDestructionTime
+		public float MaxLifespan
 		{
-			set => _selDestructionTime = value + 0.1f;
-			get => _selDestructionTime;
+			set => _maxLifespan = value;
+			get => _maxLifespan;
 		}
 
 		public override void _Ready()
 		{
-			_animation = GetChild(0) as AnimatedSprite2D;
-			_timer = GetChild(2) as Timer;
-			_bulletCollision = GetChild(1) as CollisionShape2D;
-			_explosionCollision = GetChild(3) as CollisionShape2D;
-			_timer.WaitTime = ((double)SelfDestructionTime);
+			_animation = (GetChild(0) as AnimatedSprite2D)!;
+			_timer = (GetNode("SelfDestructionTimer") as Timer)!;
+			_bulletCollision = (GetChild(1) as CollisionShape2D)!;
+			_explosionCollision = (GetChild(3) as CollisionShape2D)!;
+
+			_timer.WaitTime = MaxLifespan;
 			_timer.Start();
+
 			_animation.Play("fly2");
 
-			_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
-
-			_state.Position = GlobalPosition;
-			_state.Velocity = _state.Velocity.Normalized() * Settings.Settings2D.DefaultGun.BulletSpeed;
-			_state.ConstantAcceleration = Vector2.Down * Settings.Settings2D.Gravity;
-			_state.LinearDrag = Settings.Settings2D.DefaultGun.AirResistance;
-			_state.SelfPropellingAcceleration = 0f;
-			_state.Mass = Settings.Settings2D.DefaultGun.BulletMass;
-
-			UseNumericalIntegration = true;
-
-			Reset();
+			base._Ready();
 		}
 
 		private void OnBodyEntered(Node body)
 		{
-			if (body == null)
-				return;
-			
-			if (body is BallisticBody) {
-				(body as BallisticBody).Destroy();
-				
-				if (!_scoreUpdated)
-				{
-					_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
-					_scoreUpdated = true;
-				}
+			if (body is BallisticBody target)
+			{
+				OnExploded?.Invoke(target);
+				target.Destroy();
 			}
-
-			_on_suicide_timer_timeout();
-
+			else
+				OnExploded?.Invoke(null);
+			
+			Explode();
 		}
 
-		private void _on_suicide_timer_timeout()
+		private void SelfDestroy()
+		{
+			OnExploded?.Invoke(null);
+			Explode();
+		}
+
+		private void Explode()
 		{
 			_animation.Play("explode");
 
@@ -76,12 +67,5 @@ namespace Zenitka.Scripts._2D.Targets
 
 			HasExploded = true;
 		}
-
-		public override void Destroy()
-		{
-			QueueFree();
-		}
 	}
 }
-
-

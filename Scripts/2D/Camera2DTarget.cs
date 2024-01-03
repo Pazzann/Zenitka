@@ -1,6 +1,6 @@
 using Godot;
-using System;
-using Zenitka.Scripts._2D;
+
+namespace Zenitka.Scripts._2D;
 
 public partial class Camera2DTarget : Camera2D
 {

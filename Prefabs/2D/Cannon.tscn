@@ -13,10 +13,10 @@ position = Vector2(-0.352478, 15.8615)
 texture = ExtResource("3_vi2l7")
 
 [node name="Bullet1" type="Marker2D" parent="Gun"]
-position = Vector2(-13.3941, -65.2084)
+position = Vector2(-14, -68)
 
 [node name="Bullet2" type="Marker2D" parent="Gun"]
-position = Vector2(13.3941, -64.5034)
+position = Vector2(14, -68)
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 3

@@ -220,6 +220,7 @@ namespace Zenitka.Scripts.UI
 			OptionButton optionButtonC = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/3/OptionButton");
 			Settings.Settings3D.DefaultGun.ZenitkiState[2]=optionButtonC.Selected;
 
+			Settings.Settings3D.InvokeOnSettingsChanged();
 		}
 
 

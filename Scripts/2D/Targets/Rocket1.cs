@@ -11,21 +11,20 @@ namespace Zenitka.Scripts._2D.Targets
 
 		public override void _Ready()
 		{
+			_animation = (GetChild(0) as AnimatedSprite2D)!;
+			_rocketCollision = (GetChild(1) as CollisionShape2D)!;
+
 			_currentFuel = Settings.Settings2D.RocketTarget.FuelMass;
 
-			_animation = GetChild(0) as AnimatedSprite2D;
-			_rocketCollision = GetChild(1) as CollisionShape2D;
 			_animation.Play("fly");
 
-			_state.Velocity = _state.Velocity.Normalized() * Settings.Settings2D.RocketTarget.StartVelocity;
-			_state.ConstantAcceleration = Vector2.Down * Settings.Settings2D.Gravity;
-			_state.LinearDrag = Settings.Settings2D.RocketTarget.AirResistance;
-			_state.SelfPropellingAcceleration = Settings.Settings2D.RocketTarget.RocketAcceleration;
-			_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
+			// _state.Velocity = _state.Velocity.Normalized() * Settings.Settings2D.RocketTarget.StartVelocity;
+			// _state.ConstantAcceleration = Vector2.Down * Settings.Settings2D.Gravity;
+			// _state.LinearDrag = Settings.Settings2D.RocketTarget.AirResistance;
+			// _state.SelfPropellingAcceleration = Settings.Settings2D.RocketTarget.RocketAcceleration;
+			// _state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
 
-			UseNumericalIntegration = true;
-
-			Reset();
+			base._Ready();
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -40,13 +39,16 @@ namespace Zenitka.Scripts._2D.Targets
 			{
 				if (HasExploded)
 					return;
+				
 				_currentFuel = 0;
-				_state.SelfPropellingAcceleration = 0f;
+				//_state.SelfPropellingAcceleration = 0f;
+				
 				Destroy();
 			}
 
-			_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
+			//_state.Mass = Settings.Settings2D.RocketTarget.RocketMassWithoutFuel + _currentFuel;
 		}
+
 		private void _on_button_pressed()
 		{
 			Destroy();
@@ -65,7 +67,3 @@ namespace Zenitka.Scripts._2D.Targets
 		}
 	}
 }
-
-
-
-

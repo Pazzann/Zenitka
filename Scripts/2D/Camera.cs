@@ -1,6 +1,6 @@
 using Godot;
-using System;
-using System.ComponentModel.Design;
+
+namespace Zenitka.Scripts._2D;
 
 public partial class Camera : Camera2D
 {
@@ -39,7 +39,7 @@ public partial class Camera : Camera2D
 			_mousePosition.X = Position.X - 9600 * 0.5f * (0.2f / Zoom.X) + _mousePosition.X * (0.2f / Zoom.X);
 			if (_mousePosition.Y > Position.Y / 1.3) { _mousePosition.Y = Position.Y / 1.3f; }
 			Position = _mousePosition;
-			Zoom = Zoom * 1.3f;
+			Zoom *= 1.3f;
 		}
 
 	}

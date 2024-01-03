@@ -61,8 +61,8 @@ namespace Zenitka.Scripts._3D
 
 		private void OnTargetSpawnTimerTimeout()
 		{
-			var pos = 100f * MathUtils.OrientPlane(MathUtils.RandSphere(), Vector3.Up);
-			var vel = Settings.Settings3D.DefaultTarget.Velocity * MathUtils.OrientPlane(MathUtils.RandSphere(), -pos);
+			var pos = 100f * Utils.OrientPlane(Utils.RandUnitSphere(), Vector3.Up);
+			var vel = Settings.Settings3D.DefaultTarget.Velocity * Utils.OrientPlane(Utils.RandUnitSphere(), -pos);
 
 			var targetState = new BodyState(
 				pos,
