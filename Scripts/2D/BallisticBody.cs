@@ -60,18 +60,10 @@ public partial class BallisticBody : RigidBody2D
 	public override void _IntegrateForces(PhysicsDirectBodyState2D physicsState)
 	{
 		base._IntegrateForces(physicsState);
-
-		physicsState.LinearVelocity = State.Velocity;
-		Rotation = State.Velocity.Angle();
-	}
-
-	public override void _PhysicsProcess(double delta)
-	{
-		var deltaF = (float)delta;
-		_simulationTime += deltaF;
-
-		State = ApplyRandomness(State.Update(deltaF, Props));
-
+		
+		State = ApplyRandomness(State.Update(physicsState.Step, Props));
+		physicsState.Transform = new Transform2D(State.Velocity.Angle(), Vector2.One, 0f, State.Position);
+		
 		if (HasExploded && _firstFrameAfterExplosion)
 		{
 			State = State with { Velocity = State.Velocity / 5f };

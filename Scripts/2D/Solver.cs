@@ -6,7 +6,7 @@ public record SolverOptions(
     int SimSteps = 400,
     float SimTimeStep = 1f / 60f,
     int MaxIter = 20,
-    float AngleEps = 1e-4f);
+    float AngleEps = 1e-5f);
 
 public readonly record struct SimResult(float AbsError, float ColTime, Vector2 ColPosDiff);
 
@@ -47,7 +47,7 @@ public class Solver(Cannon cannon, BallisticBody target, SolverOptions options)
     {
         var projectileState = cannon.NewProjectileState(angle);
         var targetState = target.State;
-        var cannonDelay = cannon.MeasureRotationTime(angle);
+        var cannonDelay = cannon.MeasureDelay(angle);
         
         var result = new SimResult(Inf, 0f, Vector2.Zero);
 

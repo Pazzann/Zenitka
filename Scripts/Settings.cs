@@ -46,11 +46,13 @@ public partial class Settings : Node
 			public static float BulletMass { get; set; } // Масса пули
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 			public static int SalvoSize { get; set; } // Розмір залпа
+			public static float FiringDelay { get; set; }
 			public static float[] Zenitki { get; set; }
 			public static int[] ZenitkiState { get; set; } // 0-відсутня 1-гармата 2-ракетниця
 
 			static DefaultGun()
 			{
+				FiringDelay = 0.05f;
 				BulletSpeed = 1000.0f;
 				InitialElevationAngle = 0.0f;
 				AngularVelocity = 1.0f;

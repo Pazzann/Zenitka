@@ -5,28 +5,28 @@
 [ext_resource type="Texture2D" uid="uid://cxt4ago4a36af" path="res://Assets/Sprites/Zenitka4.png" id="3_vi2l7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0vua4"]
-size = Vector2(296, 232)
+size = Vector2(300, 250)
 
 [node name="Cannon" type="StaticBody2D"]
 script = ExtResource("1_5upuh")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, -120.5)
+shape = SubResource("RectangleShape2D_0vua4")
+
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 3
-position = Vector2(-1, -182)
-scale = Vector2(2.83706, 2.83706)
+position = Vector2(0, -190)
+scale = Vector2(3, 3)
 texture = ExtResource("2_myj8v")
 
-[node name="Gun" type="Sprite2D" parent="."]
-position = Vector2(-2, -179)
-scale = Vector2(2.83706, 2.83706)
+[node name="Gun" type="Sprite2D" parent="Body"]
 texture = ExtResource("3_vi2l7")
 
-[node name="Bullet1" type="Marker2D" parent="Gun"]
-position = Vector2(-14, -63.0935)
+[node name="Bullet1" type="Marker2D" parent="Body/Gun"]
+position = Vector2(-14, -60)
+scale = Vector2(0.363092, 6.34823)
 
-[node name="Bullet2" type="Marker2D" parent="Gun"]
-position = Vector2(14, -62.741)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, -108)
-shape = SubResource("RectangleShape2D_0vua4")
+[node name="Bullet2" type="Marker2D" parent="Body/Gun"]
+position = Vector2(14, -60)
+scale = Vector2(1, 0.985901)

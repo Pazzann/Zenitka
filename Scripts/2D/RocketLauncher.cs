@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using Zenitka.Scripts._2D.Targets;
+using Zenitka.Scripts._2D.Projectiles;
 
 namespace Zenitka.Scripts._2D;
 

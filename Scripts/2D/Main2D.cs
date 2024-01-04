@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Zenitka.Scripts._2D.Targets;
+using Zenitka.Scripts._2D.Projectiles;
 
 namespace Zenitka.Scripts._2D;
 
@@ -16,6 +16,7 @@ public partial class Main2D : Node2D
 	private Marker2D _rocketCannon;
 	private Node2D _anchor1;
 	private Node2D _anchor2;
+	private Timer _targetSpawnTimer;
 
 	private Label _ammoLabel;
 	private Label _detectedLabel;
@@ -45,6 +46,8 @@ public partial class Main2D : Node2D
 		_detectedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DetectedTargets");
 		_destroyedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 
+		_targetSpawnTimer = GetNode<Timer>("TargetSpawnTimer");
+
 		Settings.Settings2D.OnSettingsChanged += LoadSettings;
 		LoadSettings();
 	}
@@ -57,7 +60,7 @@ public partial class Main2D : Node2D
 			QDrag = Settings.Settings2D.DefaultTarget.QDrag,
 			Mass = Settings.Settings2D.DefaultTarget.Mass,
 		};
-
+		
 		_rocketTargetProps = new PBodyProps
 		{
 			ConstantAcceleration = Settings.Settings2D.GravityVector,
@@ -65,6 +68,8 @@ public partial class Main2D : Node2D
 			Mass = Settings.Settings2D.RocketTarget.BaseMass + Settings.Settings2D.RocketTarget.FuelMass,
 			MainEThrust = Settings.Settings2D.RocketTarget.MainEThrust
 		};
+
+		_targetSpawnTimer.WaitTime = 3f;
 	}
 
 	// public override void _Process(double delta)

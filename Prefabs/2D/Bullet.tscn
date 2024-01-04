@@ -55,12 +55,14 @@ size = Vector2(4, 19)
 radius = 32.0
 
 [node name="Bullet" type="RigidBody2D"]
+scale = Vector2(1.03564, 1.03046)
+collision_layer = 2
 collision_mask = 2
 gravity_scale = 0.0
+custom_integrator = true
+continuous_cd = 1
 max_contacts_reported = 1
 contact_monitor = true
-can_sleep = false
-freeze_mode = 1
 script = ExtResource("1_lyfyc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
