@@ -112,10 +112,10 @@ namespace Zenitka.Scripts._3D
 		public void OnTargetDetected(BallisticBody target, WeaponStatisticsCallback callback)
 		{
 			var aimResult = new Solver3D(State, 0, target.State, _gravity, new SolverOptions()).Aim();
-			Fire(0, aimResult.HAngle, aimResult.VAngle, aimResult.ColTime, callback);
+			LoadAndFire(0, aimResult.HAngle, aimResult.VAngle, aimResult.ColTime, callback);
 		}
 
-		private void Fire(int refBulletId, float hAngle, float vAngle, float collisionTime,
+		private void LoadAndFire(int refBulletId, float hAngle, float vAngle, float collisionTime,
 			WeaponStatisticsCallback callback)
 		{
 			var projectile = _state.CreateProjectile(refBulletId, hAngle, vAngle, _gravity);

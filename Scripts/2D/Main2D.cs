@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Zenitka.Scripts._2D.Targets;
 
@@ -28,11 +29,14 @@ public partial class Main2D : Node2D
 	public override void _Ready()
 	{
 		_targetScene = GD.Load<PackedScene>("res://Prefabs/2D/Target.tscn");
-		_bulletScene = GD.Load<PackedScene>("res://Prefabs/2D/Bullet.tscn");
-		_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/Rocket1.tscn");
-		_rocketAmmoScene = GD.Load<PackedScene>("res://Prefabs/2D/Rocket2.tscn");
+		_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/RocketTarget.tscn");
 
-		_weapons = [GetNode<Cannon>("Cannon")!, GetNode<Cannon>("Cannon2")!, GetNode<Cannon>("Cannon3")!];
+		_weapons =
+		[
+			GetNode<Cannon>("Cannon1")!,
+			GetNode<Cannon>("Cannon2")!,
+			//GetNode<RocketLauncher>("RocketLauncher")!
+		];
 
 		_anchor1 = GetNode<Node2D>("Anchor");
 		_anchor2 = GetNode<Node2D>("Anchor2");
@@ -41,13 +45,11 @@ public partial class Main2D : Node2D
 		_detectedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DetectedTargets");
 		_destroyedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 
-		_rocketCannon = GetNode<Marker2D>("RocketMarker");
-
-		Settings.Settings2D.OnSettingsChanged += OnSettingsChanged;
-		OnSettingsChanged();
+		Settings.Settings2D.OnSettingsChanged += LoadSettings;
+		LoadSettings();
 	}
 
-	private void OnSettingsChanged()
+	private void LoadSettings()
 	{
 		_normalTargetProps = new PBodyProps
 		{
@@ -65,23 +67,23 @@ public partial class Main2D : Node2D
 		};
 	}
 
-	public override void _Process(double delta)
-	{
-		var roc = GetNode<Node2D>("RocketCannon");
-		var def = GetNode<Node2D>("Cannon");
-
-		if (Settings.Settings2D.IsNotDefaultGun && roc.Visible == false)
-		{
-			roc.Show();
-			def.Hide();
-		}
-
-		if (!Settings.Settings2D.IsNotDefaultGun && roc.Visible == true)
-		{
-			def.Show();
-			roc.Hide();
-		}
-	}
+	// public override void _Process(double delta)
+	// {
+	//     var roc = GetNode<Node2D>("RocketCannon");
+	//     var def = GetNode<Node2D>("Cannon");
+	//
+	//     if (Settings.Settings2D.IsNotDefaultGun && roc.Visible == false)
+	//     {
+	//         roc.Show();
+	//         def.Hide();
+	//     }
+	//
+	//     if (!Settings.Settings2D.IsNotDefaultGun && roc.Visible == true)
+	//     {
+	//         def.Show();
+	//         roc.Hide();
+	//     }
+	// }
 
 	private void OnTargetSpawnTimerTimeout()
 	{
@@ -99,18 +101,18 @@ public partial class Main2D : Node2D
 
 		_detectedLabel.Text = (int.Parse(_detectedLabel.Text) + 1).ToString();
 
-		if (Settings.Settings2D.IsNotDefaultGun)
-		{
-			var rocket = (_rocketAmmoScene.Instantiate() as Rocket2)!;
-
-			rocket.GlobalPosition = _rocketCannon.GlobalPosition;
-			rocket.FollowTarget = target;
-
-			AddChild(rocket);
-			_ammoLabel.Text = (int.Parse(_ammoLabel.Text) + 1).ToString();
-
-			return;
-		}
+		// if (Settings.Settings2D.IsNotDefaultGun)
+		// {
+		// 	var rocket = (_rocketAmmoScene.Instantiate() as Rocket)!;
+		//
+		// 	rocket.GlobalPosition = _rocketCannon.GlobalPosition;
+		// 	rocket.FollowTarget = target;
+		//
+		// 	AddChild(rocket);
+		// 	_ammoLabel.Text = (int.Parse(_ammoLabel.Text) + 1).ToString();
+		//
+		// 	return;
+		// }
 
 		OnTargetDetected(target);
 	}
@@ -123,15 +125,12 @@ public partial class Main2D : Node2D
 			_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + targetsHit).ToString();
 		};
 
-		bool allBusy = true;
-		
-		foreach (var weapon in _weapons)
+		var allBusy = true;
+
+		foreach (var weapon in _weapons.Where(weapon => !weapon.IsBusy))
 		{
-			if (!weapon.IsBusy)
-			{
-				weapon.OnTargetDetected(target, callback);
-				allBusy = false;
-			}
+			weapon.OnTargetDetected(target, callback);
+			allBusy = false;
 		}
 
 		if (allBusy && _weapons.Count > 0)

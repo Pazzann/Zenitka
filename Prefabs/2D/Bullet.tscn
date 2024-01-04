@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://oy8li7qf5km6"]
 
-[ext_resource type="Script" path="res://Scripts/2D/Targets/Bullet.cs" id="1_my0ab"]
+[ext_resource type="Script" path="res://Scripts/2D/Projectiles/Bullet.cs" id="1_lyfyc"]
 [ext_resource type="Texture2D" uid="uid://cyca7it3n4so6" path="res://Assets/Sprites/Bullet/Bullet5.png" id="2_vc8ia"]
 [ext_resource type="Texture2D" uid="uid://bl8jmbiroltl1" path="res://Assets/Sprites/Bullet/Bullet7.png" id="3_2k7sb"]
 [ext_resource type="Texture2D" uid="uid://djrdjx570owom" path="res://Assets/Sprites/Bullet/Bullet6.png" id="4_r65gi"]
@@ -61,7 +61,7 @@ max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
 freeze_mode = 1
-script = ExtResource("1_my0ab")
+script = ExtResource("1_lyfyc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

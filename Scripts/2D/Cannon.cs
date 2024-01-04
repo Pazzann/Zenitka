@@ -6,7 +6,7 @@ using Zenitka.Scripts._2D.Targets;
 
 namespace Zenitka.Scripts._2D;
 
-public partial class Cannon : Node2D, IWeapon
+public partial class Cannon : StaticBody2D, IWeapon
 {
 	private PackedScene _bulletScene;
 
@@ -15,12 +15,10 @@ public partial class Cannon : Node2D, IWeapon
 	private Node2D _bulletPos2;
 
 	private float _rotSpeed;
-	public WeaponProjectileProps ProjectileProps { get; private set; }
-
 	private readonly Stack<(BallisticBody, WeaponCallback)> _targets = new();
-	private bool _isBusy;
 
-	public bool IsBusy => _isBusy;
+	public WeaponProjectileProps ProjectileProps { get; private set; }
+	public bool IsBusy { get; private set; }
 
 	public override void _Ready()
 	{
@@ -30,22 +28,22 @@ public partial class Cannon : Node2D, IWeapon
 		_bulletPos1 = GetNode<Node2D>("Gun/Bullet1");
 		_bulletPos2 = GetNode<Node2D>("Gun/Bullet2");
 
-		OnSettingsChanged();
-		Settings.Settings2D.OnSettingsChanged += OnSettingsChanged;
+		LoadSettings();
+		Settings.Settings2D.OnSettingsChanged += LoadSettings;
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
 
-		if (!_isBusy && _targets.Count > 0)
+		if (!IsBusy && _targets.Count > 0)
 		{
 			var (target, callback) = _targets.Pop();
 			ShootTarget(target, callback);
 		}
 	}
 
-	private void OnSettingsChanged()
+	private void LoadSettings()
 	{
 		ProjectileProps = new WeaponProjectileProps
 		{
@@ -71,13 +69,13 @@ public partial class Cannon : Node2D, IWeapon
 
 	private async void ShootTarget(BallisticBody target, WeaponCallback callback)
 	{
-		_isBusy = true;
+		IsBusy = true;
 
 		for (var i = 0; i < Settings.Settings2D.DefaultGun.SalvoSize; ++i)
 		{
 			if (!IsInstanceValid(target))
 			{
-				_isBusy = false;
+				IsBusy = false;
 				break;
 			}
 
@@ -91,12 +89,10 @@ public partial class Cannon : Node2D, IWeapon
 	private async void LoadAndFire(float angle, float colTime, WeaponCallback callback)
 	{
 		angle = 0.5f * Mathf.Pi - angle;
-
-		var targetTransform = Transform2D.Identity.Rotated(angle);
 		var duration = Utils.AngleDiff(_gun.Rotation, angle) / _rotSpeed;
-
+		
 		var tween = CreateTween();
-		tween.TweenProperty(_gun, "transform", targetTransform, duration);
+		tween.TweenProperty(_gun, "rotation", angle, duration);
 
 		await Utils.AwaitTween(tween);
 		Fire(colTime, callback);
@@ -133,13 +129,13 @@ public partial class Cannon : Node2D, IWeapon
 			AddChild(bullet);
 		}
 
-		_isBusy = false;
+		IsBusy = false;
 	}
 
 	public PBodyState NewProjectileState(float angle)
 	{
 		angle = 0.5f * Mathf.Pi - angle;
-		var transform = Transform2D.Identity.Rotated(angle - _gun.GlobalRotation);
+		var transform = Transform2D.Identity.Rotated(angle - _gun.Rotation);
 
 		return new PBodyState(
 			_gun.GlobalPosition + transform * (_bulletPos1.GlobalPosition - _gun.GlobalPosition),

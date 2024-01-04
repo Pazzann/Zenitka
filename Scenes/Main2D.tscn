@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Statistics.cs" id="5_7cxfb"]
 [ext_resource type="Script" path="res://Scripts/2D/Camera2DTarget.cs" id="5_nimdy"]
 [ext_resource type="Texture2D" uid="uid://dhxeffueupvbi" path="res://Assets/Styles/icons-settings.svg" id="6_bruf2"]
-[ext_resource type="PackedScene" uid="uid://wy15pbfofou6" path="res://Prefabs/2D/RocketCannon.tscn" id="10_438pu"]
+[ext_resource type="PackedScene" uid="uid://dj2ym7p24d0p1" path="res://Prefabs/2D/RocketLauncher.tscn" id="10_82i64"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtlii"]
 draw_center = false
@@ -221,8 +221,8 @@ offset_right = 248.0
 offset_bottom = 121.0
 text = "1"
 
-[node name="Cannon" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(1000, -182)
+[node name="Cannon1" parent="." instance=ExtResource("1_un41y")]
+position = Vector2(1002, 6)
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(-1, -2699)
@@ -243,15 +243,6 @@ position = Vector2(0, -700)
 zoom = Vector2(0.6, 0.6)
 script = ExtResource("5_nimdy")
 
-[node name="RocketMarker" type="Marker2D" parent="."]
-position = Vector2(-517, -391)
-scale = Vector2(4, 4)
-
-[node name="RocketCannon" parent="." instance=ExtResource("10_438pu")]
-visible = false
-position = Vector2(46, -368)
-scale = Vector2(4, 4)
-
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(0, 30)
 constant_linear_velocity = Vector2(0, -20)
@@ -260,10 +251,10 @@ constant_linear_velocity = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_k1wpf")
 
 [node name="Cannon2" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(-1000, -182)
+position = Vector2(-1000, 11)
 
-[node name="Cannon3" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(0, -182)
+[node name="RocketLauncher" parent="." instance=ExtResource("10_82i64")]
+position = Vector2(3, 16)
 
 [connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

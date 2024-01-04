@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://djcontc8rjxrl"]
 
-[ext_resource type="Script" path="res://Scripts/2D/Targets/Shell.cs" id="1_kmwhc"]
+[ext_resource type="Script" path="res://Scripts/2D/Projectiles/Target.cs" id="1_5i4kq"]
 [ext_resource type="Texture2D" uid="uid://cijsda3jvg8ur" path="res://Assets/Sprites/RocketExplosion/RocketExplosion1.png" id="2_tn6rf"]
 [ext_resource type="Texture2D" uid="uid://fyivqv5tptuj" path="res://Assets/Sprites/RocketExplosion/RocketExplosion2.png" id="3_bjnxw"]
 [ext_resource type="Texture2D" uid="uid://bk6bvolbqd64k" path="res://Assets/Sprites/RocketExplosion/RocketExplosion3.png" id="4_bky0t"]
@@ -59,7 +59,7 @@ collision_layer = 2
 gravity_scale = 0.0
 max_contacts_reported = 1
 contact_monitor = true
-script = ExtResource("1_kmwhc")
+script = ExtResource("1_5i4kq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(5.5, -4)
