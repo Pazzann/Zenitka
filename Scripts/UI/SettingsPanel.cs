@@ -94,13 +94,15 @@ namespace Zenitka.Scripts.UI
 			node40.Text = Settings.Settings2D.RocketTarget.FuelCost.ToString();
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			nodeAuto.Text = Settings.Settings2D.DefaultTarget.FireRatePerMinute.ToString();
+			nodeAuto.Text = Settings.Settings2D.TargetSpawnInterval.ToString();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
 			nodeNoAutoCoordinateX.Text = Settings.Settings2D.DefaultTarget.CoordinateX.ToString();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
 			nodeNoAutoCoordinateY.Text = Settings.Settings2D.DefaultTarget.CoordinateY.ToString();
 			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
 			nodeNoAutoAngle1.Text =Settings.Settings2D.DefaultTarget.Angle.ToString();
+			var Rate = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/FireRate/LineEdit");
+			Rate.Text = Settings.Settings2D.DefaultGun.FireRate.ToString();
 			
 		}
 		
@@ -196,13 +198,16 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.Auto=Convert.ToBoolean(optionButton3.Selected);
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			Settings.Settings2D.DefaultTarget.FireRatePerMinute=nodeAuto.Text.ToFloat();
+			Settings.Settings2D.TargetSpawnInterval=nodeAuto.Text.ToFloat();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
 			Settings.Settings2D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
 			Settings.Settings2D.DefaultTarget.CoordinateY=nodeNoAutoCoordinateY.Text.ToFloat();
 			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
 			Settings.Settings2D.DefaultTarget.Angle=nodeNoAutoAngle1.Text.ToFloat();
+			
+			var Rate = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/FireRate/LineEdit");
+			Settings.Settings2D.DefaultGun.FireRate=Rate.Trxt.ToFloat();
 			
 			// var a = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/1/LineEdit");
 			// Settings.Settings2D.DefaultGun.Zenitki[0]=a.Text.ToFloat();
