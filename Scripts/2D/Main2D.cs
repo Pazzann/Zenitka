@@ -45,7 +45,7 @@ public partial class Main2D : Node2D
 		_ammoLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/UsedAmmo");
 		_detectedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DetectedTargets");
 		_destroyedLabel = GetNode<Label>("CanvasLayer/Statistics/ColorRect/DestroyedTargets");
-
+		
 		_targetSpawnTimer = GetNode<Timer>("TargetSpawnTimer");
 
 		Settings.Settings2D.OnSettingsChanged += LoadSettings;

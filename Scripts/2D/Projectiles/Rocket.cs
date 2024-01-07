@@ -3,107 +3,77 @@ using Godot;
 
 namespace Zenitka.Scripts._2D.Projectiles;
 
-public partial class Rocket : RigidBody2D
+public partial class Rocket : BallisticBody
 {
 	private AnimatedSprite2D _animation;
 
 	private CollisionShape2D _rocketCollision;
 
-	private float _mainEngineForce;
-	private float _sideEngineForce;
-
+	private Marker2D _leftEnginePos;
+	private Marker2D _rightEnginePos;
+	
 	private float _currentFuel;
-
-	public Node2D FollowTarget { get; set; }
-
-	private Label _destroyedLabel;
-	public float Weight { get; set; }
-	public float DragCoefficient { get; set; }
-	public float StartVelocity { get; set; }
-	public Vector2 StartPosition { get; set; }
-	public float ConstantAcceleration { get; set; }
-
-	public float CurrentTime = 0.0f;
-	public float StartAngle = Mathf.Pi;
-
-	public float ManeuveringEngineActivationDelaySec = 1f;
-
-	public bool IsExploded;
-
-	private bool _scoreUpdated = false;
+	
+	public BallisticBody TrackedTarget { get; set; }
 
 	public override void _Ready()
 	{
-		_mainEngineForce = Settings.Settings2D.RocketGun.RocketForce;
-		_sideEngineForce = Settings.Settings2D.RocketGun.RocketForce;
+		base._Ready();
+		
+		_animation = (GetChild(0) as AnimatedSprite2D)!;
+		_rocketCollision = (GetChild(1) as CollisionShape2D)!;
 
-		StartPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y);
-
-		Weight = Settings.Settings2D.RocketGun.RocketMassWithoutFuel + Settings.Settings2D.RocketTarget.FuelMass;
+		_leftEnginePos = GetNode<Marker2D>("LeftEnginePos");
+		_rightEnginePos = GetNode<Marker2D>("RightEnginePos");
+		
 		_currentFuel = Settings.Settings2D.RocketGun.FuelMass;
-		DragCoefficient = Settings.Settings2D.RocketGun.AirResistance;
-		StartVelocity = Settings.Settings2D.RocketGun.InitialVelocity;
-		_animation = GetChild(0) as AnimatedSprite2D;
-		_rocketCollision = GetChild(1) as CollisionShape2D;
-
+		
 		_animation.Play("fly");
-
-		_destroyedLabel = GetNode<Label>("../CanvasLayer/Statistics/ColorRect/DestroyedTargets");
 	}
 
-	public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+	public override void _IntegrateForces(PhysicsDirectBodyState2D pState)
 	{
-		if (!IsInstanceValid(FollowTarget))
-			QueueFree();
-			
-		if (IsExploded)
-			state.LinearVelocity = new Vector2(0, 0);
-		base._IntegrateForces(state);
+		base._IntegrateForces(pState);
+		
+		if (!IsInstanceValid(TrackedTarget))
+		{
+			Destroy();
+			return;
+		}
+		
+		if (SimulationTime < Settings.Settings2D.RocketGun.SideEActivationDelay)
+			return;
 
-		// if (!IsExploded)
-		// 	Rotation = state.LinearVelocity.Normalized().Angle() + Mathf.Pi / 2f;
-
-		var d = (FollowTarget.GlobalPosition - GlobalPosition).Normalized();
-
-		if (GlobalTransform.X.Normalized().Cross(d) > 0.01f)
-			ApplyForce(Mass * GlobalTransform.X * _mainEngineForce / Weight, new Vector2(-20f, 33f));
-		else if (GlobalTransform.X.Normalized().Cross(d) < -0.01f)
-			ApplyForce(Mass * GlobalTransform.X * _mainEngineForce / Weight, new Vector2(20f, 33f));
- 
-		// if (CurrentTime > ManeuveringEngineActivationDelaySec) {
-		// 	ConstantForce = Mass * (FollowTarget.GlobalPosition - GlobalPosition).Normalized() * _mainEngineForce / Weight;
-		// } else
-		// 	ConstantForce = Mass * Vector2.Up * _mainEngineForce / Weight;
+		var d = (TrackedTarget.GlobalPosition - pState.Transform.Origin).Normalized();
+		
+		if (pState.Transform.X.Cross(d) > 0f)
+			ApplyForce(pState.Transform.X.Normalized() * Props.SideEThrust, _leftEnginePos.GlobalPosition - pState.Transform.Origin);
+		else
+			ApplyForce(pState.Transform.X.Normalized() * Props.SideEThrust, _rightEnginePos.GlobalPosition - pState.Transform.Origin);
+		
+		//GD.Print("trffr ", pState.AngularVelocity);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		CurrentTime += (float) delta;
-		if (_currentFuel > 0 && (FollowTarget.GlobalPosition - GlobalPosition).Length() > 10f)
+		if (!IsInstanceValid(TrackedTarget))
 		{
-			_currentFuel -= Settings.Settings2D.RocketTarget.FuelCost * (float)delta;
+			Destroy();
+			return;
 		}
+		
+		if (_currentFuel > 0 && (TrackedTarget.GlobalPosition - GlobalPosition).Length() > 10f)
+			_currentFuel -= Settings.Settings2D.RocketTarget.FuelCost * (float)delta;
 		else
 		{
-			if (IsExploded)
+			if (HasExploded)
 				return;
-			_currentFuel = 0;
-			_mainEngineForce = 0;
+			
 			Destroy();
 		}
-
-		Weight = Settings.Settings2D.RocketTarget.BaseMass + _currentFuel;
 	}
 
-	public override void _Process(double delta)
-	{
-		base._Process(delta);
-
-		if (!IsInstanceValid(FollowTarget))
-			QueueFree();
-	}
-
-	public void Destroy()
+	public override void Destroy()
 	{
 		_animation.Play("explode");
 
@@ -112,7 +82,7 @@ public partial class Rocket : RigidBody2D
 		if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
 			_animation.AnimationLooped += QueueFree;
 
-		IsExploded = true;
+		HasExploded = true;
 	}
 
 	private void _on_body_entered(Node body)
@@ -121,13 +91,8 @@ public partial class Rocket : RigidBody2D
 			target.Destroy();
 			
 		Destroy();
-
-		if (!_scoreUpdated)
-		{
-			_destroyedLabel.Text = (Int32.Parse(_destroyedLabel.Text) + 1).ToString();
-			_scoreUpdated = true;
-		}
 	}
+	
 	private void _on_button_pressed()
 	{
 		Destroy();

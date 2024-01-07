@@ -29,4 +29,4 @@ scale = Vector2(0.363092, 6.34823)
 
 [node name="Bullet2" type="Marker2D" parent="Body/Gun"]
 position = Vector2(14, -60)
-scale = Vector2(1, 0.985901)
+scale = Vector2(1.014, 1)

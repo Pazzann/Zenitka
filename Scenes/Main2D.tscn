@@ -76,11 +76,6 @@ size = Vector2(20000, 20)
 [node name="Main2D" type="Node2D"]
 script = ExtResource("1_vkw7f")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-25.4989, -5399.5)
-scale = Vector2(6.44167, 3.639)
-texture = ExtResource("2_aalep")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 3
 
@@ -222,10 +217,10 @@ offset_bottom = 121.0
 text = "1"
 
 [node name="Cannon1" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(1002, 6)
+position = Vector2(1000, 0)
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(-1, -2699)
+position = Vector2(0, -2650)
 zoom = Vector2(0.2, 0.2)
 script = ExtResource("3_ha2sy")
 
@@ -251,10 +246,15 @@ constant_linear_velocity = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_k1wpf")
 
 [node name="Cannon2" parent="." instance=ExtResource("1_un41y")]
-position = Vector2(-1000, 11)
+position = Vector2(-1000, 0)
 
 [node name="RocketLauncher" parent="." instance=ExtResource("10_82i64")]
-position = Vector2(3, 16)
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -100
+position = Vector2(3.50019, -2672)
+scale = Vector2(3.20033, 1.82333)
+texture = ExtResource("2_aalep")
 
 [connection signal="pressed" from="CanvasLayer/Button2" to="." method="SettingsButton"]
 [connection signal="timeout" from="TargetSpawnTimer" to="." method="OnTargetSpawnTimerTimeout"]

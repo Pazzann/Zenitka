@@ -61,13 +61,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cdij"]
-size = Vector2(14, 67)
+size = Vector2(200, 40)
 
 [node name="Rocket" type="RigidBody2D"]
 light_mask = 2
-rotation = -1.5708
 collision_mask = 2
 gravity_scale = 0.0
+continuous_cd = 1
 max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
@@ -75,25 +75,30 @@ freeze_mode = 1
 script = ExtResource("1_ro1hc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
+position = Vector2(100, 0)
+scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_1t060")
 animation = &"fly"
 
 [node name="BoundingBox" type="CollisionShape2D" parent="."]
-position = Vector2(6.5, -3.32801e-07)
-rotation = 1.5708
-scale = Vector2(5, 5)
+position = Vector2(100, 0)
 shape = SubResource("RectangleShape2D_3cdij")
 debug_color = Color(0.6, 0.521569, 0.423529, 0.419608)
 
 [node name="Button" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
-offset_left = -174.0
-offset_top = -71.0
-offset_right = 201.0
-offset_bottom = 72.0
+offset_left = 54.0
+offset_top = -75.0
+offset_right = 429.0
+offset_bottom = 68.0
 theme = ExtResource("13_qdp82")
 text = "Косплей москви"
+
+[node name="LeftEnginePos" type="Marker2D" parent="."]
+position = Vector2(350, -30)
+
+[node name="RightEnginePos" type="Marker2D" parent="."]
+position = Vector2(350, 30)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

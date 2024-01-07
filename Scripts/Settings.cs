@@ -75,8 +75,10 @@ public partial class Settings : Node
 				InitialVelocity
 			{ get; set; } // вектор початкової швидкості (напрям, величина у м/с)
 			public static float
-				RocketForce
+				MainEThrust
 			{ get; set; } // сила тяги, що надається ракетним двигуном (кг * м / с2)
+
+			public static float SideEThrust => 4f * MainEThrust;
 
 			//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 			public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
@@ -84,15 +86,17 @@ public partial class Settings : Node
 			public static float AngularVelocity { get; set; } // кутова швидкість (1/с) (швидкість повороту)
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
 			public static float FuelCost { get; set; } // Затрата топлива
+			public static float SideEActivationDelay { get; set; }
 
 			static RocketGun()
 			{
-				InitialVelocity = 1000f;
-				RocketForce = 4000f;
+				InitialVelocity = 1f;
+				MainEThrust = 1000f;
 				RocketMassWithoutFuel = 1f;
 				FuelMass = 4;
 				FuelCost = 0.1f;
 				AngularVelocity = 4.0f;
+				SideEActivationDelay = 0.5f;
 			}
 		}
 

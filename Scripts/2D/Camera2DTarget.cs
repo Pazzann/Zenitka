@@ -30,14 +30,14 @@ public partial class Camera2DTarget : Camera2D
 		{
 			Position = _target.Position;
 			Position = _target.Position;
-			if (Input.IsActionJustPressed("cam_zoom_out_3d"))
-			{
-				Zoom = Zoom / 1.3f;
-			}
-			if (Input.IsActionJustPressed("cam_zoom_in_3d"))
-			{
-				Zoom = Zoom * 1.3f;
-			}
+			// if (Input.IsActionJustPressed("cam_zoom_out_3d"))
+			// {
+			// 	Zoom = Zoom / 1.3f;
+			// }
+			// if (Input.IsActionJustPressed("cam_zoom_in_3d"))
+			// {
+			// 	Zoom = Zoom * 1.3f;
+			// }
 		}
 
 	}

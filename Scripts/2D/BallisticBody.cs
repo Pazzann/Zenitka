@@ -34,8 +34,8 @@ public readonly record struct PBodyState(Vector2 Position, Vector2 Velocity)
 		var force = -props.LDrag * Velocity;
 
 		if (Velocity != Vector2.Zero)
-			force += Velocity.Normalized() * props.MainEThrust - (props.QDrag * 0.0002f) * Velocity * Velocity.Length();	
-		
+			force += Velocity.Normalized() * props.MainEThrust - props.QDrag * 0.0002f * Velocity * Velocity.Length();
+
 		return force / props.Mass + props.ConstantAcceleration;
 	}
 }
@@ -44,10 +44,10 @@ public partial class BallisticBody : RigidBody2D
 {
 	private static readonly Random Rng = new();
 
-	private float _simulationTime;
-
 	public PBodyProps Props { get; private set; }
 	public PBodyState State { get; private set; }
+
+	protected float SimulationTime { get; private set; }
 
 	protected bool HasExploded;
 	private bool _firstFrameAfterExplosion = true;
@@ -57,16 +57,24 @@ public partial class BallisticBody : RigidBody2D
 		Reset();
 	}
 
-	public override void _IntegrateForces(PhysicsDirectBodyState2D physicsState)
+	public override void _IntegrateForces(PhysicsDirectBodyState2D pState)
 	{
-		base._IntegrateForces(physicsState);
-		
-		State = ApplyRandomness(State.Update(physicsState.Step, Props));
-		physicsState.Transform = new Transform2D(State.Velocity.Angle(), Vector2.One, 0f, State.Position);
-		
+		SimulationTime += pState.Step;
+
+		ApplyForce(Props.MainEThrust * pState.Transform.X.Normalized() -
+				   Props.QDrag * 0.0002f * pState.LinearVelocity * pState.LinearVelocity.Length() -
+				   Props.LDrag * pState.LinearVelocity);
+
+		pState.LinearVelocity = ApplyRandomness(pState.LinearVelocity);
+
+		if (pState.LinearVelocity != Vector2.Zero)
+			pState.Transform = new Transform2D(pState.LinearVelocity.Angle(), pState.Transform.Origin);
+
+		State = new PBodyState(pState.Transform.Origin, pState.LinearVelocity);
+
 		if (HasExploded && _firstFrameAfterExplosion)
 		{
-			State = State with { Velocity = State.Velocity / 5f };
+			pState.LinearVelocity /= 5f;
 			_firstFrameAfterExplosion = false;
 		}
 	}
@@ -75,11 +83,11 @@ public partial class BallisticBody : RigidBody2D
 	{
 		Props = props;
 		State = state;
-		
+
 		if (GetParent() != null)
 			Reset();
 	}
-	
+
 	public virtual void Destroy()
 	{
 		QueueFree();
@@ -89,11 +97,15 @@ public partial class BallisticBody : RigidBody2D
 	{
 		GlobalPosition = State.Position;
 		LinearVelocity = State.Velocity;
-		GravityScale = 0f;
-		_simulationTime = 0f;
+		AngularVelocity = 0f;
+		Mass = Props.Mass;
+		Inertia = 0f;
+		ConstantForce = Props.Mass * Props.ConstantAcceleration;
+		Rotation = State.Velocity.Angle();
+		SimulationTime = 0f;
 	}
 
-	private PBodyState ApplyRandomness(PBodyState state)
+	private Vector2 ApplyRandomness(Vector2 v)
 	{
 		var kindX = Rng.Next(2) == 1;
 		var randFactorX = Rng.Next(Settings.Settings2D.Random);
@@ -102,7 +114,7 @@ public partial class BallisticBody : RigidBody2D
 		var kindY = Rng.Next(2) == 1;
 		var randFactorY = Rng.Next(Settings.Settings2D.Random);
 		var randEnvY = kindY ? 1 - randFactorY * 0.001f : 1 + randFactorY * 0.001f;
-		
-		return state with { Velocity = state.Velocity * new Vector2(randEnvX, randEnvY) };
+
+		return v * new Vector2(randEnvX, randEnvY);
 	}
 }

@@ -40,9 +40,8 @@ public partial class Bullet : BallisticBody
 		_timer.Start();
 
 		_animation.Play("fly2");
-		Rotation = 0f;
 	}
-
+	
 	private void OnBodyEntered(Node body)
 	{
 		if (body is BallisticBody target)
