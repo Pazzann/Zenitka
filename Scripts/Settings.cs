@@ -78,7 +78,7 @@ public partial class Settings : Node
 				MainEThrust
 			{ get; set; } // сила тяги, що надається ракетним двигуном (кг * м / с2)
 
-			public static float SideEThrust => 4f * MainEThrust;
+			public static float SideEThrust => MainEThrust;
 
 			//public static Vector2 Size{ get; set; } // розміри (довжина, товщина у м)
 			public static float RocketMassWithoutFuel { get; set; } // масса ракети без палива
@@ -91,12 +91,12 @@ public partial class Settings : Node
 			static RocketGun()
 			{
 				InitialVelocity = 1f;
-				MainEThrust = 1000f;
+				MainEThrust = 4000f;
 				RocketMassWithoutFuel = 1f;
 				FuelMass = 4;
 				FuelCost = 0.1f;
 				AngularVelocity = 4.0f;
-				SideEActivationDelay = 0.5f;
+				SideEActivationDelay = 0.1f;
 			}
 		}
 

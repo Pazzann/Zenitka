@@ -95,10 +95,10 @@ theme = ExtResource("13_qdp82")
 text = "Косплей москви"
 
 [node name="LeftEnginePos" type="Marker2D" parent="."]
-position = Vector2(350, -30)
+position = Vector2(6, -14)
 
 [node name="RightEnginePos" type="Marker2D" parent="."]
-position = Vector2(350, 30)
+position = Vector2(6, 14)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

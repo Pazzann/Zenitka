@@ -12,7 +12,7 @@ public readonly record struct SimResult(float AbsError, float ColTime, Vector2 C
 
 public readonly record struct AimResult(float Angle, float AbsError, float ColTime);
 
-public class Solver(Cannon cannon, BallisticBody target, SolverOptions options)
+public class CannonSolver(Cannon cannon, BallisticBody target, SolverOptions options)
 {
     private const float Inf = 9999f;
 
@@ -45,22 +45,31 @@ public class Solver(Cannon cannon, BallisticBody target, SolverOptions options)
 
     private SimResult Simulate(float angle)
     {
-        var projectileState = cannon.NewProjectileState(angle);
-        var targetState = target.State;
-        var cannonDelay = cannon.MeasureDelay(angle);
-        
+        var body = new PBody(cannon.ProjectileProps.PBody, cannon.NewProjectileState(angle));
+        var delay = cannon.MeasureDelay(angle);
+
+        return Solver.Simulate(body, target.PBody, options.SimSteps, options.SimTimeStep, delay);
+    }
+}
+
+public static class Solver
+{
+    private const float Inf = 9999f;
+    
+    public static SimResult Simulate(PBody body, PBody target, int steps, float timeStep, float delay)
+    {
         var result = new SimResult(Inf, 0f, Vector2.Zero);
 
-        for (var i = 0; i < options.SimSteps; ++i)
+        for (var i = 0; i < steps; ++i)
         {
-            var t = options.SimTimeStep * i;
+            var t = timeStep * i;
 
-            if (t >= cannonDelay)
-                projectileState = projectileState.Update(options.SimTimeStep, cannon.ProjectileProps.PBody);
+            if (t >= delay)
+                body.State = body.State.Update(timeStep, body.Props);
 
-            targetState = targetState.Update(options.SimTimeStep, target.Props);
+            target.State = target.State.Update(timeStep, target.Props);
 
-            var posDiff = targetState.Position - projectileState.Position;
+            var posDiff = target.State.Position - body.State.Position;
             var absError = posDiff.Length();
 
             if (absError < result.AbsError)

@@ -4,9 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://dygr34ogdoari" path="res://Assets/Sprites/RocketGun.png" id="1_t88b0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ylhlj"]
-size = Vector2(908, 338)
+size = Vector2(775, 337)
 
 [node name="RocketLauncher" type="StaticBody2D"]
+z_index = 1
 script = ExtResource("1_d3c3y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -16,9 +17,9 @@ scale = Vector2(3, 3)
 texture = ExtResource("1_t88b0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-13, -167)
+position = Vector2(53.5, -166.5)
 shape = SubResource("RectangleShape2D_ylhlj")
 
 [node name="RocketPos" type="Marker2D" parent="."]
-position = Vector2(-403, -457)
+position = Vector2(-377, -324)
 scale = Vector2(-1.18653, 1.88052)

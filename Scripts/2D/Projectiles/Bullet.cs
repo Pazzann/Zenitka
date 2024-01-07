@@ -41,7 +41,15 @@ public partial class Bullet : BallisticBody
 
 		_animation.Play("fly2");
 	}
-	
+
+	public override void _IntegrateForces(PhysicsDirectBodyState2D pState)
+	{
+		base._IntegrateForces(pState);
+		
+		if (pState.LinearVelocity != Vector2.Zero)
+			pState.Transform = new Transform2D(pState.LinearVelocity.Angle(), pState.Transform.Origin);
+	}
+
 	private void OnBodyEntered(Node body)
 	{
 		if (body is BallisticBody target)

@@ -79,7 +79,7 @@ public partial class Cannon : StaticBody2D, IWeapon
 				break;
 			}
 
-			var result = new Solver(this, target, new SolverOptions()).Aim();
+			var result = new CannonSolver(this, target, new SolverOptions()).Aim();
 			LoadAndFire(result.Angle, result.ColTime, callback);
 
 			await Task.Delay(TimeSpan.FromSeconds(60f / Settings.Settings2D.DefaultTarget.FireRatePerMinute));

@@ -40,12 +40,19 @@ public readonly record struct PBodyState(Vector2 Position, Vector2 Velocity)
 	}
 }
 
+public record struct PBody(PBodyProps Props, PBodyState State)
+{
+	public PBodyProps Props { get; } = Props;
+}
+
 public partial class BallisticBody : RigidBody2D
 {
 	private static readonly Random Rng = new();
 
 	public PBodyProps Props { get; private set; }
 	public PBodyState State { get; private set; }
+
+	public PBody PBody => new(Props, State);
 
 	protected float SimulationTime { get; private set; }
 
@@ -66,9 +73,6 @@ public partial class BallisticBody : RigidBody2D
 				   Props.LDrag * pState.LinearVelocity);
 
 		pState.LinearVelocity = ApplyRandomness(pState.LinearVelocity);
-
-		if (pState.LinearVelocity != Vector2.Zero)
-			pState.Transform = new Transform2D(pState.LinearVelocity.Angle(), pState.Transform.Origin);
 
 		State = new PBodyState(pState.Transform.Origin, pState.LinearVelocity);
 
