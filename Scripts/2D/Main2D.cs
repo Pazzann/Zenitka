@@ -8,10 +8,10 @@ namespace Zenitka.Scripts._2D;
 
 public partial class Main2D : Node2D
 {
-	private PackedScene _targetScene;
-	private PackedScene _bulletScene;
+	private PackedScene _cannonScene;
+	private PackedScene _rocketLauncherScene;
 	private PackedScene _rocketTargetScene;
-	private PackedScene _rocketAmmoScene;
+	private PackedScene _targetScene;
 
 	private Marker2D _rocketCannon;
 	private Node2D _anchor1;
@@ -31,12 +31,14 @@ public partial class Main2D : Node2D
 	{
 		_targetScene = GD.Load<PackedScene>("res://Prefabs/2D/Target.tscn");
 		_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/RocketTarget.tscn");
-
+		_cannonScene = GD.Load<PackedScene>("res://Prefabs/2D/Cannon.tscn");
+		_rocketLauncherScene = GD.Load<PackedScene>("res://Prefabs/2D/RocketLauncher.tscn");
+		
 		_weapons = new();
 		
-		_weapons.Add(GetNode<Cannon>("Cannon1")!);
-		_weapons.Add(GetNode<Cannon>("Cannon2")!);
-		_weapons.Add(GetNode<RocketLauncher>("RocketLauncher")!);
+		// _weapons.Add(GetNode<Cannon>("Cannon1")!);
+		// _weapons.Add(GetNode<Cannon>("Cannon2")!);
+		// _weapons.Add(GetNode<RocketLauncher>("RocketLauncher")!);
 
 		_anchor1 = GetNode<Node2D>("Anchor");
 		_anchor2 = GetNode<Node2D>("Anchor2");
@@ -68,26 +70,58 @@ public partial class Main2D : Node2D
 			MainEThrust = Settings.Settings2D.RocketTarget.MainEThrust
 		};
 
-		_targetSpawnTimer.WaitTime = 3f;
+		_targetSpawnTimer.WaitTime = Settings.Settings2D.TargetSpawnInterval;
+
+		foreach (var weapon in _weapons)
+			(weapon as Node)!.QueueFree();
+		
+		_weapons.Clear();
+
+		for (var i = 0; i < Settings.Settings2D.DefaultGun.ZenitkiState.Length; ++i)
+		{
+			var type = Settings.Settings2D.DefaultGun.ZenitkiState[i];
+			var x = Settings.Settings2D.DefaultGun.Zenitki[i];
+
+			if (type == 1)
+			{
+				var cannon = (_cannonScene.Instantiate() as Cannon)!;
+				cannon.GlobalPosition = new Vector2(x, 0f);
+				
+				_weapons.Add(cannon);
+				AddChild(cannon);
+			} else if (type == 2)
+			{
+				var rocketLauncher = (_rocketLauncherScene.Instantiate() as RocketLauncher)!;
+				rocketLauncher.GlobalPosition = new Vector2(x, 0f);
+				
+				_weapons.Add(rocketLauncher);
+				AddChild(rocketLauncher);
+			}
+		}
 	}
 
-	// public override void _Process(double delta)
-	// {
-	//     var roc = GetNode<Node2D>("RocketCannon");
-	//     var def = GetNode<Node2D>("Cannon");
-	//
-	//     if (Settings.Settings2D.IsNotDefaultGun && roc.Visible == false)
-	//     {
-	//         roc.Show();
-	//         def.Hide();
-	//     }
-	//
-	//     if (!Settings.Settings2D.IsNotDefaultGun && roc.Visible == true)
-	//     {
-	//         def.Show();
-	//         roc.Hide();
-	//     }
-	// }
+	public override void _Process(double delta)
+	{
+		// var roc = GetNode<Node2D>("RocketCannon");
+		// var def = GetNode<Node2D>("Cannon");
+	
+		// if (Settings.Settings2D.IsNotDefaultGun && roc.Visible == false)
+		// {
+		//     roc.Show();
+		//     def.Hide();
+		// }
+		//
+		// if (!Settings.Settings2D.IsNotDefaultGun && roc.Visible == true)
+		// {
+		//     def.Show();
+		//     roc.Hide();
+		// }
+		
+		// if (Settings.Settings2D.IsNotDefaultGun)
+		// {
+		   //  
+		// }
+	}
 
 	private void OnTargetSpawnTimerTimeout()
 	{

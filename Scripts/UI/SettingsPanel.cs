@@ -196,31 +196,46 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.IsNotDefaultGun = Convert.ToBoolean(optionButton.Selected);
 			Settings.Settings2D.IsNotDefaultTarget = Convert.ToBoolean(optionButton2.Selected);
 			Settings.Settings2D.Auto=Convert.ToBoolean(optionButton3.Selected);
+
+			Settings.Settings2D.DefaultGun.Zenitki[0] = 0f;
+			Settings.Settings2D.DefaultGun.Zenitki[1] = 0f;
+			Settings.Settings2D.DefaultGun.Zenitki[2] = 0f;
+
+			try
+			{
+				var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
+				Settings.Settings2D.TargetSpawnInterval=nodeAuto.Text.ToFloat();
+				
+				var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
+				Settings.Settings2D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
+				
+				var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
+				Settings.Settings2D.DefaultTarget.CoordinateY=nodeNoAutoCoordinateY.Text.ToFloat();
+				
+				var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
+				Settings.Settings2D.DefaultTarget.Angle=nodeNoAutoAngle1.Text.ToFloat();
+				
+				var Rate = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/FireRate/LineEdit");
+				Settings.Settings2D.DefaultGun.FireRate=Rate.Text.ToFloat();
+				
+				var a = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/1/LineEdit");
+				Settings.Settings2D.DefaultGun.Zenitki[0]=a.Text.ToFloat();
+				
+				var b = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/2/LineEdit");
+				Settings.Settings2D.DefaultGun.Zenitki[1]=b.Text.ToFloat();
+				
+				var c = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/3/LineEdit");
+				Settings.Settings2D.DefaultGun.Zenitki[2]=c.Text.ToFloat();
+			} catch (Exception) {}
 			
-			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			Settings.Settings2D.TargetSpawnInterval=nodeAuto.Text.ToFloat();
-			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
-			Settings.Settings2D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
-			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
-			Settings.Settings2D.DefaultTarget.CoordinateY=nodeNoAutoCoordinateY.Text.ToFloat();
-			var nodeNoAutoAngle1 = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoAngle/LineEdit");
-			Settings.Settings2D.DefaultTarget.Angle=nodeNoAutoAngle1.Text.ToFloat();
-			
-			var Rate = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/FireRate/LineEdit");
-			Settings.Settings2D.DefaultGun.FireRate=Rate.Text.ToFloat();
-			
-			// var a = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/1/LineEdit");
-			// Settings.Settings2D.DefaultGun.Zenitki[0]=a.Text.ToFloat();
-			// var b = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/2/LineEdit");
-			// Settings.Settings2D.DefaultGun.Zenitki[1]=b.Text.ToFloat();
-			// var c = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/3/LineEdit");
-			// Settings.Settings2D.DefaultGun.Zenitki[2]=c.Text.ToFloat();
 			OptionButton optionButtonA = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/1/OptionButton");
-			Settings.Settings2D.DefaultGun.ZenitkiState[0]=optionButtonA.Selected;
+			Settings.Settings2D.DefaultGun.ZenitkiState[0] = optionButtonA.Selected;
+			
 			OptionButton optionButtonB = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/2/OptionButton");
-			Settings.Settings2D.DefaultGun.ZenitkiState[1]=optionButtonB.Selected;
+			Settings.Settings2D.DefaultGun.ZenitkiState[1] = optionButtonB.Selected;
+			
 			OptionButton optionButtonC = GetNode<OptionButton>("ColorRect/MarginContainer/VBoxContainer/Multi/3/OptionButton");
-			Settings.Settings2D.DefaultGun.ZenitkiState[2]=optionButtonC.Selected;
+			Settings.Settings2D.DefaultGun.ZenitkiState[2] = optionButtonC.Selected;
 
 			Settings.Settings2D.InvokeOnSettingsChanged();
 		}

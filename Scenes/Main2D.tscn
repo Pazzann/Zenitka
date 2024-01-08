@@ -217,6 +217,7 @@ offset_bottom = 121.0
 text = "1"
 
 [node name="Cannon1" parent="." instance=ExtResource("1_un41y")]
+visible = false
 position = Vector2(1000, 0)
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -246,9 +247,11 @@ constant_linear_velocity = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_k1wpf")
 
 [node name="Cannon2" parent="." instance=ExtResource("1_un41y")]
+visible = false
 position = Vector2(-1000, 0)
 
 [node name="RocketLauncher" parent="." instance=ExtResource("10_82i64")]
+visible = false
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -100
