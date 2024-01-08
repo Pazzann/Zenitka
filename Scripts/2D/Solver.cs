@@ -12,9 +12,21 @@ public readonly record struct SimResult(float AbsError, float ColTime, Vector2 C
 
 public readonly record struct AimResult(float Angle, float AbsError, float ColTime);
 
-public class CannonSolver(Cannon cannon, BallisticBody target, SolverOptions options)
+public class CannonSolver
 {
     private const float Inf = 9999f;
+    
+    private readonly Cannon _cannon;
+    private readonly BallisticBody _target;
+    private readonly SolverOptions _options;
+
+    // ReSharper disable once ConvertToPrimaryConstructor
+    public CannonSolver(Cannon cannon, BallisticBody target, SolverOptions options)
+    {
+        _cannon = cannon;
+        _target = target;
+        _options = options;
+    }
 
     public AimResult Aim()
     {
@@ -29,7 +41,7 @@ public class CannonSolver(Cannon cannon, BallisticBody target, SolverOptions opt
         var angle = 0f;
         var result = new SimResult(Inf, 0f, Vector2.Zero);
 
-        for (int i = 0; i < options.MaxIter && maxAngle - minAngle > options.AngleEps; ++i)
+        for (int i = 0; i < _options.MaxIter && maxAngle - minAngle > _options.AngleEps; ++i)
         {
             angle = (minAngle + maxAngle) / 2f;
             result = Simulate(angle);
@@ -45,10 +57,10 @@ public class CannonSolver(Cannon cannon, BallisticBody target, SolverOptions opt
 
     private SimResult Simulate(float angle)
     {
-        var body = new PBody(cannon.ProjectileProps.PBody, cannon.NewProjectileState(angle));
-        var delay = cannon.MeasureDelay(angle);
+        var body = new PBody(_cannon.ProjectileProps.PBody, _cannon.NewProjectileState(angle));
+        var delay = _cannon.MeasureDelay(angle);
 
-        return Solver.Simulate(body, target.PBody, options.SimSteps, options.SimTimeStep, delay);
+        return Solver.Simulate(body, _target.PBody, _options.SimSteps, _options.SimTimeStep, delay);
     }
 }
 
