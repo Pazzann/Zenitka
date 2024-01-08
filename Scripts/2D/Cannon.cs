@@ -36,7 +36,7 @@ public partial class Cannon : StaticBody2D, IWeapon
 	{
 		base._Process(delta);
 
-		if (!IsBusy && _targets.Count > 0)
+		while (!IsBusy && _targets.Count > 0)
 		{
 			var (target, callback) = _targets.Pop();
 			ShootTarget(target, callback);
@@ -74,19 +74,19 @@ public partial class Cannon : StaticBody2D, IWeapon
 		for (var i = 0; i < Settings.Settings2D.DefaultGun.SalvoSize; ++i)
 		{
 			if (!IsInstanceValid(target))
-			{
-				IsBusy = false;
 				break;
-			}
 
 			var result = new CannonSolver(this, target, new SolverOptions()).Aim();
-			LoadAndFire(result.Angle, result.ColTime, callback);
+			await LoadAndFire(result.Angle, result.ColTime, callback);
 
-			await Task.Delay(TimeSpan.FromSeconds(60f / Settings.Settings2D.DefaultTarget.FireRatePerMinute));
+			if (i < Settings.Settings2D.DefaultGun.SalvoSize - 1)
+				await Task.Delay(TimeSpan.FromSeconds(60f / Settings.Settings2D.DefaultGun.FireRate));
 		}
+		
+		IsBusy = false;
 	}
 
-	private async void LoadAndFire(float angle, float colTime, WeaponCallback callback)
+	private async Task LoadAndFire(float angle, float colTime, WeaponCallback callback)
 	{
 		angle = 0.5f * Mathf.Pi - angle;
 		var duration = Utils.AngleDiff(_gun.Rotation, angle) / _rotSpeed;
@@ -95,10 +95,10 @@ public partial class Cannon : StaticBody2D, IWeapon
 		tween.TweenProperty(_gun, "rotation", angle, duration);
 
 		await Utils.AwaitTween(tween);
-		Fire(colTime, callback);
+		await Fire(colTime, callback);
 	}
 
-	private void Fire(float colTime, WeaponCallback callback)
+	private async Task Fire(float colTime, WeaponCallback callback)
 	{
 		var bullets = new[]
 		{
@@ -111,6 +111,7 @@ public partial class Cannon : StaticBody2D, IWeapon
 
 		foreach (var bullet in bullets)
 		{
+			bullet.Freeze = true;
 			bullet.MaxLifespan = colTime + 1f;
 
 			bullet.OnExploded += target =>
@@ -127,17 +128,15 @@ public partial class Cannon : StaticBody2D, IWeapon
 			};
 
 			GetParent().AddChild(bullet);
-			
-			bullet.Freeze = true;
-			
-			GetTree().CreateTimer(Settings.Settings2D.DefaultGun.FiringDelay).Timeout += () =>
-			{
-				if (IsInstanceValid(bullet))
-					bullet.Freeze = false;
-			};
 		}
 
-		IsBusy = false;
+		await Task.Delay(TimeSpan.FromSeconds(Settings.Settings2D.DefaultGun.FiringDelay));
+
+		foreach (var bullet in bullets)
+		{
+			if (IsInstanceValid(bullet))
+				bullet.Freeze = false;
+		}
 	}
 
 	public PBodyState NewProjectileState(float angle)

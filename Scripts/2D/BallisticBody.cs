@@ -78,7 +78,7 @@ public partial class BallisticBody : RigidBody2D
 
 		if (HasExploded && _firstFrameAfterExplosion)
 		{
-			pState.LinearVelocity /= 5f;
+			pState.LinearVelocity /= 10f;
 			_firstFrameAfterExplosion = false;
 		}
 	}

@@ -55,7 +55,7 @@ public partial class Settings : Node
 
 			static DefaultGun()
 			{
-				FiringDelay = 0.05f;
+				FiringDelay = 0.04f;
 				BulletSpeed = 1000.0f;
 				InitialElevationAngle = 0.0f;
 				AngularVelocity = 1.0f;
@@ -64,7 +64,7 @@ public partial class Settings : Node
 				SalvoSize = 1;
 				Zenitki = new float[3];
 				ZenitkiState = new int[3];
-				FireRate = 1f;
+				FireRate = 60f;
 			}
 		}
 
