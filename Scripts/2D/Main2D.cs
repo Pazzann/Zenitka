@@ -123,6 +123,11 @@ public partial class Main2D : Node2D
 
 	private void OnTargetDetected(BallisticBody target)
 	{
+		target.Exploded += _ =>
+		{
+			_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + 1).ToString();
+		};
+		
 		WeaponCallback callback = (ammoUsed, targetsHit) =>
 		{
 			_ammoLabel.Text = (int.Parse(_ammoLabel.Text) + ammoUsed).ToString();

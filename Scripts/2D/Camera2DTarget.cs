@@ -21,7 +21,9 @@ public partial class Camera2DTarget : Camera2D
 				MakeCurrent();
 			}
 		}
+		
 		_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Target");
+		
 		if (_target == null)
 		{
 			_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Rocket1");
@@ -39,15 +41,18 @@ public partial class Camera2DTarget : Camera2D
 			// 	Zoom = Zoom * 1.3f;
 			// }
 		}
-
 	}
+	
 	private void _on_target_spawn_timer_timeout()
 	{
 		if (_target == null)
 		{
 			_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Rocket1");
 		}
-		_target = GetNode<BallisticBody>("/root/Main2D/Target");
-		_targetStartingPosition = _target.Position;
+		
+		_target = GetNodeOrNull<BallisticBody>("/root/Main2D/Target");
+		
+		if (_target != null)
+			_targetStartingPosition = _target.Position;
 	}
 }

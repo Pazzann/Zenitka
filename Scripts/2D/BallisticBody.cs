@@ -59,6 +59,8 @@ public partial class BallisticBody : RigidBody2D
 	public bool HasExploded { get; protected set; }
 	private bool _firstFrameAfterExplosion = true;
 
+	public event Action<BallisticBody> Exploded;
+
 	public override void _Ready()
 	{
 		Reset();
@@ -121,4 +123,9 @@ public partial class BallisticBody : RigidBody2D
 
 		return v * new Vector2(randEnvX, randEnvY);
 	}
+	
+	protected void OnExploded(BallisticBody target)
+    {
+    	Exploded?.Invoke(target);
+    }
 }

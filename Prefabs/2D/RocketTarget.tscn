@@ -66,10 +66,10 @@ size = Vector2(14, 67)
 [node name="RocketTarget" type="RigidBody2D"]
 collision_layer = 2
 gravity_scale = 0.0
+continuous_cd = 1
 max_contacts_reported = 1
 contact_monitor = true
 can_sleep = false
-freeze_mode = 1
 script = ExtResource("1_ucyrl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -94,4 +94,5 @@ offset_bottom = 67.0
 theme = ExtResource("13_5bsd0")
 text = "Косплей москви"
 
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

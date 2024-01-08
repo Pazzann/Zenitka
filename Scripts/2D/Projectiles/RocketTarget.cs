@@ -20,7 +20,7 @@ public partial class RocketTarget : BallisticBody
 
 		base._Ready();
 	}
-		
+	
 	public override void _IntegrateForces(PhysicsDirectBodyState2D pState)
 	{
 		base._IntegrateForces(pState);
@@ -52,10 +52,18 @@ public partial class RocketTarget : BallisticBody
 	{
 		Destroy();
 	}
+	
+	private void OnBodyEntered(Node body)
+	{
+		if (body is StaticBody2D)
+			Destroy();
+	}
 
 	public override void Destroy()
 	{
 		HasExploded = true;
+		OnExploded(null);
+		
 		_animation.Play("explode");
 
 		if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))

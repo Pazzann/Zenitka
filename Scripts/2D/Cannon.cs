@@ -113,12 +113,12 @@ public partial class Cannon : StaticBody2D, IWeapon
 			bullet.Freeze = true;
 			bullet.MaxLifespan = colTime + 1f;
 
-			bullet.OnExploded += target =>
+			bullet.Exploded += target =>
 			{
 				if (IsInstanceValid(target) && !target.HasExploded)
 				{
 					target.Destroy();
-					callback.Invoke(bullets.Length, 1);
+					callback.Invoke(bullets.Length, 0);
 				}
 				else if (!IsInstanceValid(target) && missed == bullets.Length - 1)
 					callback.Invoke(bullets.Length, 0);

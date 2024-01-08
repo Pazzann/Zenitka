@@ -31,6 +31,7 @@ public partial class Target : BallisticBody
 			return;
 		
 		HasExploded = true;
+		OnExploded(null);
 		
 		_rocketCollision.SetDeferred("disabled", true);
 		_animation.Play("explode");

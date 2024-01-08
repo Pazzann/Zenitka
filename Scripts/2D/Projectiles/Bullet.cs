@@ -13,8 +13,6 @@ public partial class Bullet : BallisticBody
 	private CollisionShape2D _bulletCollision;
 	private CollisionShape2D _explosionCollision;
 
-	public event Action<BallisticBody> OnExploded;
-
 	public float MaxLifespan
 	{
 		set
@@ -54,18 +52,18 @@ public partial class Bullet : BallisticBody
 	{
 		if (body is BallisticBody target)
 		{
-			OnExploded?.Invoke(target);
+			OnExploded(target);
 			target.Destroy();
 		}
 		else
-			OnExploded?.Invoke(null);
+			OnExploded(null);
 			
 		Explode();
 	}
 
 	private void SelfDestroy()
 	{
-		OnExploded?.Invoke(null);
+		OnExploded(null);
 		Explode();
 	}
 
