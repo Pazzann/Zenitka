@@ -207,7 +207,7 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings2D.DefaultTarget.Angle=nodeNoAutoAngle1.Text.ToFloat();
 			
 			var Rate = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/FireRate/LineEdit");
-			//Settings.Settings2D.DefaultGun.FireRate=Rate.Trxt.ToFloat();
+			Settings.Settings2D.DefaultGun.FireRate=Rate.Text.ToFloat();
 			
 			// var a = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Multi/1/LineEdit");
 			// Settings.Settings2D.DefaultGun.Zenitki[0]=a.Text.ToFloat();
