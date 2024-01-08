@@ -126,7 +126,7 @@ theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/HBoxContainer6"]
 layout_mode = 2
-text = "Коефіцієнт гравітації"
+text = "Прискорення вільного падіння"
 
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/HBoxContainer6"]
 layout_mode = 2
