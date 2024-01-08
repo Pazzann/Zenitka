@@ -46,8 +46,11 @@ public partial class Target : BallisticBody
 		
 		if (body is StaticBody2D)
 			Destroy();
-		
+
 		if (body is BallisticBody)
+		{
 			OnExploded(body as BallisticBody);
+			Destroy();
+		}
 	}
 }

@@ -62,7 +62,10 @@ public partial class RocketTarget : BallisticBody
 			Destroy();
 		
 		if (body is BallisticBody)
+		{
 			OnExploded(body as BallisticBody);
+			Destroy();
+		}
 	}
 
 	public override void Destroy()
