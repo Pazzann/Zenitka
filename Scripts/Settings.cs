@@ -64,7 +64,7 @@ public partial class Settings : Node
 				SalvoSize = 1;
 				Zenitki = new float[3];
 				ZenitkiState = new int[3];
-				FireRate = 60f;
+				FireRate = 600f;
 			}
 		}
 

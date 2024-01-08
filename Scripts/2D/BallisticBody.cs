@@ -56,7 +56,7 @@ public partial class BallisticBody : RigidBody2D
 
 	protected float SimulationTime { get; private set; }
 
-	protected bool HasExploded;
+	public bool HasExploded { get; protected set; }
 	private bool _firstFrameAfterExplosion = true;
 
 	public override void _Ready()

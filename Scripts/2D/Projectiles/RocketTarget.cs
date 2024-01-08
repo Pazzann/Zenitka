@@ -34,7 +34,10 @@ public partial class RocketTarget : BallisticBody
 		base._PhysicsProcess(delta);
 
 		if (_currentFuel > 0)
+		{
 			_currentFuel -= Settings.Settings2D.RocketTarget.FuelCost * (float)delta;
+			Mass -= Settings.Settings2D.RocketTarget.FuelCost * (float)delta;
+		}
 		else
 		{
 			if (HasExploded)
@@ -52,13 +55,12 @@ public partial class RocketTarget : BallisticBody
 
 	public override void Destroy()
 	{
+		HasExploded = true;
 		_animation.Play("explode");
 
 		if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
 			_animation.AnimationLooped += QueueFree;
 
 		_rocketCollision.SetDeferred("disabled", true);
-
-		HasExploded = true;
 	}
 }

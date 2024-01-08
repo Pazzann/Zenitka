@@ -32,7 +32,7 @@ public partial class Main2D : Node2D
 		_targetScene = GD.Load<PackedScene>("res://Prefabs/2D/Target.tscn");
 		_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/RocketTarget.tscn");
 
-		_weapons = new List<IWeapon>();
+		_weapons = new();
 		
 		_weapons.Add(GetNode<Cannon>("Cannon1")!);
 		_weapons.Add(GetNode<Cannon>("Cannon2")!);

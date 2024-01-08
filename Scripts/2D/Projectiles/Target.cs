@@ -29,15 +29,14 @@ public partial class Target : BallisticBody
 	{
 		if (HasExploded)
 			return;
-			
+		
+		HasExploded = true;
+		
 		_rocketCollision.SetDeferred("disabled", true);
-
 		_animation.Play("explode");
 
 		if (!_animation.IsConnected(AnimatedSprite2D.SignalName.AnimationLooped, Callable.From(QueueFree)))
 			_animation.AnimationLooped += QueueFree;
-
-		HasExploded = true;
 	}
 
 	private void OnBodyEntered(Node body)

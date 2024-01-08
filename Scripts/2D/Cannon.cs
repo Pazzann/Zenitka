@@ -107,7 +107,6 @@ public partial class Cannon : StaticBody2D, IWeapon
 		};
 
 		var missed = 0;
-		var hit = false;
 
 		foreach (var bullet in bullets)
 		{
@@ -116,17 +115,17 @@ public partial class Cannon : StaticBody2D, IWeapon
 
 			bullet.OnExploded += target =>
 			{
-				if (target != null && !hit)
+				if (IsInstanceValid(target) && !target.HasExploded)
 				{
-					hit = true;
+					target.Destroy();
 					callback.Invoke(bullets.Length, 1);
 				}
-				else if (target == null && missed == bullets.Length - 1)
+				else if (!IsInstanceValid(target) && missed == bullets.Length - 1)
 					callback.Invoke(bullets.Length, 0);
-				else if (target == null)
+				else if (!IsInstanceValid(target))
 					++missed;
 			};
-
+			
 			GetParent().AddChild(bullet);
 		}
 
