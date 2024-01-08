@@ -96,7 +96,7 @@ public partial class Settings : Node
 				FuelMass = 4;
 				FuelCost = 0.1f;
 				AngularVelocity = 4.0f;
-				SideEActivationDelay = 0.1f;
+				SideEActivationDelay = 1f;
 			}
 		}
 
