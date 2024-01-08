@@ -9,7 +9,7 @@ public partial class RocketLauncher : StaticBody2D, IWeapon
 	private PackedScene _rocketScene;
 	private Marker2D _rocketPos;
 
-	private readonly Stack<(BallisticBody, WeaponCallback)> _targets = [];
+	private readonly Stack<(BallisticBody, WeaponCallback)> _targets = new();
 
 	private PBodyProps _projectileProps;
 

@@ -25,19 +25,18 @@ public partial class Main2D : Node2D
 	private PBodyProps _normalTargetProps;
 	private PBodyProps _rocketTargetProps;
 
-	private List<IWeapon> _weapons = [];
+	private List<IWeapon> _weapons = new();
 
 	public override void _Ready()
 	{
 		_targetScene = GD.Load<PackedScene>("res://Prefabs/2D/Target.tscn");
 		_rocketTargetScene = GD.Load<PackedScene>("res://Prefabs/2D/RocketTarget.tscn");
 
-		_weapons =
-		[
-			GetNode<Cannon>("Cannon1")!,
-			GetNode<Cannon>("Cannon2")!,
-			//GetNode<RocketLauncher>("RocketLauncher")!
-		];
+		_weapons = new List<IWeapon>();
+		
+		_weapons.Add(GetNode<Cannon>("Cannon1")!);
+		_weapons.Add(GetNode<Cannon>("Cannon2")!);
+		//_weapons.Add(GetNode<RocketLauncher>("RocketLauncher")!);
 
 		_anchor1 = GetNode<Node2D>("Anchor");
 		_anchor2 = GetNode<Node2D>("Anchor2");
