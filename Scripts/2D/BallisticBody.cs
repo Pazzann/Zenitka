@@ -125,7 +125,7 @@ public partial class BallisticBody : RigidBody2D
 	}
 	
 	protected void OnExploded(BallisticBody target)
-    {
-    	Exploded?.Invoke(target);
-    }
+	{
+		Exploded?.Invoke(target);
+	}
 }

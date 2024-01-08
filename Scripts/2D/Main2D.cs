@@ -36,7 +36,7 @@ public partial class Main2D : Node2D
 		
 		_weapons.Add(GetNode<Cannon>("Cannon1")!);
 		_weapons.Add(GetNode<Cannon>("Cannon2")!);
-		//_weapons.Add(GetNode<RocketLauncher>("RocketLauncher")!);
+		_weapons.Add(GetNode<RocketLauncher>("RocketLauncher")!);
 
 		_anchor1 = GetNode<Node2D>("Anchor");
 		_anchor2 = GetNode<Node2D>("Anchor2");

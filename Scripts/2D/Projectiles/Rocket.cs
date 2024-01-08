@@ -43,14 +43,50 @@ public partial class Rocket : BallisticBody
 
 		if (SimulationTime > Settings.Settings2D.RocketGun.SideEActivationDelay)
 		{
-			var d = TrackedTarget.GlobalPosition - pState.Transform.Origin;
-			// var result = Solver.Simulate(PBody, TrackedTarget.PBody, 400, 1f / 60f, 0f);
+			pState.LinearVelocity = pState.LinearVelocity.Length() * pState.Transform.X.Normalized();
+			
+			// var front = pState.Transform.X.Normalized();
 			//
-			// pState.Transform = pState.Transform.X.Cross(d) < 0f
-			//     ? new Transform2D(pState.Transform.Rotation - 4f * pState.Step, pState.Transform.Origin)
-			//     : new Transform2D(pState.Transform.Rotation + 4f * pState.Step, pState.Transform.Origin);
+			// var r1 = _rightEnginePos.GlobalPosition - pState.Transform.Origin;
+			// var r2 = _leftEnginePos.GlobalPosition - pState.Transform.Origin;
+			//
+			// var torque1 = r1.Cross(front * Props.SideEThrust);
+			// var torque2 = r2.Cross(front * Props.SideEThrust);
+			//
+			// var angularVelocity1 = pState.AngularVelocity + torque1 * pState.Step;
+			// var angularVelocity2 = pState.AngularVelocity + torque2 * pState.Step;
 
-			pState.Transform = new Transform2D(Mathf.LerpAngle(pState.Transform.Rotation, d.Angle(), 2f * pState.Step), pState.Transform.Origin);
+			float step = Props.SideEThrust / 4000f * pState.Step;
+
+			var state1 = new PBodyState(pState.Transform.Origin, pState.LinearVelocity.Rotated(step));
+			var result1 = Solver.Simulate(new PBody(Props, state1), TrackedTarget.PBody, 20, 0.1f, 0f);
+			
+			var state2 = new PBodyState(pState.Transform.Origin, pState.LinearVelocity.Rotated(-step));
+			var result2 = Solver.Simulate(new PBody(Props, state2), TrackedTarget.PBody, 20, 0.1f, 0f);
+
+			//var result3 = Solver.Simulate(PBody, TrackedTarget.PBody, 10, 0.2f, 0f);
+
+			// if (result3.AbsError < Mathf.Min(result1.AbsError, result2.AbsError))
+			// 	return;
+
+			if (result1.AbsError < result2.AbsError)
+			{
+				pState.Transform = pState.Transform.RotatedLocal(step);
+			}
+			else
+			{
+				pState.Transform = pState.Transform.RotatedLocal(-step);
+			}
+
+			// if (result1.AbsError < result2.AbsError)
+			// 	pState.LinearVelocity = pState.LinearVelocity.Rotated(pState.Step);
+			// else
+			// 	pState.LinearVelocity = pState.LinearVelocity.Rotated(-pState.Step);
+
+			// if (result1.AbsError < result2.AbsError)
+			// 	pState.ApplyForce(front * Props.SideEThrust, r2);
+			// else
+			// 	pState.ApplyForce(front * Props.SideEThrust, r1);
 		}
 	}
 
