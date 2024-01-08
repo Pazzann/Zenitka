@@ -90,7 +90,7 @@ namespace Zenitka.Scripts.UI
 			node37.Text = Settings.Settings3D.RocketTarget.AirResistance.ToString();
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			nodeAuto.Text = Settings.Settings3D.DefaultTarget.FireRate.ToString();
+			nodeAuto.Text = Settings.Settings3D.TargetSpawnInterval.ToString();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
 			nodeNoAutoCoordinateX.Text = Settings.Settings3D.DefaultTarget.CoordinateX.ToString();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");
@@ -189,7 +189,7 @@ namespace Zenitka.Scripts.UI
 			Settings.Settings3D.RocketTarget.AirResistance = node37.Text.ToFloat();
 			
 			var nodeAuto = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/Auto/LineEdit");
-			Settings.Settings3D.DefaultTarget.FireRate=nodeAuto.Text.ToFloat();
+			Settings.Settings3D.TargetSpawnInterval=nodeAuto.Text.ToFloat();
 			var nodeNoAutoCoordinateX = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit");
 			Settings.Settings3D.DefaultTarget.CoordinateX=nodeNoAutoCoordinateX.Text.ToFloat();
 			var nodeNoAutoCoordinateY = GetNode<LineEdit>("ColorRect/MarginContainer/VBoxContainer/NoAutoCoordinates/LineEdit2");

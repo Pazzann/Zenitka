@@ -153,7 +153,6 @@ popup/item_1/text = "Зенітна ракетниця"
 popup/item_1/id = 1
 
 [node name="2DDefault" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
-visible = false
 texture_filter = 2
 layout_mode = 2
 theme_override_constants/separation = 10
@@ -225,14 +224,23 @@ text = "Коефіцієнт опору повітря"
 [node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DDefault/HBoxContainer5"]
 layout_mode = 2
 
+[node name="FireRate" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/FireRate"]
+layout_mode = 2
+text = "Скорострільність зенітки
+"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/FireRate"]
+layout_mode = 2
+
 [node name="2DRocket" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
-visible = false
 texture_filter = 2
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -247,7 +255,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -273,11 +280,9 @@ text = "Вектор початкової швидкості (напрям, ве
 layout_mode = 2
 
 [node name="LineEdit2" type="LineEdit" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket/HBoxContainer5"]
-visible = false
 layout_mode = 2
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocket"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -360,7 +365,6 @@ popup/item_1/text = "Ракетна ціль"
 popup/item_1/id = 1
 
 [node name="2DDefaultTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
-visible = false
 texture_filter = 2
 layout_mode = 2
 
@@ -377,7 +381,6 @@ layout_mode = 2
 theme = ExtResource("1_r8vbj")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -406,7 +409,6 @@ layout_mode = 2
 theme = ExtResource("1_r8vbj")
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DDefaultTarget"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -441,7 +443,6 @@ text = "Прискорення"
 layout_mode = 2
 
 [node name="2DRocketTarget" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
-visible = false
 texture_filter = 2
 layout_mode = 2
 
@@ -470,7 +471,6 @@ layout_mode = 2
 theme = ExtResource("1_r8vbj")
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 
@@ -483,7 +483,6 @@ layout_mode = 2
 theme = ExtResource("1_r8vbj")
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/2DRocketTarget"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 30
 

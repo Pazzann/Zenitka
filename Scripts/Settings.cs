@@ -14,7 +14,7 @@ public partial class Settings : Node
 	public static class Settings2D
 	{
 		public static event SettingsChanged OnSettingsChanged;
-
+		
 		public static void InvokeOnSettingsChanged()
 		{
 			OnSettingsChanged?.Invoke();
@@ -28,6 +28,7 @@ public partial class Settings : Node
 		public static Vector2 GravityVector => Gravity * Vector2.Down;
 			
 		public static bool Auto { get; set; }
+		public static float TargetSpawnInterval { get; set; }
 
 		static Settings2D()
 		{
@@ -36,6 +37,7 @@ public partial class Settings : Node
 			Auto = true;
 			Gravity = 9.8f;
 			Random = 0;
+			TargetSpawnInterval = 3f;
 		}
 
 		public static class DefaultGun
@@ -49,6 +51,7 @@ public partial class Settings : Node
 			public static float FiringDelay { get; set; }
 			public static float[] Zenitki { get; set; }
 			public static int[] ZenitkiState { get; set; } // 0-відсутня 1-гармата 2-ракетниця
+			public static float FireRate { get; set; }
 
 			static DefaultGun()
 			{
@@ -61,6 +64,7 @@ public partial class Settings : Node
 				SalvoSize = 1;
 				Zenitki = new float[3];
 				ZenitkiState = new int[3];
+				FireRate = 1f;
 			}
 		}
 
@@ -175,10 +179,12 @@ public partial class Settings : Node
 		public static bool IsNotDefaultGun { get; set; }
 		public static bool IsNotDefaultTarget { get; set; }
 		public static float Gravity { get; set; } // Гравітація
+		public static float TargetSpawnInterval { get; set; }
 
 		static Settings3D()
 		{
 			Auto = true;
+			TargetSpawnInterval = 3f;
 		}
 		public static class DefaultGun
 		{
@@ -245,9 +251,6 @@ public partial class Settings : Node
 
 			//public static float Altitude{ get; set; } // викривлення земної поверхні
 			public static float AirResistance { get; set; } // Коєфіціент опору повітря
-				
-			public static float FireRate { get; set; }
-
 			public static float CoordinateX { get; set; }
 			public static float CoordinateY { get; set; }
 			public static float CoordinateZ { get; set; }
@@ -259,7 +262,6 @@ public partial class Settings : Node
 				Velocity = 10.0f;
 				Mass = 1f;
 				AirResistance = 0.05f;
-				FireRate = 3f;
 			}
 		}
 
