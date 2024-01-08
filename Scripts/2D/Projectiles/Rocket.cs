@@ -56,7 +56,7 @@ public partial class Rocket : BallisticBody
 			// var angularVelocity1 = pState.AngularVelocity + torque1 * pState.Step;
 			// var angularVelocity2 = pState.AngularVelocity + torque2 * pState.Step;
 
-			float step = Props.SideEThrust / 4000f * pState.Step;
+			float step = Props.SideEThrust / 8000f * pState.Step;
 
 			var state1 = new PBodyState(pState.Transform.Origin, pState.LinearVelocity.Rotated(step));
 			var result1 = Solver.Simulate(new PBody(Props, state1), TrackedTarget.PBody, 20, 0.1f, 0f);
@@ -111,6 +111,7 @@ public partial class Rocket : BallisticBody
 
 	public override void Destroy()
 	{
+		LinearVelocity = Vector2.Zero;
 		_animation.Play("explode");
 
 		_rocketCollision.SetDeferred("disabled", true);
