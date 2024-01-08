@@ -50,6 +50,9 @@ public partial class Bullet : BallisticBody
 
 	private void OnBodyEntered(Node body)
 	{
+		if (body is IWeapon)
+			body.QueueFree();
+		
 		if (body is BallisticBody target)
 		{
 			OnExploded(target);
@@ -63,7 +66,6 @@ public partial class Bullet : BallisticBody
 
 	private void SelfDestroy()
 	{
-		OnExploded(null);
 		Explode();
 	}
 

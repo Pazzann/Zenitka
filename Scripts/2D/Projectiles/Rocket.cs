@@ -123,8 +123,14 @@ public partial class Rocket : BallisticBody
 
 	private void _on_body_entered(Node body)
 	{
+		if (body is IWeapon)
+			body.QueueFree();
+
 		if (body is BallisticBody target)
+		{
+			OnExploded(target);
 			target.Destroy();
+		}
 
 		Destroy();
 	}

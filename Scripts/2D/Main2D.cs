@@ -69,11 +69,15 @@ public partial class Main2D : Node2D
 			Mass = Settings.Settings2D.RocketTarget.BaseMass + Settings.Settings2D.RocketTarget.FuelMass,
 			MainEThrust = Settings.Settings2D.RocketTarget.MainEThrust
 		};
-
+		
 		_targetSpawnTimer.WaitTime = Settings.Settings2D.TargetSpawnInterval;
+		_targetSpawnTimer.Start();
 
 		foreach (var weapon in _weapons)
-			(weapon as Node)!.QueueFree();
+		{
+			if (IsInstanceValid(weapon as Node))
+				(weapon as Node)!.QueueFree();
+		}
 		
 		_weapons.Clear();
 
@@ -157,9 +161,10 @@ public partial class Main2D : Node2D
 
 	private void OnTargetDetected(BallisticBody target)
 	{
-		target.Exploded += _ =>
+		target.Exploded += b =>
 		{
-			_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + 1).ToString();
+			if (b is Bullet or Rocket)
+				_destroyedLabel.Text = (int.Parse(_destroyedLabel.Text) + 1).ToString();
 		};
 		
 		WeaponCallback callback = (ammoUsed, targetsHit) =>

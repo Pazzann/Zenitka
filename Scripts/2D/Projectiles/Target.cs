@@ -31,7 +31,6 @@ public partial class Target : BallisticBody
 			return;
 		
 		HasExploded = true;
-		OnExploded(null);
 		
 		_rocketCollision.SetDeferred("disabled", true);
 		_animation.Play("explode");
@@ -42,7 +41,13 @@ public partial class Target : BallisticBody
 
 	private void OnBodyEntered(Node body)
 	{
+		if (body is IWeapon)
+			body.QueueFree();
+		
 		if (body is StaticBody2D)
 			Destroy();
+		
+		if (body is BallisticBody)
+			OnExploded(body as BallisticBody);
 	}
 }

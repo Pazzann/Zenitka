@@ -55,14 +55,19 @@ public partial class RocketTarget : BallisticBody
 	
 	private void OnBodyEntered(Node body)
 	{
+		if (body is IWeapon)
+			body.QueueFree();
+		
 		if (body is StaticBody2D)
 			Destroy();
+		
+		if (body is BallisticBody)
+			OnExploded(body as BallisticBody);
 	}
 
 	public override void Destroy()
 	{
 		HasExploded = true;
-		OnExploded(null);
 		
 		_animation.Play("explode");
 
