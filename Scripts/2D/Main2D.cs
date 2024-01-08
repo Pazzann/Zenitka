@@ -69,9 +69,37 @@ public partial class Main2D : Node2D
 			Mass = Settings.Settings2D.RocketTarget.BaseMass + Settings.Settings2D.RocketTarget.FuelMass,
 			MainEThrust = Settings.Settings2D.RocketTarget.MainEThrust
 		};
-		
-		_targetSpawnTimer.WaitTime = Settings.Settings2D.TargetSpawnInterval;
-		_targetSpawnTimer.Start();
+
+		if (Settings.Settings2D.Auto)
+		{
+			_targetSpawnTimer.Paused = false;
+			_targetSpawnTimer.WaitTime = Settings.Settings2D.TargetSpawnInterval;
+			_targetSpawnTimer.Start();
+		}
+		else
+		{
+			_targetSpawnTimer.Paused = true;
+			
+			var scene = Settings.Settings2D.IsNotDefaultTarget ? _rocketTargetScene : _targetScene;
+			var props = Settings.Settings2D.IsNotDefaultTarget ? _rocketTargetProps.Copied() : _normalTargetProps;
+			
+			var state = CreateTargetState(Settings.Settings2D.IsNotDefaultTarget
+				? Settings.Settings2D.RocketTarget.StartVelocity
+				: Settings.Settings2D.DefaultTarget.Velocity);
+
+			state = state with
+			{
+				Position = new Vector2(Settings.Settings2D.DefaultTarget.CoordinateX,
+					-Settings.Settings2D.DefaultTarget.CoordinateY),
+				Velocity = state.Velocity.Length() * Vector2.FromAngle(Settings.Settings2D.DefaultTarget.Angle)
+			};
+
+			var target = (scene.Instantiate() as BallisticBody)!;
+			target.Reset(props, state);
+			
+			AddChild(target);
+			OnTargetDetected(target);
+		}
 
 		foreach (var weapon in _weapons)
 		{
