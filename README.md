@@ -2,7 +2,7 @@
 
 Since February 24, 2022, the enemy has used tens of thousands of missiles, drones, shells, as well as hundreds of aircraft on our territory. Many of them, due to the shortage of anti-aircraft systems, hit military and residential facilities. Unfortunately, Ukraine does not have enough of its own means of air defense, so their development is currently more appropriate and relevant than ever.
 
-The project is an anti-air system tester, created in accordance with the task of the Tournament of Young Informatics 2023-2024. It implements detailed simulation parameters (According to task numbers: 1.1, 1.2, 1.3, 1.4, 1.5, 1.7, 2.4, 3.1, 3.2, 3.3, 3.4, 4.1, 4.5, 5.3, 5.4, 5.5 ), 2D and 3D visualization (and a control panel for their parameters), and other features.
+The project is an anti-air system tester, created in accordance with the task of the Tournament of Young Informatics 2023-2024. It implements detailed simulation parameters (According to task numbers: 1.1, 1.2, 1.3, 1.4, 1.5, 1.7, 2.4, 3.1, 3.2, 3.3, 3.4, 4.1, 4.3, 4.5, 5.1, 5.2, 5.3, 5.4, 5.5 ), 2D and 3D visualization (and a control panel for their parameters), and other features.
 
 ## System Requirements
 
